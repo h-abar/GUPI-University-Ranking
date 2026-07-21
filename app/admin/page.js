@@ -57,16 +57,16 @@ export default function AdminLoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gupi-ink-700 mb-2">اسم المستخدم</label>
+              <label className="block text-sm font-medium text-gupi-ink-700 mb-2">البريد الإلكتروني</label>
               <div className="relative">
                 <User className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gupi-ink-400" />
                 <input
-                  type="text"
+                  type="email"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
                   className="w-full pr-10 pl-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all"
-                  placeholder="admin"
+                  placeholder="abulayeth@gmail.com"
                 />
               </div>
             </div>
@@ -96,7 +96,7 @@ export default function AdminLoginPage() {
           </form>
 
           <div className="mt-6 text-center text-xs text-gupi-ink-400">
-            <p>بيانات الدخول الافتراضية: admin / admin123</p>
+            <p>منصة GUPI — للإدارة فقط</p>
           </div>
         </div>
       </div>
