@@ -41,11 +41,11 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gupi-500 to-gupi-900 flex items-center justify-center text-white mx-auto mb-4">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gupi-orange-500 to-gupi-orange-900 flex items-center justify-center text-white mx-auto mb-4">
               <Shield className="w-8 h-8" />
             </div>
-            <h1 className="text-2xl font-display font-bold text-gupi-900">لوحة الإدارة</h1>
-            <p className="text-sm text-slate-500 mt-1">منصة GUPI — مؤشر الحضور العالمي للجامعات</p>
+            <h1 className="text-2xl font-display font-bold text-gupi-orange-900">لوحة الإدارة</h1>
+            <p className="text-sm text-gupi-ink-500 mt-1">منصة GUPI — مؤشر الحضور العالمي للجامعات</p>
           </div>
 
           {error && (
@@ -57,30 +57,30 @@ export default function AdminLoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">اسم المستخدم</label>
+              <label className="block text-sm font-medium text-gupi-ink-700 mb-2">اسم المستخدم</label>
               <div className="relative">
-                <User className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                <User className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gupi-ink-400" />
                 <input
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
-                  className="w-full pr-10 pl-4 py-3 rounded-xl border border-slate-200 focus:border-gupi-500 focus:ring-2 focus:ring-gupi-200 outline-none transition-all"
+                  className="w-full pr-10 pl-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all"
                   placeholder="admin"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">كلمة المرور</label>
+              <label className="block text-sm font-medium text-gupi-ink-700 mb-2">كلمة المرور</label>
               <div className="relative">
-                <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gupi-ink-400" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full pr-10 pl-4 py-3 rounded-xl border border-slate-200 focus:border-gupi-500 focus:ring-2 focus:ring-gupi-200 outline-none transition-all"
+                  className="w-full pr-10 pl-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all"
                   placeholder="••••••••"
                 />
               </div>
@@ -89,13 +89,13 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-gupi-600 to-gupi-800 text-white font-bold hover:from-gupi-700 hover:to-gupi-900 transition-all disabled:opacity-50"
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-gupi-orange-600 to-gupi-orange-800 text-white font-bold hover:from-gupi-orange-700 hover:to-gupi-orange-900 transition-all disabled:opacity-50"
             >
               {loading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}
             </button>
           </form>
 
-          <div className="mt-6 text-center text-xs text-slate-400">
+          <div className="mt-6 text-center text-xs text-gupi-ink-400">
             <p>بيانات الدخول الافتراضية: admin / admin123</p>
           </div>
         </div>

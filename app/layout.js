@@ -1,3 +1,4 @@
+import './gupi-theme.css';
 import './globals.css';
 
 export const metadata = {
@@ -10,9 +11,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ar" dir="rtl">
       <head>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo.png" type="image/png" />
       </head>
-      <body className="bg-slate-50 text-slate-800 antialiased">
+      <body className="bg-gupi-bg text-gupi-ink-900 antialiased">
         {children}
       </body>
     </html>

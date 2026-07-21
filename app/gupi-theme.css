@@ -1,0 +1,141 @@
+/* ============================================================
+   GUPI | مؤشر الحضور العالمي للجامعات
+   Design Tokens — الهوية البصرية للمنصة  v1.0
+   ============================================================ */
+
+:root {
+  /* ---------- 1. الألوان الأساسية Brand ---------- */
+  --gupi-orange-50: #FCF7F1;
+  --gupi-orange-100: #F8ECDF;
+  --gupi-orange-200: #F7D9B9;
+  --gupi-orange-300: #F2C492;
+  --gupi-orange-400: #EDAD67;
+  --gupi-orange-500: #E8963C;
+  --gupi-orange-600: #D5791F;
+  --gupi-orange-700: #A16626;
+  --gupi-orange-800: #7B4E1D;
+  --gupi-orange-900: #553614;
+  --gupi-orange-950: #34210C;
+
+  --gupi-sage-50: #F4F5F3;
+  --gupi-sage-100: #E6E8E3;
+  --gupi-sage-200: #CDD1C5;
+  --gupi-sage-300: #B2B8A5;
+  --gupi-sage-400: #939C82;
+  --gupi-sage-500: #75805F;
+  --gupi-sage-600: #636C4F;
+  --gupi-sage-700: #505840;
+  --gupi-sage-800: #3D4331;
+  --gupi-sage-900: #2A2E22;
+  --gupi-sage-950: #1A1C15;
+
+  --gupi-amber-50: #FDFAF4;
+  --gupi-amber-100: #FAF3E6;
+  --gupi-amber-200: #FAE8C7;
+  --gupi-amber-300: #F8DCA8;
+  --gupi-amber-400: #F5CE85;
+  --gupi-amber-500: #F2C063;
+  --gupi-amber-600: #CEA250;
+  --gupi-amber-700: #A78341;
+  --gupi-amber-800: #806432;
+  --gupi-amber-900: #584622;
+  --gupi-amber-950: #362A15;
+
+  --gupi-ink-50: #EFEFEF;
+  --gupi-ink-100: #DBDBDB;
+  --gupi-ink-200: #B8B7B6;
+  --gupi-ink-300: #91908E;
+  --gupi-ink-400: #656461;
+  --gupi-ink-500: #3A3835;
+  --gupi-ink-600: #312F2C;
+  --gupi-ink-700: #282624;
+  --gupi-ink-800: #1E1D1B;
+  --gupi-ink-900: #151413;
+  --gupi-ink-950: #0D0C0C;
+
+  /* ---------- 2. الألوان الدلالية Semantic ---------- */
+  --gupi-success: #6B8A3E;
+  --gupi-success-soft: #EEF3E4;
+  --gupi-success-dark: #4C6529;
+  --gupi-warning: #F2C063;
+  --gupi-warning-soft: #FAF3E6;
+  --gupi-warning-dark: #A78341;
+  --gupi-error: #C2492F;
+  --gupi-error-soft: #F9E9E5;
+  --gupi-error-dark: #93311C;
+  --gupi-info: #527A8A;
+  --gupi-info-soft: #E9F1F3;
+  --gupi-info-dark: #38596A;
+
+  /* ---------- 3. الأدوار الوظيفية UI Roles ---------- */
+  --gupi-primary: #E8963C;
+  --gupi-primary-hover: #D5791F;
+  --gupi-primary-active: #A16626;
+  --gupi-primary-soft: #F8ECDF;
+  --gupi-on-primary: #FFFFFF;
+
+  --gupi-secondary: #75805F;
+  --gupi-secondary-hover: #636C4F;
+  --gupi-secondary-soft: #E6E8E3;
+  --gupi-on-secondary: #FFFFFF;
+
+  --gupi-bg: #F7F5F0;
+  --gupi-surface: #FFFFFF;
+  --gupi-surface-2: #EFEFEF;
+  --gupi-border: #DBDBDB;
+  --gupi-border-strong: #B8B7B6;
+
+  --gupi-text: #151413;
+  --gupi-text-secondary: #656461;
+  --gupi-text-muted: #91908E;
+  --gupi-text-inverse: #F7F5F0;
+
+  /* ---------- 4. التدرجات Gradients ---------- */
+  --gupi-gradient-primary: linear-gradient(135deg, #F8DCA8 0%, #F2C063 28%, #E8963C 62%, #D5791F 100%);
+  --gupi-gradient-secondary: linear-gradient(135deg, #B2B8A5 0%, #75805F 55%, #505840 100%);
+  --gupi-gradient-brand: linear-gradient(120deg, #75805F 0%, #B2B8A5 30%, #F2C063 55%, #E8963C 80%, #D5791F 100%);
+  --gupi-gradient-soft: linear-gradient(180deg, #FCF7F1 0%, #FAF3E6 100%);
+  --gupi-gradient-dark: linear-gradient(160deg, #2A2E22 0%, #0D0C0C 100%);
+  --gupi-gradient-text: linear-gradient(120deg, #D5791F, #E8963C 55%, #CEA250);
+
+  /* ---------- 5. الظلال Shadows ---------- */
+  --gupi-shadow-sm: 0 1px 2px rgba(31,31,30,.06);
+  --gupi-shadow-md: 0 4px 14px -2px rgba(31,31,30,.10);
+  --gupi-shadow-lg: 0 12px 32px -8px rgba(31,31,30,.16);
+  --gupi-shadow-primary: 0 6px 18px -4px rgba(232,150,60,.45);
+
+  /* ---------- 6. الزوايا والخطوط ---------- */
+  --gupi-radius-sm: 8px;
+  --gupi-radius-md: 12px;
+  --gupi-radius-lg: 18px;
+  --gupi-radius-xl: 26px;
+
+  --gupi-font-ar: 'IBM Plex Sans Arabic', 'Tajawal', 'Segoe UI', system-ui, sans-serif;
+  --gupi-font-en: 'Montserrat', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+}
+
+/* ---------- الوضع الداكن Dark Mode ---------- */
+[data-theme="dark"] {
+  --gupi-bg: #0D0C0C;
+  --gupi-surface: #151413;
+  --gupi-surface-2: #1E1D1B;
+  --gupi-border: #282624;
+  --gupi-border-strong: #312F2C;
+  --gupi-text: #F2F0EB;
+  --gupi-text-secondary: #B8B7B6;
+  --gupi-text-muted: #91908E;
+  --gupi-primary-soft: rgba(232,150,60,.14);
+  --gupi-secondary-soft: rgba(117,128,95,.22);
+}
+
+/* ---------- أصناف جاهزة Utility Classes ---------- */
+.gupi-bg-gradient-primary   { background: var(--gupi-gradient-primary); }
+.gupi-bg-gradient-secondary { background: var(--gupi-gradient-secondary); }
+.gupi-bg-gradient-brand     { background: var(--gupi-gradient-brand); }
+.gupi-bg-gradient-soft      { background: var(--gupi-gradient-soft); }
+.gupi-bg-gradient-dark      { background: var(--gupi-gradient-dark); }
+.gupi-text-gradient {
+  background: var(--gupi-gradient-text);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}

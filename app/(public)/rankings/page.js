@@ -60,22 +60,22 @@ export default function RankingsPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-gupi-200 border-t-gupi-600 rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-slate-600">جاري تحميل البيانات...</p>
+          <div className="w-16 h-16 border-4 border-gupi-orange-200 border-t-gupi-orange-600 rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gupi-ink-600">جاري تحميل البيانات...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-gupi-ink-50">
       {/* Header */}
       <div className="hero-gradient text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl md:text-5xl font-display font-black mb-3">
             ترتيب الجامعات العربية — <span className="gold-text">GUPI 2027</span>
           </h1>
-          <p className="text-slate-300 text-lg">
+          <p className="text-gupi-ink-300 text-lg">
             القائمة النهائية لمؤشر الحضور العالمي للجامعات — أفضل 70 جامعة عربية
           </p>
         </div>
@@ -87,20 +87,20 @@ export default function RankingsPage() {
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search */}
             <div className="flex-1 relative">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gupi-ink-400" />
               <input
                 type="text"
                 placeholder="ابحث عن جامعة..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pr-10 pl-4 py-3 rounded-xl border border-slate-200 focus:border-gupi-500 focus:ring-2 focus:ring-gupi-200 outline-none transition-all"
+                className="w-full pr-10 pl-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all"
               />
             </div>
             {/* Country filter */}
             <select
               value={countryFilter}
               onChange={(e) => setCountryFilter(e.target.value)}
-              className="px-4 py-3 rounded-xl border border-slate-200 focus:border-gupi-500 focus:ring-2 focus:ring-gupi-200 outline-none transition-all bg-white"
+              className="px-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all bg-white"
             >
               <option value="all">جميع الدول</option>
               {countries.map((c) => (
@@ -110,12 +110,12 @@ export default function RankingsPage() {
           </div>
 
           {/* Results count */}
-          <div className="mt-4 flex items-center justify-between text-sm text-slate-500">
+          <div className="mt-4 flex items-center justify-between text-sm text-gupi-ink-500">
             <span>عرض {filtered.length} من {universities.length} جامعة</span>
             {(search || countryFilter !== 'all') && (
               <button
                 onClick={() => { setSearch(''); setCountryFilter('all'); }}
-                className="flex items-center gap-1 text-gupi-600 hover:text-gupi-700"
+                className="flex items-center gap-1 text-gupi-orange-600 hover:text-gupi-orange-700"
               >
                 <X className="w-4 h-4" />
                 مسح الفلاتر
@@ -129,21 +129,21 @@ export default function RankingsPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-gupi-950 text-white">
-                  <th className="px-4 py-4 text-right cursor-pointer hover:bg-gupi-900 transition-colors" onClick={() => toggleSort('rank')}>
+                <tr className="bg-gupi-orange-950 text-white">
+                  <th className="px-4 py-4 text-right cursor-pointer hover:bg-gupi-orange-900 transition-colors" onClick={() => toggleSort('rank')}>
                     <div className="flex items-center gap-1">
                       <span>الترتيب</span>
                       <ArrowUpDown className="w-3 h-3" />
                     </div>
                   </th>
-                  <th className="px-4 py-4 text-right cursor-pointer hover:bg-gupi-900 transition-colors" onClick={() => toggleSort('name')}>
+                  <th className="px-4 py-4 text-right cursor-pointer hover:bg-gupi-orange-900 transition-colors" onClick={() => toggleSort('name')}>
                     <div className="flex items-center gap-1">
                       <span>الجامعة</span>
                       <ArrowUpDown className="w-3 h-3" />
                     </div>
                   </th>
                   <th className="px-4 py-4 text-center hidden md:table-cell">الدولة</th>
-                  <th className="px-4 py-4 text-center cursor-pointer hover:bg-gupi-900 transition-colors" onClick={() => toggleSort('score')}>
+                  <th className="px-4 py-4 text-center cursor-pointer hover:bg-gupi-orange-900 transition-colors" onClick={() => toggleSort('score')}>
                     <div className="flex items-center gap-1 justify-center">
                       <span>درجة GUPI</span>
                       <ArrowUpDown className="w-3 h-3" />
@@ -151,7 +151,7 @@ export default function RankingsPage() {
                   </th>
                   <th className="px-4 py-4 text-center hidden lg:table-cell">الحضور (7)</th>
                   <th className="px-4 py-4 text-center hidden lg:table-cell">التميز (3)</th>
-                  <th className="px-4 py-4 text-center cursor-pointer hover:bg-gupi-900 transition-colors hidden md:table-cell" onClick={() => toggleSort('articles')}>
+                  <th className="px-4 py-4 text-center cursor-pointer hover:bg-gupi-orange-900 transition-colors hidden md:table-cell" onClick={() => toggleSort('articles')}>
                     <div className="flex items-center gap-1 justify-center">
                       <span>الأبحاث</span>
                       <ArrowUpDown className="w-3 h-3" />
@@ -164,7 +164,7 @@ export default function RankingsPage() {
                 {filtered.map((uni, idx) => (
                   <tr
                     key={uni.id}
-                    className={`border-b border-slate-100 hover:bg-gupi-50/50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-slate-50/30'}`}
+                    className={`border-b border-gupi-ink-100 hover:bg-gupi-orange-50/50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-gupi-ink-50/30'}`}
                   >
                     <td className="px-4 py-3">
                       <div className={`rank-badge ${
@@ -176,47 +176,47 @@ export default function RankingsPage() {
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="font-bold text-gupi-900">{uni.name}</div>
-                      <div className="text-xs text-slate-500 md:hidden">{uni.country}</div>
+                      <div className="font-bold text-gupi-orange-900">{uni.name}</div>
+                      <div className="text-xs text-gupi-ink-500 md:hidden">{uni.country}</div>
                     </td>
                     <td className="px-4 py-3 text-center hidden md:table-cell">
-                      <span className="inline-flex items-center gap-1 text-sm text-slate-600">
+                      <span className="inline-flex items-center gap-1 text-sm text-gupi-ink-600">
                         <MapPin className="w-3 h-3" />
                         {uni.country}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-center">
                       <div className="inline-flex flex-col items-center">
-                        <span className="font-display font-black text-2xl text-gupi-700">{uni.gupi.totalScore}</span>
-                        <span className="text-xs text-slate-400">/ 10</span>
+                        <span className="font-display font-black text-2xl text-gupi-orange-700">{uni.gupi.totalScore}</span>
+                        <span className="text-xs text-gupi-ink-400">/ 10</span>
                       </div>
                     </td>
                     <td className="px-4 py-3 text-center hidden lg:table-cell">
-                      <span className="font-bold text-gupi-600">{uni.gupi.presenceScore}</span>
-                      <span className="text-slate-400 text-sm">/ 7</span>
+                      <span className="font-bold text-gupi-orange-600">{uni.gupi.presenceScore}</span>
+                      <span className="text-gupi-ink-400 text-sm">/ 7</span>
                     </td>
                     <td className="px-4 py-3 text-center hidden lg:table-cell">
-                      <span className="font-bold text-gold-600">{uni.gupi.excellenceScore}</span>
-                      <span className="text-slate-400 text-sm">/ 3</span>
+                      <span className="font-bold text-gupi-amber-600">{uni.gupi.excellenceScore}</span>
+                      <span className="text-gupi-ink-400 text-sm">/ 3</span>
                     </td>
                     <td className="px-4 py-3 text-center hidden md:table-cell">
                       {uni.articles_2025 ? (
-                        <span className="text-sm font-medium text-slate-700">{uni.articles_2025.toLocaleString()}</span>
+                        <span className="text-sm font-medium text-gupi-ink-700">{uni.articles_2025.toLocaleString()}</span>
                       ) : (
-                        <span className="text-slate-300">—</span>
+                        <span className="text-gupi-ink-300">—</span>
                       )}
                     </td>
                     <td className="px-4 py-3 text-center hidden md:table-cell">
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => setSelectedUni(uni)}
-                          className="px-3 py-1.5 rounded-lg bg-gupi-100 text-gupi-700 text-sm font-medium hover:bg-gupi-200 transition-colors"
+                          className="px-3 py-1.5 rounded-lg bg-gupi-orange-100 text-gupi-orange-700 text-sm font-medium hover:bg-gupi-orange-200 transition-colors"
                         >
                           عرض
                         </button>
                         <Link
                           href={`/universities/${uni.id}`}
-                          className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-gupi-600 to-gupi-800 text-white text-sm font-medium hover:from-gupi-700 hover:to-gupi-900 transition-colors"
+                          className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-gupi-orange-600 to-gupi-orange-800 text-white text-sm font-medium hover:from-gupi-orange-700 hover:to-gupi-orange-900 transition-colors"
                         >
                           بطاقة
                         </Link>
@@ -248,21 +248,21 @@ export default function RankingsPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-display font-bold">{selectedUni.name}</h3>
-                  <p className="text-sm text-slate-300">{selectedUni.country} • تأسست {selectedUni.founded}</p>
+                  <p className="text-sm text-gupi-ink-300">{selectedUni.country} • تأسست {selectedUni.founded}</p>
                 </div>
               </div>
               <div className="mt-4 flex gap-6">
                 <div>
                   <div className="text-3xl font-black">{selectedUni.gupi.totalScore}</div>
-                  <div className="text-xs text-slate-300">درجة GUPI / 10</div>
+                  <div className="text-xs text-gupi-ink-300">درجة GUPI / 10</div>
                 </div>
                 <div>
                   <div className="text-3xl font-black">{selectedUni.gupi.presenceScore}</div>
-                  <div className="text-xs text-slate-300">الحضور / 7</div>
+                  <div className="text-xs text-gupi-ink-300">الحضور / 7</div>
                 </div>
                 <div>
                   <div className="text-3xl font-black">{selectedUni.gupi.excellenceScore}</div>
-                  <div className="text-xs text-slate-300">التميز / 3</div>
+                  <div className="text-xs text-gupi-ink-300">التميز / 3</div>
                 </div>
               </div>
             </div>
@@ -270,14 +270,14 @@ export default function RankingsPage() {
             <div className="p-6 space-y-4">
               {/* Presence details */}
               <div>
-                <h4 className="font-bold text-gupi-900 mb-3 flex items-center gap-2">
-                  <Trophy className="w-5 h-5 text-gupi-600" />
+                <h4 className="font-bold text-gupi-orange-900 mb-3 flex items-center gap-2">
+                  <Trophy className="w-5 h-5 text-gupi-orange-600" />
                   الحضور في التصنيفات العالمية (7 درجات)
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
                   {selectedUni.gupi.presenceDetails.map((d, i) => (
                     <div key={i} className={`flex items-center justify-between px-3 py-2 rounded-lg text-sm ${
-                      d.present ? 'bg-green-50 text-green-700' : 'bg-slate-50 text-slate-400'
+                      d.present ? 'bg-green-50 text-green-700' : 'bg-gupi-ink-50 text-gupi-ink-400'
                     }`}>
                       <span>{d.label}</span>
                       <span className="font-bold">{d.present ? '✓ 1' : '✗ 0'}</span>
@@ -288,14 +288,14 @@ export default function RankingsPage() {
 
               {/* Excellence details */}
               <div>
-                <h4 className="font-bold text-gold-800 mb-3 flex items-center gap-2">
-                  <Award className="w-5 h-5 text-gold-600" />
+                <h4 className="font-bold text-gupi-amber-800 mb-3 flex items-center gap-2">
+                  <Award className="w-5 h-5 text-gupi-amber-600" />
                   التميز في التصنيفات الكبرى (3 درجات)
                 </h4>
                 <div className="grid grid-cols-3 gap-2">
                   {selectedUni.gupi.excellenceDetails.map((d, i) => (
                     <div key={i} className={`flex flex-col items-center px-3 py-3 rounded-lg text-sm ${
-                      d.present ? 'bg-gold-50 text-gold-700' : 'bg-slate-50 text-slate-400'
+                      d.present ? 'bg-gupi-amber-50 text-gupi-amber-700' : 'bg-gupi-ink-50 text-gupi-ink-400'
                     }`}>
                       <span className="mb-1">{d.label}</span>
                       <span className="font-bold">{d.present ? '✓ 1' : '✗ 0'}</span>
@@ -306,7 +306,7 @@ export default function RankingsPage() {
 
               {/* Link to full card */}
               <div className="pt-2">
-                <Link href={`/universities/${selectedUni.id}`} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-gupi-600 to-gupi-800 text-white font-bold hover:from-gupi-700 hover:to-gupi-900 transition-colors">
+                <Link href={`/universities/${selectedUni.id}`} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-gupi-orange-600 to-gupi-orange-800 text-white font-bold hover:from-gupi-orange-700 hover:to-gupi-orange-900 transition-colors">
                   <ExternalLink className="w-4 h-4" />
                   عرض بطاقة الجامعة الكاملة
                 </Link>
@@ -314,7 +314,7 @@ export default function RankingsPage() {
 
               {/* All rankings */}
               <div>
-                <h4 className="font-bold text-slate-700 mb-3">جميع التصنيفات</h4>
+                <h4 className="font-bold text-gupi-ink-700 mb-3">جميع التصنيفات</h4>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   {[
                     ['Shanghai (ARWU)', selectedUni.shanghai_ranking],
@@ -336,9 +336,9 @@ export default function RankingsPage() {
                     ['GUV', selectedUni.guv],
                     ['Arabic Ranking', selectedUni.arabic_ranking],
                   ].map(([label, val]) => (
-                    <div key={label} className="flex items-center justify-between px-3 py-1.5 rounded bg-slate-50">
-                      <span className="text-slate-600">{label}</span>
-                      <span className={`font-medium ${val ? 'text-gupi-700' : 'text-slate-300'}`}>
+                    <div key={label} className="flex items-center justify-between px-3 py-1.5 rounded bg-gupi-ink-50">
+                      <span className="text-gupi-ink-600">{label}</span>
+                      <span className={`font-medium ${val ? 'text-gupi-orange-700' : 'text-gupi-ink-300'}`}>
                         {val || '—'}
                       </span>
                     </div>

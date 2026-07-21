@@ -30,8 +30,8 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-16 h-16 border-4 border-gupi-200 border-t-gupi-600 rounded-full animate-spin mx-auto mb-4" />
-        <p className="text-slate-600">جاري تحميل لوحة البيانات...</p>
+        <div className="w-16 h-16 border-4 border-gupi-orange-200 border-t-gupi-orange-600 rounded-full animate-spin mx-auto mb-4" />
+        <p className="text-gupi-ink-600">جاري تحميل لوحة البيانات...</p>
       </div>
     );
   }
@@ -121,14 +121,14 @@ export default function DashboardPage() {
   const avgScore = (universities.reduce((sum, u) => sum + u.gupi.totalScore, 0) / universities.length).toFixed(1);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-gupi-ink-50">
       {/* Header */}
       <div className="hero-gradient text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-3xl md:text-5xl font-display font-black mb-3">
             لوحة البيانات التفاعلية — <span className="gold-text">GUPI</span>
           </h1>
-          <p className="text-slate-300 text-lg">
+          <p className="text-gupi-ink-300 text-lg">
             تحليل بصري شامل لمؤشر الحضور العالمي للجامعات العربية
           </p>
         </div>
@@ -138,9 +138,9 @@ export default function DashboardPage() {
         {/* Stats cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
-            { label: 'إجمالي الجامعات', value: universities.length, icon: Users, color: 'from-gupi-500 to-gupi-700' },
+            { label: 'إجمالي الجامعات', value: universities.length, icon: Users, color: 'from-gupi-orange-500 to-gupi-orange-700' },
             { label: 'إجمالي الأبحاث', value: totalArticles.toLocaleString(), icon: TrendingUp, color: 'from-emerald-500 to-emerald-700' },
-            { label: 'متوسط درجة GUPI', value: avgScore, icon: Award, color: 'from-gold-500 to-gold-700' },
+            { label: 'متوسط درجة GUPI', value: avgScore, icon: Award, color: 'from-gupi-amber-500 to-gupi-amber-700' },
             { label: 'الدول الممثلة', value: Object.keys(countryCounts).length, icon: Globe, color: 'from-purple-500 to-purple-700' },
           ].map((stat, i) => {
             const Icon = stat.icon;
@@ -149,8 +149,8 @@ export default function DashboardPage() {
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center mb-3`}>
                   <Icon className="w-6 h-6 text-white" />
                 </div>
-                <div className="text-3xl font-display font-black text-slate-800">{stat.value}</div>
-                <div className="text-sm text-slate-500 mt-1">{stat.label}</div>
+                <div className="text-3xl font-display font-black text-gupi-ink-800">{stat.value}</div>
+                <div className="text-sm text-gupi-ink-500 mt-1">{stat.label}</div>
               </div>
             );
           })}
@@ -158,8 +158,8 @@ export default function DashboardPage() {
 
         {/* Top 10 Chart */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-display font-bold text-gupi-900 mb-6 flex items-center gap-2">
-            <Trophy className="w-5 h-5 text-gold-500" />
+          <h2 className="text-xl font-display font-bold text-gupi-orange-900 mb-6 flex items-center gap-2">
+            <Trophy className="w-5 h-5 text-gupi-amber-500" />
             أفضل 10 جامعات — درجات GUPI
           </h2>
           <ResponsiveContainer width="100%" height={400}>
@@ -188,8 +188,8 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Country distribution */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h2 className="text-xl font-display font-bold text-gupi-900 mb-6 flex items-center gap-2">
-              <MapPin className="w-5 h-5 text-gupi-600" />
+            <h2 className="text-xl font-display font-bold text-gupi-orange-900 mb-6 flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-gupi-orange-600" />
               توزيع الجامعات حسب الدولة
             </h2>
             <ResponsiveContainer width="100%" height={350}>
@@ -215,8 +215,8 @@ export default function DashboardPage() {
 
           {/* Score distribution */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h2 className="text-xl font-display font-bold text-gupi-900 mb-6 flex items-center gap-2">
-              <Award className="w-5 h-5 text-gold-500" />
+            <h2 className="text-xl font-display font-bold text-gupi-orange-900 mb-6 flex items-center gap-2">
+              <Award className="w-5 h-5 text-gupi-amber-500" />
               توزيع الدرجات
             </h2>
             <ResponsiveContainer width="100%" height={350}>
@@ -233,8 +233,8 @@ export default function DashboardPage() {
 
         {/* Presence rates */}
         <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-display font-bold text-gupi-900 mb-6 flex items-center gap-2">
-            <Globe className="w-5 h-5 text-gupi-600" />
+          <h2 className="text-xl font-display font-bold text-gupi-orange-900 mb-6 flex items-center gap-2">
+            <Globe className="w-5 h-5 text-gupi-orange-600" />
             معدلات الحضور في التصنيفات العالمية
           </h2>
           <ResponsiveContainer width="100%" height={300}>
@@ -255,7 +255,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Scatter: Presence vs Excellence */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h2 className="text-xl font-display font-bold text-gupi-900 mb-6">
+            <h2 className="text-xl font-display font-bold text-gupi-orange-900 mb-6">
               العلاقة بين الحضور والتميز
             </h2>
             <ResponsiveContainer width="100%" height={350}>
@@ -282,7 +282,7 @@ export default function DashboardPage() {
 
           {/* Country averages */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
-            <h2 className="text-xl font-display font-bold text-gupi-900 mb-6">
+            <h2 className="text-xl font-display font-bold text-gupi-orange-900 mb-6">
               متوسط الدرجات حسب الدولة
             </h2>
             <ResponsiveContainer width="100%" height={350}>
@@ -299,7 +299,7 @@ export default function DashboardPage() {
 
         {/* Country comparison radar */}
         <div className="bg-white rounded-2xl shadow-lg p-6">
-          <h2 className="text-xl font-display font-bold text-gupi-900 mb-6">
+          <h2 className="text-xl font-display font-bold text-gupi-orange-900 mb-6">
             مقارنة الحضور والتميز حسب الدولة
           </h2>
           <ResponsiveContainer width="100%" height={400}>
