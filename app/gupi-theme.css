@@ -110,8 +110,8 @@
   --gupi-radius-lg: 18px;
   --gupi-radius-xl: 26px;
 
-  --gupi-font-ar: 'IBM Plex Sans Arabic', 'Tajawal', 'Segoe UI', system-ui, sans-serif;
-  --gupi-font-en: 'Montserrat', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --gupi-font-ar: 'Cairo', 'Tajawal', 'Segoe UI', system-ui, sans-serif;
+  --gupi-font-en: 'Cairo', 'Montserrat', system-ui, sans-serif;
 }
 
 /* ---------- الوضع الداكن Dark Mode ---------- */

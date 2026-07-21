@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Montserrat:wght@600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
   --gupi-primary: #E8963C;
@@ -18,7 +18,7 @@ html {
 }
 
 body {
-  font-family: 'IBM Plex Sans Arabic', 'Tajawal', 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Cairo', 'Tajawal', 'Segoe UI', system-ui, sans-serif;
   direction: rtl;
   background-color: var(--gupi-bg);
   color: var(--gupi-text);

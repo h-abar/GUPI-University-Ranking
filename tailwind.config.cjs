@@ -46,9 +46,9 @@ module.exports = {
         'gupi-dark':      'linear-gradient(160deg, #2A2E22 0%, #0D0C0C 100%)',
       },
       fontFamily: {
-        sans: ['IBM Plex Sans Arabic', 'Tajawal', 'Segoe UI', 'system-ui', 'sans-serif'],
-        en:   ['Montserrat', 'IBM Plex Sans Arabic', 'system-ui', 'sans-serif'],
-        display: ['Montserrat', 'IBM Plex Sans Arabic', 'system-ui', 'sans-serif'],
+        sans: ['Cairo', 'Tajawal', 'Segoe UI', 'system-ui', 'sans-serif'],
+        en:   ['Cairo', 'Montserrat', 'system-ui', 'sans-serif'],
+        display: ['Cairo', 'Montserrat', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         'gupi-sm': '8px', 'gupi-md': '12px', 'gupi-lg': '18px', 'gupi-xl': '26px',
