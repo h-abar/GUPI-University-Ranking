@@ -3,6 +3,7 @@ import { query } from '@/lib/db';
 import { rankUniversities, getRankingConfigs, getSettings } from '@/lib/scoring';
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 export async function GET() {
   const { rows } = await query('SELECT id, name, country, founded FROM universities ORDER BY name');
@@ -136,46 +137,22 @@ async function getAIAnalysis(uni1, uni2, configs) {
   const uni1Data = buildUniSummary(uni1, configs);
   const uni2Data = buildUniSummary(uni2, configs);
 
-  const systemPrompt = `أنت محلل أكاديمي خبير في مؤشر GUPI للحضور العالمي للجامعات.
-مهمتك: مقارنة جامعتين عربيتين بناءً على البيانات المقدمة فقط.
-
-قواعد صارمة:
-1. استخدم الحصري البيانات المقدمة في هذا الطلب. لا تستخدم أي معلومات خارجية أو معرفة مسبقة عن هذه الجامعات.
-2. لا تخترع أي أرقام أو حقائق غير موجودة في البيانات.
-3. إذا كانت البيانات غير متوفرة لحقل ما، اذكر ذلك صراحة.
-4. اكتب التحليل باللغة العربية الفصحى بأسلوب مهني وموضوعي.
-5. نظّم التحليل بالعناوين والنقاط.
-
-هيكل التحليل المطلوب:
+  const systemPrompt = `أنت محلل أكاديمي خبير في مؤشر GUPI. قارن جامعتين عربيتين بناءً على البيانات المقدمة فقط.
+قواعد: لا تخترع بيانات، اكتب بالعربية الفصحى، نظّم بالعناوين والنقاط.
+هيكل التحليل:
 ## ملخص المواجهة
-- من الفائز ولماذا (بناءً على درجة GUPI الإجمالية)
-
+- الفائز ولماذا
 ## مقارنة الحضور الدولي
-- عدد التصنيفات العالمية التي حضرتها كل جامعة
-- التصنيفات التي حضرتها جامعة وغابت عنها الأخرى
-
 ## مقارنة التميز الأكاديمي
-- نقاط التميز في التصنيفات الكبرى (ARWU, QS, THE)
-- أفضل ترتيب حققته كل جامعة
-
 ## نقاط القوة والضعف
-- لكل جامعة: نقاط القوة ونقاط الضعف
+## الخلاصة`;
 
-## الخلاصة
-- حكم نهائي شامل مع توصية`;
-
-  const userPrompt = `قارن بين الجامعتين التاليتين بناءً على هذه البيانات فقط:
-
-الجامعة الأولى:
-${JSON.stringify(uni1Data, null, 2)}
-
-الجامعة الثانية:
-${JSON.stringify(uni2Data, null, 2)}
-
-ملاحظة: "present: true" يعني أن الجامعة حاضرة في هذا التصنيف. "rankNum" هو رقم الترتيب إن وُجد. "excellencePoints" هي نقاط التميز.`;
+  const userPrompt = `قارن بين الجامعتين التاليتين:
+الجامعة الأولى: ${JSON.stringify(uni1Data)}
+الجامعة الثانية: ${JSON.stringify(uni2Data)}`;
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 45000);
+  const timeout = setTimeout(() => controller.abort(), 60000);
 
   let response;
   try {
@@ -186,21 +163,21 @@ ${JSON.stringify(uni2Data, null, 2)}
         Authorization: `Bearer ${process.env.NVIDIA_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'meta/llama-3.1-70b-instruct',
+        model: 'meta/llama-3.1-8b-instruct',
         messages: [
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt },
         ],
         temperature: 0.3,
         top_p: 0.7,
-        max_tokens: 2048,
+        max_tokens: 1024,
       }),
       signal: controller.signal,
     });
   } catch (fetchErr) {
     clearTimeout(timeout);
     if (fetchErr.name === 'AbortError') {
-      throw new Error('انتهت مهلة الاتصال بـ NVIDIA API (45 ثانية)');
+      throw new Error('انتهت مهلة الاتصال بـ NVIDIA API (60 ثانية)');
     }
     throw fetchErr;
   }
