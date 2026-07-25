@@ -56,6 +56,8 @@ export default function ComparePage() {
     setAiError(null);
     setComparison(null);
 
+    let comparisonData = null;
+
     try {
       const res = await fetch('/api/compare', {
         method: 'POST',
@@ -65,18 +67,36 @@ export default function ComparePage() {
       const data = await res.json();
       if (data.error) {
         setAiError(data.error);
-      } else {
-        setComparison(data);
-        if (data.aiAnalysis) {
-          setAiAnalysis(data.aiAnalysis);
-        } else if (data.aiError) {
-          setAiError(data.aiError);
-        }
+        setComparing(false);
+        return;
       }
+      comparisonData = data;
+      setComparison(data);
     } catch (err) {
       setAiError('حدث خطأ أثناء جلب المقارنة');
+      setComparing(false);
+      return;
     }
     setComparing(false);
+
+    // Fetch AI analysis separately so comparison data shows immediately
+    setAiLoading(true);
+    try {
+      const aiRes = await fetch('/api/compare', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ university1Id: uni1Id, university2Id: uni2Id }),
+      });
+      const aiData = await aiRes.json();
+      if (aiData.aiAnalysis) {
+        setAiAnalysis(aiData.aiAnalysis);
+      } else if (aiData.aiError) {
+        setAiError(aiData.aiError);
+      }
+    } catch (err) {
+      setAiError('تعذر الحصول على التحليل الذكي');
+    }
+    setAiLoading(false);
   }
 
   function resetComparison() {
@@ -194,6 +214,7 @@ export default function ComparePage() {
             comparison={comparison}
             aiAnalysis={aiAnalysis}
             aiError={aiError}
+            aiLoading={aiLoading}
             onReset={resetComparison}
           />
         )}
@@ -281,7 +302,7 @@ function UniSelector({ label, color, universities, selectedId, onSelect, search,
 }
 
 /* ============ Comparison Results Component ============ */
-function ComparisonResults({ comparison, aiAnalysis, aiError, onReset }) {
+function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset }) {
   const { uni1, uni2, allRankings, settings } = comparison;
   const maxTotal = parseFloat(settings.maxTotal) || 23;
   const maxPresence = parseFloat(settings.maxPresence) || 18;
@@ -440,7 +461,13 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, onReset }) {
           </div>
         </div>
 
-        {aiAnalysis ? (
+        {aiLoading ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <Loader2 className="w-10 h-10 text-gupi-orange-400 animate-spin mb-4" />
+            <p className="text-gupi-ink-300 text-sm">جاري إنشاء التحليل الذكي...</p>
+            <p className="text-gupi-ink-400 text-xs mt-1">قد يستغرق هذا بضع ثوان</p>
+          </div>
+        ) : aiAnalysis ? (
           <AIAnalysisContent content={aiAnalysis} />
         ) : aiError ? (
           <div className="bg-red-900/30 border border-red-700/50 rounded-xl p-6">

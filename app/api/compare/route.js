@@ -34,21 +34,46 @@ export async function POST(request) {
 
   const comparisonData = buildComparisonData(uni1, uni2, configs, settings);
 
+  // Return comparison data immediately — AI analysis is fetched separately
+  return NextResponse.json({ ...comparisonData, aiAnalysis: null, aiError: null });
+}
+
+export async function PATCH(request) {
+  const { university1Id, university2Id } = await request.json();
+
+  if (!university1Id || !university2Id || university1Id === university2Id) {
+    return NextResponse.json({ error: 'اختر جامعتين مختلفتين' }, { status: 400 });
+  }
+
   const apiKey = process.env.NVIDIA_API_KEY;
   if (!apiKey) {
     return NextResponse.json({
-      ...comparisonData,
       aiAnalysis: null,
       aiError: 'مفتاح NVIDIA API غير مُهيأ. تواصل مع المسؤول.',
     });
   }
 
+  const { rows } = await query('SELECT * FROM universities WHERE id = $1 OR id = $2', [
+    university1Id,
+    university2Id,
+  ]);
+
+  if (rows.length < 2) {
+    return NextResponse.json({ error: 'لم يتم العثور على الجامعتين' }, { status: 404 });
+  }
+
+  const configs = await getRankingConfigs();
+  const settings = await getSettings();
+  const ranked = await rankUniversities(rows, configs, settings);
+
+  const uni1 = ranked.find((u) => u.id === university1Id);
+  const uni2 = ranked.find((u) => u.id === university2Id);
+
   try {
     const aiAnalysis = await getAIAnalysis(uni1, uni2, configs);
-    return NextResponse.json({ ...comparisonData, aiAnalysis, aiError: null });
+    return NextResponse.json({ aiAnalysis, aiError: null });
   } catch (err) {
     return NextResponse.json({
-      ...comparisonData,
       aiAnalysis: null,
       aiError: `تعذر الحصول على التحليل الذكي: ${err.message}`,
     });
@@ -149,23 +174,37 @@ ${JSON.stringify(uni2Data, null, 2)}
 
 ملاحظة: "present: true" يعني أن الجامعة حاضرة في هذا التصنيف. "rankNum" هو رقم الترتيب إن وُجد. "excellencePoints" هي نقاط التميز.`;
 
-  const response = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.NVIDIA_API_KEY}`,
-    },
-    body: JSON.stringify({
-      model: 'meta/llama-3.1-70b-instruct',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt },
-      ],
-      temperature: 0.3,
-      top_p: 0.7,
-      max_tokens: 2048,
-    }),
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 45000);
+
+  let response;
+  try {
+    response = await fetch('https://integrate.api.nvidia.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.NVIDIA_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'meta/llama-3.1-70b-instruct',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt },
+        ],
+        temperature: 0.3,
+        top_p: 0.7,
+        max_tokens: 2048,
+      }),
+      signal: controller.signal,
+    });
+  } catch (fetchErr) {
+    clearTimeout(timeout);
+    if (fetchErr.name === 'AbortError') {
+      throw new Error('انتهت مهلة الاتصال بـ NVIDIA API (45 ثانية)');
+    }
+    throw fetchErr;
+  }
+  clearTimeout(timeout);
 
   if (!response.ok) {
     const errText = await response.text();
