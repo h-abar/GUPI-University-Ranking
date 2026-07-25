@@ -39,10 +39,15 @@ export async function POST(request) {
     'Country': 'country',
     'Articles2025': 'articles_2025',
     'Shanghai Ranking': 'shanghai_ranking',
+    'Shanghai': 'shanghai_excellence',
     'THE': 'the_ranking',
+    'THE تميز': 'the_excellence',
     'AD Scientific Index': 'ad_scientific_index',
+    'AD Scientific تميز': 'ad_scientific_excellence',
     'QS': 'qs_ranking',
+    'QS تميز': 'qs_excellence',
     'Arabic Ranking': 'arabic_ranking',
+    'Arabic Ranking تميز': 'arabic_ranking_excellence',
     'Scimago': 'scimago',
     'CWTS': 'cwts',
     'world rank UniRank': 'unirank_world',
@@ -84,8 +89,12 @@ export async function POST(request) {
 
   const cols = [
     'name', 'founded', 'country', 'articles_2025',
-    'shanghai_ranking', 'the_ranking', 'ad_scientific_index', 'qs_ranking',
-    'arabic_ranking', 'scimago', 'cwts', 'unirank_world',
+    'shanghai_ranking', 'shanghai_excellence',
+    'the_ranking', 'the_excellence',
+    'ad_scientific_index', 'ad_scientific_excellence',
+    'qs_ranking', 'qs_excellence',
+    'arabic_ranking', 'arabic_ranking_excellence',
+    'scimago', 'cwts', 'unirank_world',
     'qs_arab', 'the_arab', 'us_news', 'unirank_arabic',
     'the_impact', 'ui_greenmetric', 'cwur', 'scholar_gps', 'rur', 'guv'
   ];
@@ -105,8 +114,11 @@ export async function POST(request) {
     // Convert numeric fields
     if (mapped.founded) mapped.founded = parseInt(mapped.founded) || null;
     if (mapped.articles_2025) mapped.articles_2025 = parseInt(mapped.articles_2025) || null;
+    for (const excField of ['shanghai_excellence', 'the_excellence', 'ad_scientific_excellence', 'qs_excellence', 'arabic_ranking_excellence']) {
+      if (mapped[excField]) mapped[excField] = parseInt(mapped[excField]) || null;
+    }
 
-    const values = cols.map((c) => mapped[c] || null);
+    const values = cols.map((c) => mapped[c] != null ? mapped[c] : null);
 
     try {
       await query(

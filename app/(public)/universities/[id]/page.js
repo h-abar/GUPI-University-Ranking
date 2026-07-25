@@ -357,6 +357,46 @@ export default function UniversityCardPage() {
           </div>
         )}
 
+        {/* Excellence details table */}
+        {uni.gupi.excellenceDetails && uni.gupi.excellenceDetails.length > 0 && (
+          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div className="p-6 border-b border-gupi-ink-100">
+              <h2 className="font-display font-bold text-xl text-gupi-amber-800">تفاصيل حساب التميز</h2>
+              <p className="text-sm text-gupi-ink-500 mt-1">نقاط التميز بناءً على الترتيب (المركز 1 = 1.0، المركز 10 = 0.1)</p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="bg-gupi-ink-50 text-gupi-ink-600">
+                    <th className="px-4 py-3 text-right">التصنيف</th>
+                    <th className="px-4 py-3 text-center">الحضور</th>
+                    <th className="px-4 py-3 text-center">الترتيب</th>
+                    <th className="px-4 py-3 text-center">نقاط التميز</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {uni.gupi.excellenceDetails.map((d, i) => (
+                    <tr key={i} className="border-b border-gupi-ink-50">
+                      <td className="px-4 py-3 font-medium text-gupi-ink-700">{d.label}</td>
+                      <td className="px-4 py-3 text-center">
+                        {d.present ? <CheckCircle2 className="w-5 h-5 text-green-500 inline" /> : <XCircle className="w-5 h-5 text-gupi-ink-300 inline" />}
+                      </td>
+                      <td className="px-4 py-3 text-center text-gupi-ink-600">{d.rankNum || '—'}</td>
+                      <td className="px-4 py-3 text-center font-bold text-gupi-amber-700">{d.excellencePoints}</td>
+                    </tr>
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className="bg-gupi-amber-50 font-bold">
+                    <td className="px-4 py-3 text-gupi-amber-900" colSpan={3}>إجمالي درجة التميز</td>
+                    <td className="px-4 py-3 text-center text-gupi-amber-700 text-lg">{uni.gupi.excellenceScore} / {uni.gupi.maxExcellence}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        )}
+
         {/* Navigation between universities */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
           {prevUni && (
