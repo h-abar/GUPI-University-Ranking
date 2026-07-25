@@ -330,7 +330,7 @@ export default function HomePage() {
             {[
               { step: 1, title: 'الإنتاج العلمي', desc: 'اختيار الجامعات الأعلى في كثافة النشر العلمي (أعلى 70 جامعة عربية).', icon: Database },
               { step: 2, title: 'تحليل الظهور', desc: 'التحقق الرقمي من الظهور في 18 تصنيفات عالمية معتمدة.', icon: Globe },
-              { step: 3, title: 'نقاط التميز', desc: 'احتساب الترتيب والريادة في تصنيفات QS وTHE وShanghai.', icon: Trophy },
+              { step: 3, title: 'نقاط التميز', desc: 'احتساب الترتيب والريادة في تصنيفات QS وTHE وShanghai والتصنيف العربي ومؤشر البحث العلمي AD.', icon: Trophy },
               { step: 4, title: 'النتيجة النهائية', desc: 'استخراج درجة المؤشر المعتمدة وحفظها في قاعدة البيانات (GUPI Score).', icon: Calculator },
             ].map((item) => {
               const Icon = item.icon;
