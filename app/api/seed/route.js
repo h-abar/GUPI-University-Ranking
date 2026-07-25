@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { query, ensureSchema } from '@/lib/db';
+import { query, ensureSchema, getPool } from '@/lib/db';
 import { requireAuth } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
@@ -18,8 +18,20 @@ const COLS = [
   'the_impact', 'ui_greenmetric', 'cwur', 'scholar_gps', 'rur', 'guv'
 ];
 
+const FORCE_SCHEMA_SQL = `
+ALTER TABLE universities ADD COLUMN IF NOT EXISTS shanghai_excellence INTEGER;
+ALTER TABLE universities ADD COLUMN IF NOT EXISTS the_excellence INTEGER;
+ALTER TABLE universities ADD COLUMN IF NOT EXISTS ad_scientific_excellence INTEGER;
+ALTER TABLE universities ADD COLUMN IF NOT EXISTS qs_excellence INTEGER;
+ALTER TABLE universities ADD COLUMN IF NOT EXISTS arabic_ranking_excellence INTEGER;
+`;
+
 async function doSeed() {
   await ensureSchema();
+
+  // Force-add excellence columns (bypasses initialized cache)
+  const p = getPool();
+  await p.query(FORCE_SCHEMA_SQL);
 
   const { SEED_UNIVERSITIES } = await import('@/scripts/seed-data.js');
 
@@ -28,6 +40,7 @@ async function doSeed() {
   await query('DELETE FROM universities');
 
   let count = 0;
+  let errors = [];
   for (const uni of SEED_UNIVERSITIES) {
     if (!uni.name) continue;
     const values = COLS.map((c) => uni[c] != null ? uni[c] : null);
@@ -40,8 +53,15 @@ async function doSeed() {
       count++;
     } catch (e) {
       console.error('Error inserting row:', uni.name, e.message);
+      errors.push({ name: uni.name, error: e.message });
     }
   }
+
+  // Verify excellence data was inserted
+  const { rows: verification } = await query(
+    `SELECT name, shanghai_excellence, the_excellence, ad_scientific_excellence, qs_excellence, arabic_ranking_excellence
+     FROM universities WHERE name = 'جامعة الملك سعود'`
+  );
 
   // Update descriptions
   const { updateDescriptionsData } = await import('@/scripts/update-descriptions-data.js');
@@ -55,7 +75,7 @@ async function doSeed() {
     }
   }
 
-  return { success: true, count, descriptions: descCount };
+  return { success: true, count, descriptions: descCount, errors, verification: verification[0] || null };
 }
 
 export async function GET(request) {
