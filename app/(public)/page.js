@@ -58,10 +58,10 @@ export default function HomePage() {
           {/* Stats bar */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-5xl mx-auto">
             {[
-              { value: '70+', label: 'جامعة عربية نُخبة', icon: Database },
-              { value: '7', label: 'تصنيفات عالمية', icon: Globe },
-              { value: '3', label: 'تصنيفات رئيسية كبرى', icon: Trophy },
-              { value: '10', label: 'درجات المؤشر الإجمالية', icon: Calculator },
+              { value: '70', label: 'جامعة عربية نُخبة', icon: Database },
+              { value: '18', label: 'تصنيفات عالمية', icon: Globe },
+              { value: '5', label: 'تصنيفات رئيسية كبرى', icon: Trophy },
+              { value: '100', label: 'درجات المؤشر الإجمالية', icon: Calculator },
             ].map((stat, i) => {
               const Icon = stat.icon;
               return (
@@ -236,15 +236,15 @@ export default function HomePage() {
                   </div>
                   <span className="text-3xl font-bold text-gupi-orange-400">=</span>
                   <div className="bg-gupi-orange-600 text-white rounded-xl px-6 py-3 shadow-md">
-                    <span className="font-bold text-lg">الحضور الدولي (18)</span>
+                    <span className="font-bold text-lg">الحضور الدولي (70%)</span>
                   </div>
                   <span className="text-3xl font-bold text-gupi-orange-400">+</span>
                   <div className="bg-gupi-amber-500 text-white rounded-xl px-6 py-3 shadow-md">
-                    <span className="font-bold text-lg">التميز الأكاديمي (5)</span>
+                    <span className="font-bold text-lg">التميز الأكاديمي (30%)</span>
                   </div>
                   <span className="text-3xl font-bold text-gupi-orange-400">=</span>
                   <div className="bg-gradient-to-br from-gupi-orange-700 to-gupi-orange-900 text-white rounded-xl px-6 py-3 shadow-lg">
-                    <span className="font-display font-black text-2xl">23 درجة</span>
+                    <span className="font-display font-black text-2xl">100 درجة</span>
                   </div>
                 </div>
               </div>
@@ -329,7 +329,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             {[
               { step: 1, title: 'الإنتاج العلمي', desc: 'اختيار الجامعات الأعلى في كثافة النشر العلمي (أعلى 70 جامعة عربية).', icon: Database },
-              { step: 2, title: 'تحليل الظهور', desc: 'التحقق الرقمي من الظهور في 7 تصنيفات عالمية معتمدة.', icon: Globe },
+              { step: 2, title: 'تحليل الظهور', desc: 'التحقق الرقمي من الظهور في 18 تصنيفات عالمية معتمدة.', icon: Globe },
               { step: 3, title: 'نقاط التميز', desc: 'احتساب الترتيب والريادة في تصنيفات QS وTHE وShanghai.', icon: Trophy },
               { step: 4, title: 'النتيجة النهائية', desc: 'استخراج درجة المؤشر المعتمدة وحفظها في قاعدة البيانات (GUPI Score).', icon: Calculator },
             ].map((item) => {
