@@ -27,6 +27,7 @@ export default function Footer() {
               <li><Link href="/rankings" className="hover:text-gupi-orange-400 transition-colors">ترتيب الجامعات</Link></li>
               <li><Link href="/dashboard" className="hover:text-gupi-orange-400 transition-colors">لوحة البيانات</Link></li>
               <li><Link href="/methodology" className="hover:text-gupi-orange-400 transition-colors">منهجية المؤشر</Link></li>
+              <li><Link href="/compare" className="hover:text-gupi-orange-400 transition-colors">تحدي الحضور الدولي</Link></li>
             </ul>
           </div>
 

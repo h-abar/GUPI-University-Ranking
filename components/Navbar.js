@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X, Globe, BarChart3, Table, Home, Shield } from 'lucide-react';
+import { Menu, X, Globe, BarChart3, Table, Home, Shield, Swords } from 'lucide-react';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -14,6 +14,7 @@ export default function Navbar() {
     { href: '/rankings', label: 'ترتيب الجامعات', icon: Table },
     { href: '/dashboard', label: 'لوحة البيانات', icon: BarChart3 },
     { href: '/methodology', label: 'منهجية المؤشر', icon: Globe },
+    { href: '/compare', label: 'تحدي الحضور الدولي', icon: Swords },
   ];
 
   return (
