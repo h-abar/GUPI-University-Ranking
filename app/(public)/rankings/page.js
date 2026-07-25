@@ -188,16 +188,16 @@ export default function RankingsPage() {
                     <td className="px-4 py-3 text-center">
                       <div className="inline-flex flex-col items-center">
                         <span className="font-display font-black text-2xl text-gupi-orange-700">{uni.gupi.totalScore}</span>
-                        <span className="text-xs text-gupi-ink-400">/ 10</span>
+                        <span className="text-xs text-gupi-ink-400">/ 23</span>
                       </div>
                     </td>
                     <td className="px-4 py-3 text-center hidden lg:table-cell">
                       <span className="font-bold text-gupi-orange-600">{uni.gupi.presenceScore}</span>
-                      <span className="text-gupi-ink-400 text-sm">/ 7</span>
+                      <span className="text-gupi-ink-400 text-sm">/ 18</span>
                     </td>
                     <td className="px-4 py-3 text-center hidden lg:table-cell">
                       <span className="font-bold text-gupi-amber-600">{uni.gupi.excellenceScore}</span>
-                      <span className="text-gupi-ink-400 text-sm">/ 3</span>
+                      <span className="text-gupi-ink-400 text-sm">/ 5</span>
                     </td>
                     <td className="px-4 py-3 text-center hidden md:table-cell">
                       {uni.articles_2025 ? (
@@ -254,15 +254,15 @@ export default function RankingsPage() {
               <div className="mt-4 flex gap-6">
                 <div>
                   <div className="text-3xl font-black">{selectedUni.gupi.totalScore}</div>
-                  <div className="text-xs text-gupi-ink-300">درجة GUPI / 10</div>
+                  <div className="text-xs text-gupi-ink-300">درجة GUPI / 23</div>
                 </div>
                 <div>
                   <div className="text-3xl font-black">{selectedUni.gupi.presenceScore}</div>
-                  <div className="text-xs text-gupi-ink-300">الحضور / 7</div>
+                  <div className="text-xs text-gupi-ink-300">الحضور / 18</div>
                 </div>
                 <div>
                   <div className="text-3xl font-black">{selectedUni.gupi.excellenceScore}</div>
-                  <div className="text-xs text-gupi-ink-300">التميز / 3</div>
+                  <div className="text-xs text-gupi-ink-300">التميز / 5</div>
                 </div>
               </div>
             </div>
@@ -272,7 +272,7 @@ export default function RankingsPage() {
               <div>
                 <h4 className="font-bold text-gupi-orange-900 mb-3 flex items-center gap-2">
                   <Trophy className="w-5 h-5 text-gupi-orange-600" />
-                  الحضور في التصنيفات العالمية (7 درجات)
+                  الحضور في التصنيفات العالمية (18 درجة)
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
                   {selectedUni.gupi.presenceDetails.map((d, i) => (
@@ -290,7 +290,7 @@ export default function RankingsPage() {
               <div>
                 <h4 className="font-bold text-gupi-amber-800 mb-3 flex items-center gap-2">
                   <Award className="w-5 h-5 text-gupi-amber-600" />
-                  التميز في التصنيفات الكبرى (3 درجات)
+                  التميز في التصنيفات الكبرى (5 درجات)
                 </h4>
                 <div className="grid grid-cols-3 gap-2">
                   {selectedUni.gupi.excellenceDetails.map((d, i) => (
@@ -298,7 +298,7 @@ export default function RankingsPage() {
                       d.present ? 'bg-gupi-amber-50 text-gupi-amber-700' : 'bg-gupi-ink-50 text-gupi-ink-400'
                     }`}>
                       <span className="mb-1">{d.label}</span>
-                      <span className="font-bold">{d.present ? '✓ 1' : '✗ 0'}</span>
+                      <span className="font-bold">{d.present ? `✓ ${d.excellencePoints}` : '✗ 0'}</span>
                     </div>
                   ))}
                 </div>

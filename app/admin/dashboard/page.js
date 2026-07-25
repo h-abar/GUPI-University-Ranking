@@ -191,7 +191,7 @@ function OverviewTab({ universities, settings }) {
         </div>
         <div className="bg-white rounded-2xl shadow p-6">
           <div className="text-sm text-gupi-ink-500 mb-1">الحد الأقصى للمؤشر</div>
-          <div className="text-3xl font-black text-gupi-orange-700">{settings.max_total_score || '10'}</div>
+          <div className="text-3xl font-black text-gupi-orange-700">{settings.max_total_score || '23'}</div>
         </div>
       </div>
 
@@ -882,15 +882,15 @@ function SettingsTab({ settings, onReload }) {
           </div>
           <span className="text-2xl font-bold text-gupi-orange-400">=</span>
           <div className="bg-gupi-orange-600 rounded-xl px-6 py-3">
-            <span className="font-bold">الحضور ({local.max_presence_score || '7'})</span>
+            <span className="font-bold">الحضور ({local.max_presence_score || '18'})</span>
           </div>
           <span className="text-2xl font-bold text-gupi-orange-400">+</span>
           <div className="bg-gupi-amber-500 rounded-xl px-6 py-3">
-            <span className="font-bold">التميز ({local.max_excellence_score || '3'})</span>
+            <span className="font-bold">التميز ({local.max_excellence_score || '5'})</span>
           </div>
           <span className="text-2xl font-bold text-gupi-orange-400">=</span>
           <div className="bg-white text-gupi-orange-900 rounded-xl px-6 py-3">
-            <span className="font-black text-xl">{local.max_total_score || '10'} درجات</span>
+            <span className="font-black text-xl">{local.max_total_score || '23'} درجات</span>
           </div>
         </div>
       </div>

@@ -236,15 +236,15 @@ export default function HomePage() {
                   </div>
                   <span className="text-3xl font-bold text-gupi-orange-400">=</span>
                   <div className="bg-gupi-orange-600 text-white rounded-xl px-6 py-3 shadow-md">
-                    <span className="font-bold text-lg">الحضور الدولي (7)</span>
+                    <span className="font-bold text-lg">الحضور الدولي (18)</span>
                   </div>
                   <span className="text-3xl font-bold text-gupi-orange-400">+</span>
                   <div className="bg-gupi-amber-500 text-white rounded-xl px-6 py-3 shadow-md">
-                    <span className="font-bold text-lg">التميز الأكاديمي (3)</span>
+                    <span className="font-bold text-lg">التميز الأكاديمي (5)</span>
                   </div>
                   <span className="text-3xl font-bold text-gupi-orange-400">=</span>
                   <div className="bg-gradient-to-br from-gupi-orange-700 to-gupi-orange-900 text-white rounded-xl px-6 py-3 shadow-lg">
-                    <span className="font-display font-black text-2xl">10 درجات</span>
+                    <span className="font-display font-black text-2xl">23 درجة</span>
                   </div>
                 </div>
               </div>
@@ -257,7 +257,7 @@ export default function HomePage() {
             <div className="bg-gradient-to-br from-gupi-orange-50 to-white rounded-2xl p-8 border border-gupi-orange-100">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-gupi-orange-600 text-white flex items-center justify-center font-display font-black text-xl">
-                  7
+                  18
                 </div>
                 <div>
                   <h3 className="font-display font-bold text-xl text-gupi-orange-900">الظهور في التصنيفات العالمية</h3>
@@ -265,7 +265,7 @@ export default function HomePage() {
                 </div>
               </div>
               <p className="text-gupi-ink-600 text-sm leading-relaxed mb-4">
-                يتم قياس مدى ظهور الجامعة وثباتها في 7 تصنيفات دولية رئيسية، حيث يتم التحقق المباشر من المشاركة الرسمية لكل جامعة عبر المواقع الإلكترونية لكل تصنيف.
+                يتم قياس مدى ظهور الجامعة وثباتها في التصنيفات الدولية الرئيسية، حيث يتم التحقق المباشر من المشاركة الرسمية لكل جامعة عبر المواقع الإلكترونية لكل تصنيف. كل مشاركة تمنح الجامعة درجة حضور.
               </p>
               <ul className="space-y-2">
                 <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-green-500" /> مشاركة الجامعة: 1 درجة</li>
@@ -280,7 +280,7 @@ export default function HomePage() {
             <div className="bg-gradient-to-br from-gupi-amber-50 to-white rounded-2xl p-8 border border-gupi-amber-200">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-xl bg-gupi-amber-500 text-white flex items-center justify-center font-display font-black text-xl">
-                  3
+                  5
                 </div>
                 <div>
                   <h3 className="font-display font-bold text-xl text-gupi-amber-800">التميز في التصنيفات الكبرى</h3>
@@ -288,12 +288,12 @@ export default function HomePage() {
                 </div>
               </div>
               <p className="text-gupi-ink-600 text-sm leading-relaxed mb-4">
-                يُمنح للجامعات التي تحقق مراكز متقدمة على المستوى العربي في التصنيفات الثلاثة الكبرى (ARWU - QS - THE)، ويعكس هذا البعد جودة الأداء الفعلي وليس مجرد الظهور.
+                يُمنح للجامعات التي تحقق مراكز متقدمة في التصنيفات الكبرى (ARWU - QS - THE)، ويعكس هذا البعد جودة الأداء الفعلي وليس مجرد الظهور. يتم احتساب نقاط التميز وفق ترتيب الجامعة: المركز الأول = 1.0، الثاني = 0.9، ... العاشر = 0.1.
               </p>
               <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-green-500" /> تصنيف شنغهاي (ARWU): 1 درجة قصوى</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-green-500" /> تصنيف كيو إس (QS): 1 درجة قصوى</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-green-500" /> تصنيف التايمز (THE): 1 درجة قصوى</li>
+                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-green-500" /> المركز 1: 1.0 نقطة</li>
+                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-green-500" /> المركز 2: 0.9 نقطة</li>
+                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-green-500" /> ... حتى المركز 10: 0.1 نقطة</li>
               </ul>
               <div className="mt-4 pt-4 border-t border-gupi-amber-200">
                 <p className="text-xs text-gupi-amber-700 font-medium">الهدف: قياس التميز والريادة الأكاديمية</p>

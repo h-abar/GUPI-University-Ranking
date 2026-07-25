@@ -39,7 +39,7 @@ export default function MethodologyPage() {
             <div className="bg-gradient-to-br from-gupi-orange-50 to-white rounded-2xl p-8 border-2 border-gupi-orange-200">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-14 h-14 rounded-2xl bg-gupi-orange-600 text-white flex items-center justify-center font-display font-black text-2xl">
-                  7
+                  18
                 </div>
                 <div>
                   <h3 className="font-display font-bold text-xl text-gupi-orange-900">الظهور في التصنيفات العالمية</h3>
@@ -47,7 +47,7 @@ export default function MethodologyPage() {
                 </div>
               </div>
               <p className="text-gupi-ink-700 leading-relaxed mb-4">
-                يتم قياس مدى ظهور الجامعة وثباتها في 7 تصنيفات دولية رئيسية، حيث يتم التحقق المباشر من المشاركة الرسمية لكل جامعة عبر المواقع الإلكترونية لكل تصنيف.
+                يتم قياس مدى ظهور الجامعة وثباتها في التصنيفات الدولية الرئيسية، حيث يتم التحقق المباشر من المشاركة الرسمية لكل جامعة عبر المواقع الإلكترونية لكل تصنيف. كل مشاركة تمنح الجامعة درجة حضور.
               </p>
               <div className="space-y-2 mb-4">
                 <div className="flex items-center gap-2 text-sm bg-green-50 text-green-700 px-3 py-2 rounded-lg">
@@ -64,7 +64,7 @@ export default function MethodologyPage() {
             <div className="bg-gradient-to-br from-gupi-amber-50 to-white rounded-2xl p-8 border-2 border-gupi-amber-200">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-14 h-14 rounded-2xl bg-gupi-amber-500 text-white flex items-center justify-center font-display font-black text-2xl">
-                  3
+                  5
                 </div>
                 <div>
                   <h3 className="font-display font-bold text-xl text-gupi-amber-800">التميز في التصنيفات الكبرى</h3>
@@ -72,14 +72,24 @@ export default function MethodologyPage() {
                 </div>
               </div>
               <p className="text-gupi-ink-700 leading-relaxed mb-4">
-                يُمنح للجامعات التي تحقق مراكز متقدمة على المستوى العربي في التصنيفات الثلاثة الكبرى (ARWU - QS - THE)، ويعكس هذا البعد جودة الأداء الفعلي وليس مجرد الظهور.
+                يُمنح للجامعات التي تحقق مراكز متقدمة في التصنيفات الكبرى (ARWU - QS - THE)، ويعكس هذا البعد جودة الأداء الفعلي وليس مجرد الظهور. يتم احتساب نقاط التميز وفق ترتيب الجامعة:
               </p>
               <div className="space-y-2 mb-4">
-                {['تصنيف شنغهاي (ARWU)', 'تصنيف كيو إس (QS)', 'تصنيف التايمز (THE)'].map((label) => (
-                  <div key={label} className="flex items-center gap-2 text-sm bg-gupi-amber-50 text-gupi-amber-700 px-3 py-2 rounded-lg">
-                    <CheckCircle2 className="w-4 h-4" /> {label}: 1 درجة قصوى
-                  </div>
-                ))}
+                <div className="flex items-center gap-2 text-sm bg-gupi-amber-50 text-gupi-amber-700 px-3 py-2 rounded-lg">
+                  <CheckCircle2 className="w-4 h-4" /> المركز الأول: 1.0 نقطة
+                </div>
+                <div className="flex items-center gap-2 text-sm bg-gupi-amber-50 text-gupi-amber-700 px-3 py-2 rounded-lg">
+                  <CheckCircle2 className="w-4 h-4" /> المركز الثاني: 0.9 نقطة
+                </div>
+                <div className="flex items-center gap-2 text-sm bg-gupi-amber-50 text-gupi-amber-700 px-3 py-2 rounded-lg">
+                  <CheckCircle2 className="w-4 h-4" /> المركز الثالث: 0.8 نقطة
+                </div>
+                <div className="flex items-center gap-2 text-sm bg-gupi-amber-50 text-gupi-amber-700 px-3 py-2 rounded-lg">
+                  <CheckCircle2 className="w-4 h-4" /> ... وهكذا حتى المركز العاشر: 0.1 نقطة
+                </div>
+                <div className="flex items-center gap-2 text-sm bg-red-50 text-red-600 px-3 py-2 rounded-lg">
+                  <XCircle className="w-4 h-4" /> بعد المركز العاشر: 0 نقطة
+                </div>
               </div>
               <p className="text-sm text-gupi-amber-700 font-medium">الهدف: قياس التميز والريادة الأكاديمية.</p>
             </div>
@@ -95,25 +105,25 @@ export default function MethodologyPage() {
             </div>
             <span className="text-3xl font-bold text-gupi-orange-400">=</span>
             <div className="bg-gupi-orange-600 rounded-xl px-6 py-3">
-              <span className="font-bold">الحضور الدولي (7)</span>
+              <span className="font-bold">الحضور الدولي (18)</span>
             </div>
             <span className="text-3xl font-bold text-gupi-orange-400">+</span>
             <div className="bg-gupi-amber-500 rounded-xl px-6 py-3">
-              <span className="font-bold">التميز الأكاديمي (3)</span>
+              <span className="font-bold">التميز الأكاديمي (5)</span>
             </div>
             <span className="text-3xl font-bold text-gupi-orange-400">=</span>
             <div className="bg-white text-gupi-orange-900 rounded-xl px-6 py-3">
-              <span className="font-display font-black text-2xl">10 درجات</span>
+              <span className="font-display font-black text-2xl">23 درجة</span>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4 mt-8 max-w-2xl mx-auto">
             <div className="bg-white/5 rounded-xl p-4 text-center">
               <div className="text-3xl font-black text-gupi-orange-400">70%</div>
-              <div className="text-sm text-gupi-ink-300 mt-1">الحضور العالمي (7 درجات)</div>
+              <div className="text-sm text-gupi-ink-300 mt-1">الحضور العالمي (18 درجة)</div>
             </div>
             <div className="bg-white/5 rounded-xl p-4 text-center">
               <div className="text-3xl font-black text-gupi-amber-400">30%</div>
-              <div className="text-sm text-gupi-ink-300 mt-1">التميز النوعي (3 درجات)</div>
+              <div className="text-sm text-gupi-ink-300 mt-1">التميز النوعي (5 درجات)</div>
             </div>
           </div>
         </section>
@@ -148,8 +158,8 @@ export default function MethodologyPage() {
           <div className="space-y-4">
             {[
               { title: 'الإنتاج البحثي', desc: 'يعتمد المؤشر على رصد وحساب كثافة عدد الأبحاث العلمية المنشورة بدقة عبر قواعد البيانات العالمية المعتمدة: Scopus و SciVal', icon: BookOpen },
-              { title: 'الظهور العالمي', desc: 'قياس حضور وتواجد الجامعات في 7 تصنيفات عالمية رئيسية لضمان الشمول والتوازن الكامل وعدم التحيز لمنظومة واحدة.', icon: Globe },
-              { title: 'نقاط التميز', desc: 'منح درجات إضافية للجامعات التي تحقق مراكز متقدمة على الساحة العربية ضمن القمة الثلاثية للتصنيفات الكبرى: QS و THE و Shanghai (ARWU).', icon: Trophy },
+              { title: 'الظهور العالمي', desc: 'قياس حضور وتواجد الجامعات في التصنيفات العالمية الرئيسية لضمان الشمول والتوازن الكامل وعدم التحيز لمنظومة واحدة.', icon: Globe },
+              { title: 'نقاط التميز', desc: 'منح درجات متدرجة للجامعات التي تحقق مراكز متقدمة (1-10) في التصنيفات الكبرى: QS و THE و Shanghai (ARWU)، حيث يحصل المركز الأول على 1.0 نقطة والعاشر على 0.1 نقطة.', icon: Trophy },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
@@ -173,8 +183,8 @@ export default function MethodologyPage() {
           <div className="space-y-4">
             {[
               { step: 1, title: 'الإنتاج العلمي', desc: 'اختيار الجامعات الأعلى في كثافة النشر العلمي (أعلى 70 جامعة عربية).' },
-              { step: 2, title: 'تحليل الظهور', desc: 'التحقق الرقمي من الظهور في 7 تصنيفات عالمية معتمدة.' },
-              { step: 3, title: 'نقاط التميز', desc: 'احتساب الترتيب والريادة في تصنيفات QS وTHE وShanghai.' },
+              { step: 2, title: 'تحليل الظهور', desc: 'التحقق الرقمي من الظهور في التصنيفات العالمية المعتمدة.' },
+              { step: 3, title: 'نقاط التميز', desc: 'احتساب الترتيب والريادة في تصنيفات QS وTHE وShanghai (المركز 1-10).' },
               { step: 4, title: 'النتيجة النهائية', desc: 'استخراج درجة المؤشر المعتمدة وحفظها في قاعدة البيانات (GUPI Score).' },
             ].map((item) => (
               <div key={item.step} className="flex items-start gap-4">
@@ -205,8 +215,8 @@ export default function MethodologyPage() {
               <tbody>
                 {[
                   ['الإنتاج البحثي', 'حساب كثافة وعدد الأبحاث العلمية المنشورة وفق قواعد البيانات', 'أعلى 70 جامعة'],
-                  ['الظهور في التصنيفات', 'المشاركة الفعلية والرسمية في 7 تصنيفات دولية رئيسية', '70% (7 درجات)'],
-                  ['نقاط التميز', 'تحقيق مراكز متقدمة في القمة الثلاثية (QS • THE • Shanghai)', '30% (3 درجات)'],
+                  ['الظهور في التصنيفات', 'المشاركة الفعلية والرسمية في التصنيفات الدولية الرئيسية', '70% (18 درجة)'],
+                  ['نقاط التميز', 'تحقيق مراكز متقدمة (1-10) في التصنيفات الكبرى (QS • THE • Shanghai)', '30% (5 درجات)'],
                 ].map((row, i) => (
                   <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-gupi-ink-50'}>
                     <td className="px-4 py-3 font-bold text-gupi-orange-900">{row[0]}</td>
@@ -223,7 +233,7 @@ export default function MethodologyPage() {
         <section className="bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-2xl font-display font-bold text-gupi-orange-900 mb-6">آلية ترتيب الجامعات (Ranking Mechanism)</h2>
           <p className="text-gupi-ink-700 leading-relaxed mb-6">
-            يتم ترتيب الجامعات تنازليًا حسب الدرجة النهائية (من 10 درجات). وفي حال تساوي درجات أكثر من جامعة، يتم اللجوء إلى معايير ترجيحية دقيقة حسمًا للترتيب:
+            يتم ترتيب الجامعات تنازليًا حسب الدرجة النهائية (من 23 درجة). وفي حال تساوي درجات أكثر من جامعة، يتم اللجوء إلى معايير ترجيحية دقيقة حسمًا للترتيب:
           </p>
           <div className="space-y-4">
             {[
@@ -318,7 +328,7 @@ export default function MethodologyPage() {
         <section className="bg-gradient-to-br from-gupi-orange-50 to-white rounded-2xl p-8 border border-gupi-orange-100">
           <h2 className="text-2xl font-display font-bold text-gupi-orange-900 mb-4">حول مؤشر الحضور العالمي للجامعات (GUPI)</h2>
           <p className="text-gupi-ink-700 leading-relaxed">
-            يمثل مؤشر GUPI نموذجًا مستقلًا ومبتكرًا لقياس الحضور العالمي للجامعات العربية، حيث يجمع بين النشاط البحثي والاعتراف الدولي والتميز الأكاديمي ضمن إطار بسيط (10 درجات)، مما يجعله أداة فعالة لصناع القرار والجامعات لتقييم موقعهم عالميًا وتحديد فجوات التحسين. تعتمد التصنيفات في هذا الموقع على بيانات متاحة للعموم، ومؤشرات شفافة، ومنهجيات مطورة بشكل مستقل.
+            يمثل مؤشر GUPI نموذجًا مستقلًا ومبتكرًا لقياس الحضور العالمي للجامعات العربية، حيث يجمع بين النشاط البحثي والاعتراف الدولي والتميز الأكاديمي ضمن إطار بسيط (23 درجة)، مما يجعله أداة فعالة لصناع القرار والجامعات لتقييم موقعهم عالميًا وتحديد فجوات التحسين. تعتمد التصنيفات في هذا الموقع على بيانات متاحة للعموم، ومؤشرات شفافة، ومنهجيات مطورة بشكل مستقل.
           </p>
         </section>
 
