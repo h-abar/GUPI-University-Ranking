@@ -124,7 +124,6 @@ export default function RankingsPage() {
         </Reveal>
 
         {/* Table */}
-        <Reveal delay={120}>
         <div className="bg-white rounded-2xl border border-gupi-ink-100 shadow-sm overflow-hidden mb-12">
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -228,7 +227,6 @@ export default function RankingsPage() {
             </table>
           </div>
         </div>
-        </Reveal>
       </div>
 
       {/* Detail Modal */}

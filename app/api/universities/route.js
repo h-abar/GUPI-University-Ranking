@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
 import { query } from '@/lib/db';
-import { rankUniversities } from '@/lib/scoring';
+import { rankUniversities, getRankingConfigs, getSettings } from '@/lib/scoring';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
-  const { rows } = await query('SELECT * FROM universities ORDER BY id');
-  const ranked = await rankUniversities(rows);
+  const [{ rows }, configs, settings] = await Promise.all([
+    query('SELECT * FROM universities ORDER BY id'),
+    getRankingConfigs(),
+    getSettings(),
+  ]);
+  const ranked = await rankUniversities(rows, configs, settings);
   return NextResponse.json(ranked);
 }
 
