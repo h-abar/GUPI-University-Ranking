@@ -33,6 +33,15 @@ async function doSeed() {
   const p = getPool();
   await p.query(FORCE_SCHEMA_SQL);
 
+  // Force-update ranking configs with latest is_presence/is_excellence values
+  const { SEED_RANKING_CONFIGS } = await import('@/lib/db');
+  for (const d of SEED_RANKING_CONFIGS) {
+    await p.query(
+      'UPDATE ranking_configs SET is_presence = $1, is_excellence = $2 WHERE field_key = $3',
+      [d.is_presence, d.is_excellence, d.field_key]
+    );
+  }
+
   const { SEED_UNIVERSITIES } = await import('@/scripts/seed-data.js');
 
   const placeholders = COLS.map((_, i) => `$${i + 1}`).join(', ');
