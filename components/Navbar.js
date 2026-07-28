@@ -23,7 +23,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <img src="/logo.png" alt="GUPI" className="w-12 h-12 object-contain group-hover:scale-105 transition-transform" />
+            <img src="/logo.png" alt="GUPI" className="w-14 h-14 object-contain group-hover:scale-105 transition-transform" />
           </Link>
 
           {/* Desktop nav */}
