@@ -8,6 +8,7 @@ import {
   Calendar, MapPin, FileText, CheckCircle2, XCircle, ChevronLeft,
   ChevronRight, Search, Star, Target, BookOpen, ExternalLink
 } from 'lucide-react';
+import Reveal from '@/components/home/Reveal';
 
 const COUNTRY_FLAGS = {
   'السعودية': '🇸🇦', 'الأردن': '🇯🇴', 'قطر': '🇶🇦', 'مصر': '🇪🇬',
@@ -124,68 +125,72 @@ export default function UniversityCardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gupi-ink-50">
+    <div className="min-h-screen bg-gupi-bg">
       {/* Hero card section */}
       <div className="relative hero-gradient overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 right-10 w-72 h-72 bg-white rounded-full blur-3xl" />
-          <div className="absolute bottom-10 left-10 w-96 h-96 bg-gupi-amber-400 rounded-full blur-3xl" />
+        <div className="absolute inset-0" aria-hidden="true">
+          <div className="absolute -top-16 -right-16 w-72 h-72 bg-gupi-orange-500/25 rounded-full blur-3xl animate-drift" />
+          <div className="absolute bottom-0 -left-16 w-80 h-80 bg-gupi-amber-400/20 rounded-full blur-3xl animate-drift-slow" />
+          <div className="absolute inset-0 dot-grid opacity-50 [mask-image:radial-gradient(ellipse_at_center,black,transparent_78%)]" />
         </div>
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Top bar */}
           <div className="flex items-center justify-between mb-6">
-            <Link href="/rankings" className="flex items-center gap-1 text-white/80 hover:text-white text-sm">
+            <Link href="/rankings" className="flex items-center gap-1 text-white/80 hover:text-white text-sm transition-colors">
               <ArrowRight className="w-4 h-4" /> العودة للترتيب
             </Link>
             <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-bold backdrop-blur-sm">
-                EXCLUSIVE 2026
+              <span className="px-3 py-1 rounded-full bg-white/10 border border-gupi-amber-400/40 text-gupi-amber-300 text-xs font-bold backdrop-blur-sm">
+                GUPI 2027
               </span>
             </div>
           </div>
 
           {/* University card */}
-          <div className="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 p-8 md:p-10">
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl border border-white/20 p-6 md:p-8">
             <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
               {/* Logo circle */}
-              <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-gupi-orange-400 to-gupi-orange-700 flex items-center justify-center text-white font-black text-2xl flex-shrink-0 shadow-xl">
-                {uni.short_code || uni.name?.slice(0, 2) || 'U'}
+              <div className="relative w-20 h-20 flex-shrink-0">
+                {uni.rank <= 3 && <div className="absolute inset-0 rounded-2xl ring-conic" aria-hidden="true" />}
+                <div className={`absolute ${uni.rank <= 3 ? 'inset-[3px]' : 'inset-0'} rounded-2xl bg-gradient-to-br from-gupi-orange-400 to-gupi-orange-700 flex items-center justify-center text-white font-black text-xl shadow-xl`}>
+                  {uni.short_code || uni.name?.slice(0, 2) || 'U'}
+                </div>
               </div>
 
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <span className="text-3xl">{flag}</span>
-                  <h1 className="text-2xl md:text-3xl font-display font-black text-white">{uni.name}</h1>
+                  <span className="text-2xl">{flag}</span>
+                  <h1 className="text-xl md:text-2xl font-display font-black text-white">{uni.name}</h1>
                 </div>
-                <div className="flex flex-wrap items-center gap-4 text-white/80 text-sm">
+                <div className="flex flex-wrap items-center gap-4 text-white/80 text-xs">
                   {uni.country && (
-                    <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {uni.country}</span>
+                    <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {uni.country}</span>
                   )}
                   {uni.founded && (
-                    <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> تأسست {uni.founded}</span>
+                    <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> تأسست {uni.founded}</span>
                   )}
                   {uni.articles_2025 && (
-                    <span className="flex items-center gap-1"><FileText className="w-4 h-4" /> {uni.articles_2025.toLocaleString()} بحث</span>
+                    <span className="flex items-center gap-1"><FileText className="w-3.5 h-3.5" /> {uni.articles_2025.toLocaleString()} بحث</span>
                   )}
                 </div>
               </div>
 
               {/* GUPI Score badge */}
-              <div className="bg-white rounded-2xl p-4 text-center shadow-xl min-w-[140px]">
-                <div className="text-xs text-gupi-ink-500 font-medium mb-1">درجة GUPI</div>
-                <div className="text-4xl font-black text-gupi-orange-700">{uni.gupi.totalScore}</div>
-                <div className="text-xs text-gupi-ink-400">من {uni.gupi.maxTotal}</div>
+              <div className="bg-white rounded-2xl p-4 text-center shadow-xl min-w-[130px]">
+                <div className="text-[11px] text-gupi-ink-500 font-semibold mb-1">درجة GUPI</div>
+                <div className="text-3xl font-black text-gupi-orange-700">{uni.gupi.totalScore}</div>
+                <div className="text-[11px] text-gupi-ink-400">من {uni.gupi.maxTotal}</div>
                 <div className="mt-2 flex items-center justify-center gap-1">
-                  {uni.rank <= 3 && <Trophy className="w-4 h-4 text-gupi-amber-500" />}
-                  <span className="text-sm font-bold text-gupi-ink-700">الترتيب #{uni.rank}</span>
+                  {uni.rank <= 3 && <Trophy className="w-3.5 h-3.5 text-gupi-amber-500" />}
+                  <span className="text-xs font-bold text-gupi-ink-700">الترتيب #{uni.rank}</span>
                 </div>
               </div>
             </div>
 
             {/* Description */}
             {uni.description && (
-              <p className="mt-6 text-white/90 text-base leading-relaxed border-t border-white/20 pt-6">
+              <p className="mt-5 text-white/90 text-sm leading-relaxed border-t border-white/20 pt-5">
                 {uni.description}
               </p>
             )}
@@ -195,134 +200,146 @@ export default function UniversityCardPage() {
 
       {/* Score breakdown */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-10">
+        <Reveal>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Presence score */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
+          <div className="shine-card bg-white rounded-2xl border border-gupi-ink-100 shadow-sm p-5">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gupi-orange-400 to-gupi-orange-600 flex items-center justify-center">
-                <Globe className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gupi-orange-400 to-gupi-orange-600 flex items-center justify-center">
+                <Globe className="w-5 h-5 text-white" />
               </div>
               <div>
-                <div className="font-bold text-gupi-ink-800">درجة الحضور</div>
-                <div className="text-xs text-gupi-ink-500">Presence Score</div>
+                <div className="font-bold text-sm text-gupi-ink-800">درجة الحضور</div>
+                <div className="text-[11px] text-gupi-ink-500">Presence Score</div>
               </div>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-4xl font-black text-gupi-orange-700">{uni.gupi.presenceScore}</span>
-              <span className="text-lg text-gupi-ink-400">/ {uni.gupi.maxPresence}</span>
+              <span className="text-3xl font-black text-gupi-orange-700">{uni.gupi.presenceScore}</span>
+              <span className="text-base text-gupi-ink-400">/ {uni.gupi.maxPresence}</span>
             </div>
-            <div className="mt-3 bg-gupi-ink-100 rounded-full h-3 overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-gupi-orange-400 to-gupi-orange-600 rounded-full" style={{ width: `${(uni.gupi.presenceScore / uni.gupi.maxPresence) * 100}%` }} />
+            <div className="mt-3 bg-gupi-ink-100 rounded-full h-2.5 overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-gupi-orange-400 to-gupi-orange-600 rounded-full bar-fill" style={{ width: `${(uni.gupi.presenceScore / uni.gupi.maxPresence) * 100}%` }} />
             </div>
-            <div className="mt-2 text-xs text-gupi-ink-500">
+            <div className="mt-2 text-[11px] text-gupi-ink-500">
               {uni.gupi.presenceDetails?.filter((d) => d.present).length || 0} من {uni.gupi.presenceDetails?.length || 0} تصنيفات
             </div>
           </div>
 
           {/* Excellence score */}
-          <div className="bg-white rounded-2xl shadow-lg p-6">
+          <div className="shine-card bg-white rounded-2xl border border-gupi-ink-100 shadow-sm p-5">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gupi-amber-400 to-gupi-amber-600 flex items-center justify-center">
-                <Trophy className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gupi-amber-400 to-gupi-amber-600 flex items-center justify-center">
+                <Trophy className="w-5 h-5 text-white" />
               </div>
               <div>
-                <div className="font-bold text-gupi-ink-800">درجة التميز</div>
-                <div className="text-xs text-gupi-ink-500">Excellence Score</div>
+                <div className="font-bold text-sm text-gupi-ink-800">درجة التميز</div>
+                <div className="text-[11px] text-gupi-ink-500">Excellence Score</div>
               </div>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-4xl font-black text-gupi-amber-600">{uni.gupi.excellenceScore}</span>
-              <span className="text-lg text-gupi-ink-400">/ {uni.gupi.maxExcellence}</span>
+              <span className="text-3xl font-black text-gupi-amber-600">{uni.gupi.excellenceScore}</span>
+              <span className="text-base text-gupi-ink-400">/ {uni.gupi.maxExcellence}</span>
             </div>
-            <div className="mt-3 bg-gupi-ink-100 rounded-full h-3 overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-gupi-amber-400 to-gupi-amber-600 rounded-full" style={{ width: `${(uni.gupi.excellenceScore / uni.gupi.maxExcellence) * 100}%` }} />
+            <div className="mt-3 bg-gupi-ink-100 rounded-full h-2.5 overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-gupi-amber-400 to-gupi-amber-600 rounded-full bar-fill" style={{ width: `${(uni.gupi.excellenceScore / uni.gupi.maxExcellence) * 100}%` }} />
             </div>
-            <div className="mt-2 text-xs text-gupi-ink-500">
+            <div className="mt-2 text-[11px] text-gupi-ink-500">
               {uni.gupi.excellenceDetails?.filter((d) => d.present).length || 0} من {uni.gupi.excellenceDetails?.length || 0} تصنيفات تميز
             </div>
           </div>
 
           {/* Total score */}
-          <div className="bg-gradient-to-br from-gupi-orange-700 to-gupi-orange-950 rounded-2xl shadow-lg p-6 text-white">
+          <div className="bg-gradient-to-br from-gupi-orange-700 to-gupi-orange-950 rounded-2xl shadow-lg p-5 text-white relative overflow-hidden">
+            <div className="absolute inset-0 dot-grid opacity-30" aria-hidden="true" />
+            <div className="relative">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
-                <Award className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
+                <Award className="w-5 h-5 text-white" />
               </div>
               <div>
-                <div className="font-bold">الدرجة الإجمالية</div>
-                <div className="text-xs text-white/60">Total GUPI Score</div>
+                <div className="font-bold text-sm">الدرجة الإجمالية</div>
+                <div className="text-[11px] text-white/60">Total GUPI Score</div>
               </div>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-5xl font-black">{uni.gupi.totalScore}</span>
-              <span className="text-lg text-white/60">/ {uni.gupi.maxTotal}</span>
+              <span className="text-4xl font-black gold-shimmer">{uni.gupi.totalScore}</span>
+              <span className="text-base text-white/60">/ {uni.gupi.maxTotal}</span>
             </div>
-            <div className="mt-3 bg-white/20 rounded-full h-3 overflow-hidden">
-              <div className="h-full bg-white rounded-full" style={{ width: `${(uni.gupi.totalScore / uni.gupi.maxTotal) * 100}%` }} />
+            <div className="mt-3 bg-white/20 rounded-full h-2.5 overflow-hidden">
+              <div className="h-full bg-white rounded-full bar-fill" style={{ width: `${(uni.gupi.totalScore / uni.gupi.maxTotal) * 100}%` }} />
             </div>
-            <div className="mt-2 text-xs text-white/70">
+            <div className="mt-2 text-[11px] text-white/70">
               الترتيب العام: #{uni.rank} من {allUnis.length}
+            </div>
             </div>
           </div>
         </div>
+        </Reveal>
       </div>
 
       {/* Rankings details */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* World rankings */}
+        <Reveal>
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gupi-orange-100 flex items-center justify-center">
-              <Globe className="w-5 h-5 text-gupi-orange-600" />
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-gupi-orange-500 to-gupi-orange-700 flex items-center justify-center">
+              <Globe className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h2 className="font-display font-bold text-xl text-gupi-orange-900">التصنيفات العالمية</h2>
-              <p className="text-sm text-gupi-ink-500">International Rankings</p>
+              <h2 className="font-display font-bold text-base text-gupi-orange-900">التصنيفات العالمية</h2>
+              <p className="text-xs text-gupi-ink-500">International Rankings</p>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {worldRankings.map(renderRankingCard)}
           </div>
         </div>
+        </Reveal>
 
         {/* Arab rankings */}
+        <Reveal>
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-gupi-amber-100 flex items-center justify-center">
-              <Trophy className="w-5 h-5 text-gupi-amber-600" />
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-gupi-amber-500 to-gupi-amber-700 flex items-center justify-center">
+              <Trophy className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h2 className="font-display font-bold text-xl text-gupi-orange-900">التصنيفات العربية</h2>
-              <p className="text-sm text-gupi-ink-500">Arab Rankings</p>
+              <h2 className="font-display font-bold text-base text-gupi-orange-900">التصنيفات العربية</h2>
+              <p className="text-xs text-gupi-ink-500">Arab Rankings</p>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {arabRankings.map(renderRankingCard)}
           </div>
         </div>
+        </Reveal>
 
         {/* Other rankings */}
+        <Reveal>
         <div>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center">
-              <Target className="w-5 h-5 text-emerald-600" />
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-gupi-sage-500 to-gupi-sage-700 flex items-center justify-center">
+              <Target className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h2 className="font-display font-bold text-xl text-gupi-orange-900">تصنيفات التأثير والاستدامة</h2>
-              <p className="text-sm text-gupi-ink-500">Impact & Sustainability Rankings</p>
+              <h2 className="font-display font-bold text-base text-gupi-orange-900">تصنيفات التأثير والاستدامة</h2>
+              <p className="text-xs text-gupi-ink-500">Impact & Sustainability Rankings</p>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {otherRankings.map(renderRankingCard)}
           </div>
         </div>
+        </Reveal>
 
         {/* Presence details table */}
         {uni.gupi.presenceDetails && uni.gupi.presenceDetails.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="p-6 border-b border-gupi-ink-100">
-              <h2 className="font-display font-bold text-xl text-gupi-orange-900">تفاصيل حساب الحضور</h2>
-              <p className="text-sm text-gupi-ink-500 mt-1">كيف تم حساب درجة الحضور لهذه الجامعة</p>
+          <Reveal>
+          <div className="bg-white rounded-2xl border border-gupi-ink-100 shadow-sm overflow-hidden">
+            <div className="p-5 border-b border-gupi-ink-100">
+              <h2 className="font-display font-bold text-base text-gupi-orange-900">تفاصيل حساب الحضور</h2>
+              <p className="text-xs text-gupi-ink-500 mt-0.5">كيف تم حساب درجة الحضور لهذه الجامعة</p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -355,14 +372,16 @@ export default function UniversityCardPage() {
               </table>
             </div>
           </div>
+          </Reveal>
         )}
 
         {/* Excellence details table */}
         {uni.gupi.excellenceDetails && uni.gupi.excellenceDetails.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <div className="p-6 border-b border-gupi-ink-100">
-              <h2 className="font-display font-bold text-xl text-gupi-amber-800">تفاصيل حساب التميز</h2>
-              <p className="text-sm text-gupi-ink-500 mt-1">نقاط التميز بناءً على الترتيب (المركز 1 = 1.0، المركز 10 = 0.1)</p>
+          <Reveal>
+          <div className="bg-white rounded-2xl border border-gupi-ink-100 shadow-sm overflow-hidden">
+            <div className="p-5 border-b border-gupi-ink-100">
+              <h2 className="font-display font-bold text-base text-gupi-amber-800">تفاصيل حساب التميز</h2>
+              <p className="text-xs text-gupi-ink-500 mt-0.5">نقاط التميز بناءً على الترتيب (المركز 1 = 1.0، المركز 10 = 0.1)</p>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
@@ -395,6 +414,7 @@ export default function UniversityCardPage() {
               </table>
             </div>
           </div>
+          </Reveal>
         )}
 
         {/* Navigation between universities */}
@@ -422,18 +442,23 @@ export default function UniversityCardPage() {
         </div>
 
         {/* CTA */}
-        <div className="bg-gradient-to-br from-gupi-orange-700 to-gupi-orange-950 rounded-3xl p-8 text-center text-white">
-          <h3 className="font-display font-bold text-xl mb-2">اكتشف بطاقات جامعات أخرى</h3>
-          <p className="text-white/70 text-sm mb-6">تصفح أكثر من 70 بطاقة جامعة عربية مع تحليل شامل للتصنيفات الدولية</p>
+        <Reveal>
+        <div className="relative bg-gradient-to-br from-gupi-orange-700 to-gupi-orange-950 rounded-3xl p-8 text-center text-white overflow-hidden">
+          <div className="absolute inset-0 dot-grid opacity-40" aria-hidden="true" />
+          <div className="relative">
+          <h3 className="font-display font-bold text-lg mb-2">اكتشف بطاقات جامعات أخرى</h3>
+          <p className="text-white/70 text-xs mb-6">تصفح أكثر من 70 بطاقة جامعة عربية مع تحليل شامل للتصنيفات الدولية</p>
           <div className="flex gap-3 justify-center flex-wrap">
-            <Link href="/rankings" className="px-6 py-3 rounded-xl bg-white text-gupi-orange-800 font-bold hover:bg-gupi-orange-50 transition-colors">
+            <Link href="/rankings" className="px-6 py-3 rounded-xl bg-white text-gupi-orange-800 text-sm font-bold hover:bg-gupi-orange-50 hover:scale-[1.03] transition-all">
               استعرض جميع البطاقات
             </Link>
-            <Link href="/dashboard" className="px-6 py-3 rounded-xl bg-white/20 text-white font-bold hover:bg-white/30 transition-colors backdrop-blur-sm">
+            <Link href="/dashboard" className="px-6 py-3 rounded-xl bg-white/20 text-white text-sm font-bold hover:bg-white/30 transition-colors backdrop-blur-sm">
               لوحة التحليلات
             </Link>
           </div>
+          </div>
         </div>
+        </Reveal>
       </div>
     </div>
   );

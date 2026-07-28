@@ -3,6 +3,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Search, ArrowUpDown, Trophy, MapPin, Award, TrendingUp, X, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
+import PageHero from '@/components/PageHero';
+import Reveal from '@/components/home/Reveal';
 
 export default function RankingsPage() {
   const [universities, setUniversities] = useState([]);
@@ -68,22 +70,18 @@ export default function RankingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gupi-ink-50">
-      {/* Header */}
-      <div className="hero-gradient text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-3xl md:text-5xl font-display font-black mb-3">
-            ترتيب الجامعات العربية — <span className="gold-text">GUPI 2027</span>
-          </h1>
-          <p className="text-gupi-ink-300 text-lg">
-            القائمة النهائية لمؤشر الحضور العالمي للجامعات — أفضل 70 جامعة عربية
-          </p>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gupi-bg">
+      <PageHero
+        icon={Trophy}
+        eyebrow="GUPI 2027"
+        title={<>ترتيب <span className="gold-shimmer">الجامعات العربية</span></>}
+        subtitle="القائمة النهائية لمؤشر الحضور العالمي للجامعات — أفضل 70 جامعة عربية"
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
+        <Reveal>
         {/* Filters */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+        <div className="bg-white rounded-2xl border border-gupi-ink-100 shadow-sm p-5 mb-5">
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search */}
             <div className="flex-1 relative">
@@ -123,9 +121,11 @@ export default function RankingsPage() {
             )}
           </div>
         </div>
+        </Reveal>
 
         {/* Table */}
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden mb-12">
+        <Reveal delay={120}>
+        <div className="bg-white rounded-2xl border border-gupi-ink-100 shadow-sm overflow-hidden mb-12">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
@@ -149,8 +149,8 @@ export default function RankingsPage() {
                       <ArrowUpDown className="w-3 h-3" />
                     </div>
                   </th>
-                  <th className="px-4 py-4 text-center hidden lg:table-cell">الحضور (7)</th>
-                  <th className="px-4 py-4 text-center hidden lg:table-cell">التميز (3)</th>
+                  <th className="px-4 py-4 text-center hidden lg:table-cell">الحضور (18)</th>
+                  <th className="px-4 py-4 text-center hidden lg:table-cell">التميز (5)</th>
                   <th className="px-4 py-4 text-center cursor-pointer hover:bg-gupi-orange-900 transition-colors hidden md:table-cell" onClick={() => toggleSort('articles')}>
                     <div className="flex items-center gap-1 justify-center">
                       <span>الأبحاث</span>
@@ -228,6 +228,7 @@ export default function RankingsPage() {
             </table>
           </div>
         </div>
+        </Reveal>
       </div>
 
       {/* Detail Modal */}

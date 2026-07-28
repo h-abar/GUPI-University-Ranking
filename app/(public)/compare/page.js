@@ -11,6 +11,8 @@ import {
   Radar, ResponsiveContainer, BarChart, Bar, XAxis, YAxis,
   CartesianGrid, Tooltip, Legend, Cell
 } from 'recharts';
+import PageHero from '@/components/PageHero';
+import Reveal from '@/components/home/Reveal';
 
 export default function ComparePage() {
   const [universities, setUniversities] = useState([]);
@@ -117,28 +119,16 @@ export default function ComparePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gupi-ink-50">
-      {/* Hero Header */}
-      <div className="hero-gradient text-white py-12 relative overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-10 right-20 w-72 h-72 bg-gupi-orange-400/20 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-0 left-10 w-80 h-80 bg-gupi-orange-300/10 rounded-full blur-3xl" />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-4">
-            <Swords className="w-5 h-5 text-gupi-orange-300" />
-            <span className="text-sm font-medium">GUPI Challenge Arena</span>
-          </div>
-          <h1 className="text-3xl md:text-5xl font-display font-black mb-3">
-            تحدي <span className="gold-text">الحضور الدولي</span>
-          </h1>
-          <p className="text-gupi-ink-300 text-lg max-w-2xl mx-auto">
-            مواجهة مباشرة بين جامعتين عربيتين — مقارنة شاملة في كل التصنيفات والحضور والتميز مع تحليل ذكي
-          </p>
-        </div>
-      </div>
+    <div className="min-h-screen bg-gupi-bg">
+      <PageHero
+        icon={Swords}
+        eyebrow="GUPI Challenge Arena"
+        title={<>تحدي <span className="gold-shimmer">الحضور الدولي</span></>}
+        subtitle="مواجهة مباشرة بين جامعتين عربيتين — مقارنة شاملة في كل التصنيفات والحضور والتميز مع تحليل ذكي"
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
+        <Reveal>
         {/* Selection Cards */}
         <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center mb-8">
           {/* University 1 Selector */}
@@ -185,7 +175,7 @@ export default function ComparePage() {
           <button
             onClick={handleCompare}
             disabled={!uni1Id || !uni2Id || uni1Id === uni2Id || comparing}
-            className="flex items-center gap-3 px-10 py-4 rounded-xl bg-gradient-to-r from-gupi-orange-600 to-gupi-orange-800 text-white font-bold text-lg hover:scale-105 transition-all shadow-xl disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+            className="flex items-center gap-2.5 px-8 py-3.5 rounded-xl bg-gradient-to-r from-gupi-amber-400 to-gupi-orange-600 text-gupi-orange-950 font-bold hover:scale-105 transition-all shadow-xl glow-gold disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:shadow-none"
           >
             {comparing ? (
               <>
@@ -200,6 +190,7 @@ export default function ComparePage() {
             )}
           </button>
         </div>
+        </Reveal>
 
         {/* Error */}
         {aiError && !comparison && (
@@ -210,6 +201,7 @@ export default function ComparePage() {
 
         {/* Comparison Results */}
         {comparison && (
+          <Reveal>
           <ComparisonResults
             comparison={comparison}
             aiAnalysis={aiAnalysis}
@@ -217,6 +209,7 @@ export default function ComparePage() {
             aiLoading={aiLoading}
             onReset={resetComparison}
           />
+          </Reveal>
         )}
       </div>
 
@@ -233,7 +226,7 @@ function UniSelector({ label, color, universities, selectedId, onSelect, search,
     : { bg: 'from-gupi-amber-500 to-gupi-amber-700', text: 'text-gupi-amber-700', border: 'border-gupi-amber-300', light: 'bg-gupi-amber-50' };
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg p-6 border border-gupi-ink-100 relative">
+    <div className="bg-white rounded-2xl border border-gupi-ink-100 shadow-sm p-5 relative">
       <label className={`block text-sm font-bold mb-3 ${colorClasses.text}`}>{label}</label>
 
       {selected ? (
@@ -328,23 +321,26 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
   return (
     <div className="space-y-6">
       {/* Winner Banner */}
-      <div className={`rounded-2xl p-6 text-center shadow-lg ${winner === 0 ? 'bg-gradient-to-r from-gupi-ink-600 to-gupi-ink-800' : winner === 1 ? 'bg-gradient-to-r from-gupi-orange-600 to-gupi-orange-800' : 'bg-gradient-to-r from-gupi-amber-500 to-gupi-amber-700'} text-white`}>
+      <div className={`rounded-2xl p-6 text-center shadow-lg relative overflow-hidden ${winner === 0 ? 'bg-gradient-to-r from-gupi-ink-600 to-gupi-ink-800' : winner === 1 ? 'bg-gradient-to-r from-gupi-orange-600 to-gupi-orange-800' : 'bg-gradient-to-r from-gupi-amber-500 to-gupi-amber-700'} text-white`}>
+        <div className="absolute inset-0 dot-grid opacity-40" aria-hidden="true" />
+        <div className="relative">
         {winner === 0 ? (
           <>
-            <Trophy className="w-10 h-10 mx-auto mb-2" />
-            <h2 className="text-2xl font-display font-black">تعادل!</h2>
-            <p className="text-white/80">الجامعتان متساويتان في درجة GUPI</p>
+            <Trophy className="w-9 h-9 mx-auto mb-2" />
+            <h2 className="text-xl font-display font-black">تعادل!</h2>
+            <p className="text-white/80 text-sm">الجامعتان متساويتان في درجة GUPI</p>
           </>
         ) : (
           <>
-            <Crown className="w-10 h-10 mx-auto mb-2" />
-            <h2 className="text-2xl font-display font-black">الفائز: {winner === 1 ? uni1.name : uni2.name}</h2>
-            <p className="text-white/80">بدرجة GUPI: {winner === 1 ? uni1.gupi.totalScore : uni2.gupi.totalScore} / {maxTotal}</p>
+            <Crown className="w-9 h-9 mx-auto mb-2 drop-shadow-[0_0_10px_rgba(242,192,99,0.9)]" />
+            <h2 className="text-xl font-display font-black">الفائز: {winner === 1 ? uni1.name : uni2.name}</h2>
+            <p className="text-white/80 text-sm">بدرجة GUPI: {winner === 1 ? uni1.gupi.totalScore : uni2.gupi.totalScore} / {maxTotal}</p>
           </>
         )}
         <button onClick={onReset} className="mt-4 px-4 py-2 rounded-lg bg-white/20 hover:bg-white/30 text-sm font-medium transition-colors">
           مواجهة جديدة
         </button>
+        </div>
       </div>
 
       {/* Score Summary Cards */}
