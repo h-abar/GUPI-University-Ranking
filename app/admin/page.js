@@ -67,7 +67,7 @@ export default function AdminLoginPage() {
                   required
                   autoComplete="email"
                   className="w-full pr-10 pl-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all"
-                  placeholder="abulayeth@gmail.com"
+                  placeholder="أدخل البريد الإلكتروني"
                 />
               </div>
             </div>
