@@ -121,7 +121,7 @@ function buildComparisonData(uni1, uni2, configs, settings) {
     settings: {
       maxPresence: settings.max_presence_score || '18',
       maxExcellence: settings.max_excellence_score || '5',
-      maxTotal: settings.max_total_score || '23',
+      maxTotal: settings.max_total_score || '100',
     },
   };
 }

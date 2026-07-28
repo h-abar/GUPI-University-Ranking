@@ -55,7 +55,7 @@ export default function MethodologyPage() {
                     <XCircle className="w-3.5 h-3.5" /> عدم المشاركة: 0 درجة
                   </div>
                 </div>
-                <p className="text-xs text-gupi-orange-600 font-semibold">الهدف: قياس الانتشار الدولي والاعتراف العالمي.</p>
+                <p className="text-xs text-gupi-orange-600 font-semibold">الهدف: قياس الانتشار الدولي والاعتراف العالمي — يمثل 70% من الدرجة الإجمالية.</p>
               </div>
 
               {/* البعد الثاني */}
@@ -82,7 +82,7 @@ export default function MethodologyPage() {
                     <XCircle className="w-3.5 h-3.5" /> بعد المركز العاشر: 0 نقطة
                   </div>
                 </div>
-                <p className="text-xs text-gupi-amber-700 font-semibold">الهدف: قياس التميز والريادة الأكاديمية.</p>
+                <p className="text-xs text-gupi-amber-700 font-semibold">الهدف: قياس التميز والريادة الأكاديمية — يمثل 30% من الدرجة الإجمالية.</p>
               </div>
             </div>
           </section>
@@ -102,27 +102,27 @@ export default function MethodologyPage() {
                 </div>
                 <span className="text-2xl font-bold text-gupi-orange-400">=</span>
                 <div className="bg-gupi-orange-600 rounded-xl px-5 py-2.5">
-                  <span className="font-bold text-sm">الحضور الدولي (18)</span>
+                  <span className="font-bold text-sm">الحضور الدولي (70%)</span>
                 </div>
                 <span className="text-2xl font-bold text-gupi-orange-400">+</span>
                 <div className="bg-gupi-amber-500 rounded-xl px-5 py-2.5">
-                  <span className="font-bold text-sm">التميز الأكاديمي (5)</span>
+                  <span className="font-bold text-sm">التميز الأكاديمي (30%)</span>
                 </div>
                 <span className="text-2xl font-bold text-gupi-orange-400">=</span>
                 <div className="bg-white text-gupi-orange-900 rounded-xl px-5 py-2.5">
-                  <span className="font-display font-black text-lg">23 درجة</span>
+                  <span className="font-display font-black text-lg">100 درجة</span>
                 </div>
               </div>
 
               {/* شريط الأوزان المتحرك */}
               <div className="max-w-2xl mx-auto mt-6">
                 <div className="flex h-3 rounded-full overflow-hidden bg-white/10">
-                  <div className="bar-fill bg-gradient-to-l from-gupi-orange-500 to-gupi-orange-400" style={{ width: '78%' }} />
-                  <div className="bar-fill bg-gradient-to-l from-gupi-amber-400 to-gupi-amber-300" style={{ width: '22%', animationDelay: '0.7s' }} />
+                  <div className="bar-fill bg-gradient-to-l from-gupi-orange-500 to-gupi-orange-400" style={{ width: '70%' }} />
+                  <div className="bar-fill bg-gradient-to-l from-gupi-amber-400 to-gupi-amber-300" style={{ width: '30%', animationDelay: '0.7s' }} />
                 </div>
                 <div className="flex justify-between mt-2 text-[11px] font-semibold">
-                  <span className="text-gupi-orange-300">الحضور العالمي — 18 درجة (78%)</span>
-                  <span className="text-gupi-amber-300">التميز النوعي — 5 درجات (22%)</span>
+                  <span className="text-gupi-orange-300">الحضور العالمي — 70% (18 درجة)</span>
+                  <span className="text-gupi-amber-300">التميز النوعي — 30% (5 درجات)</span>
                 </div>
               </div>
             </div>
@@ -227,8 +227,8 @@ export default function MethodologyPage() {
                 <tbody>
                   {[
                     ['الإنتاج البحثي', 'حساب كثافة وعدد الأبحاث العلمية المنشورة وفق قواعد البيانات', 'أعلى 70 جامعة'],
-                    ['الظهور في التصنيفات', 'المشاركة الفعلية والرسمية في التصنيفات الدولية الرئيسية', '78% (18 درجة)'],
-                    ['نقاط التميز', 'تحقيق مراكز متقدمة (1-10) في التصنيفات الكبرى', '22% (5 درجات)'],
+                    ['الظهور في التصنيفات', 'المشاركة الفعلية والرسمية في التصنيفات الدولية الرئيسية', '70% (18 درجة)'],
+                    ['نقاط التميز', 'تحقيق مراكز متقدمة (1-10) في التصنيفات الكبرى', '30% (5 درجات)'],
                   ].map((row, i) => (
                     <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-gupi-ink-50/50'}>
                       <td className="px-4 py-3 font-bold text-gupi-orange-900">{row[0]}</td>
@@ -247,7 +247,7 @@ export default function MethodologyPage() {
           <section className="bg-white rounded-2xl border border-gupi-ink-100 shadow-sm p-6 md:p-8">
             <SectionTitle icon={Trophy} title="آلية ترتيب الجامعات (Ranking Mechanism)" />
             <p className="text-gupi-ink-700 text-sm leading-relaxed mb-5">
-              يتم ترتيب الجامعات تنازليًا حسب الدرجة النهائية (من 23 درجة). وفي حال تساوي درجات أكثر من جامعة، يتم اللجوء إلى معايير ترجيحية دقيقة حسمًا للترتيب:
+              يتم ترتيب الجامعات تنازليًا حسب الدرجة النهائية (من 100 درجة). وفي حال تساوي درجات أكثر من جامعة، يتم اللجوء إلى معايير ترجيحية دقيقة حسمًا للترتيب:
             </p>
             <div className="space-y-3">
               {[
@@ -352,7 +352,7 @@ export default function MethodologyPage() {
           <section className="shine-card bg-gradient-to-br from-gupi-orange-50 to-white rounded-2xl p-6 md:p-8 border border-gupi-orange-100">
             <SectionTitle icon={Award} title="حول مؤشر الحضور العالمي للجامعات (GUPI)" />
             <p className="text-gupi-ink-700 text-sm leading-relaxed">
-              يمثل مؤشر GUPI نموذجًا مستقلًا ومبتكرًا لقياس الحضور العالمي للجامعات العربية، حيث يجمع بين النشاط البحثي والاعتراف الدولي والتميز الأكاديمي ضمن إطار بسيط (23 درجة)، مما يجعله أداة فعالة لصناع القرار والجامعات لتقييم موقعهم عالميًا وتحديد فجوات التحسين. تعتمد التصنيفات في هذا الموقع على بيانات متاحة للعموم، ومؤشرات شفافة، ومنهجيات مطورة بشكل مستقل.
+              يمثل مؤشر GUPI نموذجًا مستقلًا ومبتكرًا لقياس الحضور العالمي للجامعات العربية، حيث يجمع بين النشاط البحثي والاعتراف الدولي والتميز الأكاديمي ضمن إطار بسيط (100 درجة)، مما يجعله أداة فعالة لصناع القرار والجامعات لتقييم موقعهم عالميًا وتحديد فجوات التحسين. تعتمد التصنيفات في هذا الموقع على بيانات متاحة للعموم، ومؤشرات شفافة، ومنهجيات مطورة بشكل مستقل.
             </p>
           </section>
         </Reveal>

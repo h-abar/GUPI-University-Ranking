@@ -188,7 +188,7 @@ export default function RankingsPage() {
                     <td className="px-4 py-3 text-center">
                       <div className="inline-flex flex-col items-center">
                         <span className="font-display font-black text-2xl text-gupi-orange-700">{uni.gupi.totalScore}</span>
-                        <span className="text-xs text-gupi-ink-400">/ 23</span>
+                        <span className="text-xs text-gupi-ink-400">/ 100</span>
                       </div>
                     </td>
                     <td className="px-4 py-3 text-center hidden lg:table-cell">
@@ -255,7 +255,7 @@ export default function RankingsPage() {
               <div className="mt-4 flex gap-6">
                 <div>
                   <div className="text-3xl font-black">{selectedUni.gupi.totalScore}</div>
-                  <div className="text-xs text-gupi-ink-300">درجة GUPI / 23</div>
+                  <div className="text-xs text-gupi-ink-300">درجة GUPI / 100</div>
                 </div>
                 <div>
                   <div className="text-3xl font-black">{selectedUni.gupi.presenceScore}</div>

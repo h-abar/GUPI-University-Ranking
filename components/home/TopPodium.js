@@ -88,7 +88,7 @@ export default function TopPodium() {
 
             <div className="inline-flex items-baseline gap-1.5 px-4 py-1.5 rounded-full bg-black/25 border border-white/10 group-hover:border-gupi-amber-400/40 transition-colors">
               <span className="font-display font-black text-xl gold-text">{u.gupi.totalScore}</span>
-              <span className="text-[11px] text-gupi-ink-300">/ {u.gupi.maxTotal ?? 23}</span>
+              <span className="text-[11px] text-gupi-ink-300">/ {u.gupi.maxTotal ?? 100}</span>
             </div>
           </Link>
         ))}

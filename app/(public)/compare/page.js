@@ -297,7 +297,7 @@ function UniSelector({ label, color, universities, selectedId, onSelect, search,
 /* ============ Comparison Results Component ============ */
 function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset }) {
   const { uni1, uni2, allRankings, settings } = comparison;
-  const maxTotal = parseFloat(settings.maxTotal) || 23;
+  const maxTotal = parseFloat(settings.maxTotal) || 100;
   const maxPresence = parseFloat(settings.maxPresence) || 18;
   const maxExcellence = parseFloat(settings.maxExcellence) || 5;
 

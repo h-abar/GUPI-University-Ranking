@@ -146,14 +146,14 @@ function OverviewTab({ universities, settings }) {
   const lowScore = universities.length > 0 ? Math.min(...universities.map((u) => u.gupi.totalScore)) : 0;
   const totalArticles = universities.reduce((s, u) => s + (u.articles_2025 || 0), 0);
 
-  const scoreBuckets = { '0-2': 0, '3-4': 0, '5-6': 0, '7-8': 0, '9-10': 0 };
+  const scoreBuckets = { '0-20': 0, '21-40': 0, '41-60': 0, '61-80': 0, '81-100': 0 };
   universities.forEach((u) => {
     const s = u.gupi.totalScore;
-    if (s <= 2) scoreBuckets['0-2']++;
-    else if (s <= 4) scoreBuckets['3-4']++;
-    else if (s <= 6) scoreBuckets['5-6']++;
-    else if (s <= 8) scoreBuckets['7-8']++;
-    else scoreBuckets['9-10']++;
+    if (s <= 20) scoreBuckets['0-20']++;
+    else if (s <= 40) scoreBuckets['21-40']++;
+    else if (s <= 60) scoreBuckets['41-60']++;
+    else if (s <= 80) scoreBuckets['61-80']++;
+    else scoreBuckets['81-100']++;
   });
 
   return (
@@ -191,7 +191,7 @@ function OverviewTab({ universities, settings }) {
         </div>
         <div className="bg-white rounded-2xl shadow p-6">
           <div className="text-sm text-gupi-ink-500 mb-1">الحد الأقصى للمؤشر</div>
-          <div className="text-3xl font-black text-gupi-orange-700">{settings.max_total_score || '23'}</div>
+          <div className="text-3xl font-black text-gupi-orange-700">{settings.max_total_score || '100'}</div>
         </div>
       </div>
 
@@ -890,7 +890,7 @@ function SettingsTab({ settings, onReload }) {
           </div>
           <span className="text-2xl font-bold text-gupi-orange-400">=</span>
           <div className="bg-white text-gupi-orange-900 rounded-xl px-6 py-3">
-            <span className="font-black text-xl">{local.max_total_score || '23'} درجات</span>
+            <span className="font-black text-xl">{local.max_total_score || '100'} درجات</span>
           </div>
         </div>
       </div>
