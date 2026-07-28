@@ -24,12 +24,9 @@ export default function HomePage() {
               <span className="text-sm font-medium">Global University Presence Index • 2026</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-display font-black mb-4 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+            <h1 className="text-5xl md:text-7xl font-display font-black mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               مؤشر <span className="gold-text">GUPI</span>
             </h1>
-            <p className="text-2xl md:text-3xl font-display font-bold mb-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              الحضور العالمي للجامعات
-            </p>
             <p className="text-lg md:text-xl text-gupi-orange-100 mb-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
               التميز يُقاس بالحضور العالمي
             </p>
@@ -148,7 +145,7 @@ export default function HomePage() {
               {
                 title: 'الظهور في التصنيفات الدولية',
                 icon: Award,
-                desc: 'قراءة موحدة لتموضع الجامعة في قواعد البيانات العالمية (QS, THE, ARWU) بمرونة وعمق.',
+                desc: 'قراءة موحدة لتموضع الجامعة في قواعد البيانات العالمية (QS, THE, ARWU, مؤشر البحث العلمي AD, التصنيف العربي) بمرونة وعمق.',
                 color: 'from-purple-500 to-purple-700',
               },
               {
@@ -373,7 +370,7 @@ export default function HomePage() {
             {[
               {
                 title: 'الحيادية والتوازن',
-                desc: 'استخدام 7 تصنيفات متنوعة للحد التام من التحيز لصالح أي فلسفة تصنيفية واحدة.',
+                desc: 'استخدام 18 تصنيفات متنوعة للحد التام من التحيز لصالح أي فلسفة تصنيفية واحدة.',
                 icon: Shield,
               },
               {
@@ -383,7 +380,7 @@ export default function HomePage() {
               },
               {
                 title: 'مكافأة الجودة والتميز',
-                desc: 'عدم الاكتفاء بالظهور الشكلي وإضافة نقاط تقديرية للتميز في التصنيفات الثلاثة الأكثر تأثيراً.',
+                desc: 'عدم الاكتفاء بالظهور الشكلي وإضافة نقاط تقديرية للتميز في التصنيفات الخمسة الأكثر تأثيراً.',
                 icon: Trophy,
               },
             ].map((item, i) => {
