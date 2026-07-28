@@ -24,10 +24,6 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
             <img src="/logo.png" alt="GUPI" className="w-10 h-10 rounded-gupi-md group-hover:scale-105 transition-transform" />
-            <div className="flex flex-col">
-              <span className="font-display font-bold text-lg text-gupi-orange-900 leading-none">GUPI</span>
-              <span className="text-[10px] text-gupi-ink-400 leading-none mt-1">الحضور العالمي للجامعات</span>
-            </div>
           </Link>
 
           {/* Desktop nav */}
