@@ -2,49 +2,63 @@ import Link from 'next/link';
 import {
   Globe, BookOpen, Award, Monitor, Users, Handshake,
   ArrowLeft, BarChart3, Target, CheckCircle2, TrendingUp,
-  Database, Shield, Layers, Calculator, Trophy
+  Database, Shield, Layers, Calculator, Trophy, Sparkles, Medal
 } from 'lucide-react';
+import Reveal from '@/components/home/Reveal';
+import CountUp from '@/components/home/CountUp';
+import SectionHeader from '@/components/home/SectionHeader';
+import TopPodium from '@/components/home/TopPodium';
+
+const RANKINGS_TICKER = [
+  'QS', 'THE', 'ARWU', 'AD Scientific', 'Scimago', 'CWTS', 'UniRank',
+  'US News', 'CWUR', 'ScholarGPS', 'RUR', 'GUV', 'Arabic Ranking',
+  'QS Arab', 'THE Arab', 'UniRank Arabic', 'THE Impact', 'GreenMetric',
+];
 
 export default function HomePage() {
   return (
     <main>
-      {/* Hero Section */}
+      {/* ================= Hero — الصدارة ================= */}
       <section className="relative hero-gradient text-white overflow-hidden">
-        {/* Decorative shapes */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gupi-orange-400/20 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-10 right-20 w-96 h-96 bg-gupi-orange-300/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/3 w-64 h-64 bg-white/5 rounded-full blur-2xl" />
+        {/* سحب متوهجة + شبكة نقاط */}
+        <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="absolute -top-24 -right-24 w-[28rem] h-[28rem] bg-gupi-orange-500/25 rounded-full blur-3xl animate-drift" />
+          <div className="absolute top-1/3 -left-32 w-[26rem] h-[26rem] bg-gupi-amber-400/15 rounded-full blur-3xl animate-drift-slow" />
+          <div className="absolute bottom-0 right-1/3 w-80 h-80 bg-gupi-sage-400/15 rounded-full blur-3xl animate-drift" style={{ animationDelay: '-6s' }} />
+          <div className="absolute inset-0 dot-grid opacity-70 [mask-image:radial-gradient(ellipse_at_center,black,transparent_78%)]" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-6 animate-fade-in-up">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-sm font-medium">Global University Presence Index • 2026</span>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-20 md:pt-20">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 mb-5 animate-fade-in-up">
+              <span className="relative flex w-2 h-2">
+                <span className="absolute inset-0 rounded-full bg-gupi-amber-400 animate-ping-soft" />
+                <span className="relative rounded-full w-2 h-2 bg-gupi-amber-400" />
+              </span>
+              <span className="text-xs font-semibold tracking-wide">Global University Presence Index • 2027</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-display font-black mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-              مؤشر <span className="gold-text">GUPI</span>
+            <h1 className="text-3xl md:text-4xl font-display font-black mb-3 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+              مؤشر <span className="gold-shimmer">GUPI</span> للحضور العالمي للجامعات
             </h1>
-            <p className="text-lg md:text-xl text-gupi-orange-100 mb-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            <p className="text-base md:text-lg text-gupi-amber-200 font-semibold mb-3 animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
               التميز يُقاس بالحضور العالمي
             </p>
-            <p className="text-base md:text-lg text-gupi-ink-300 max-w-3xl mx-auto leading-relaxed mb-10 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-              يُعد مؤشر الحضور العالمي للجامعات (GUPI) مؤشر رائد ومبتكر يهدف إلى قياس المنظومة الأكاديمية بأساليب جيل الذكاء الاصطناعي. نحن لا نرصد الأرقام الجافة، بل نقرأ الأثر الحقيقي والظهور الدولي للمؤسسات التعليمية عبر معايير علمية متقدمة ومستقلة.
+            <p className="text-sm md:text-base text-gupi-ink-200 max-w-2xl mx-auto leading-relaxed mb-8 animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
+              مؤشر رائد يقيس الأثر الحقيقي والظهور الدولي للجامعات العربية عبر 18 تصنيفاً عالمياً، بمنهجية علمية مستقلة وتقنيات الذكاء الاصطناعي.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center animate-fade-in-up" style={{ animationDelay: '0.45s' }}>
               <Link
                 href="/rankings"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-gupi-orange-900 font-bold text-lg hover:bg-gupi-orange-50 transition-all shadow-xl hover:shadow-2xl hover:scale-105"
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white text-gupi-orange-900 font-bold hover:bg-gupi-orange-50 transition-all shadow-xl hover:shadow-2xl hover:scale-[1.03]"
               >
-                <Trophy className="w-5 h-5" />
+                <Trophy className="w-5 h-5 text-gupi-orange-600 group-hover:rotate-12 transition-transform" />
                 استكشف ترتيب الجامعات
               </Link>
               <Link
                 href="/dashboard"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gupi-orange-600/30 border border-white/30 text-white font-bold text-lg hover:bg-gupi-orange-600/50 transition-all backdrop-blur-sm"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/10 border border-white/25 text-white font-bold hover:bg-white/20 transition-all backdrop-blur-sm"
               >
                 <BarChart3 className="w-5 h-5" />
                 لوحة البيانات التفاعلية
@@ -52,83 +66,96 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Stats bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 max-w-5xl mx-auto">
+          {/* منصة التتويج — أعلى 3 جامعات */}
+          <TopPodium />
+
+          {/* شريط الإحصاءات — عدّادات متحركة */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14 max-w-4xl mx-auto">
             {[
-              { value: '70', label: 'جامعة عربية نُخبة', icon: Database },
-              { value: '18', label: 'تصنيفات عالمية', icon: Globe },
-              { value: '5', label: 'تصنيفات رئيسية كبرى', icon: Trophy },
-              { value: '100', label: 'درجات المؤشر الإجمالية', icon: Calculator },
+              { value: 70, label: 'جامعة عربية نُخبة', icon: Database },
+              { value: 18, label: 'تصنيفاً عالمياً', icon: Globe },
+              { value: 5, label: 'تصنيفات كبرى للتميز', icon: Trophy },
+              { value: 23, label: 'الدرجة الكلية للمؤشر', icon: Calculator },
             ].map((stat, i) => {
               const Icon = stat.icon;
               return (
-                <div
-                  key={i}
-                  className="glass-dark rounded-2xl p-6 text-center animate-fade-in-up"
-                  style={{ animationDelay: `${0.6 + i * 0.1}s` }}
-                >
-                  <Icon className="w-8 h-8 mx-auto mb-2 text-gupi-orange-300" />
-                  <div className="text-3xl font-display font-black text-white">{stat.value}</div>
-                  <div className="text-sm text-gupi-ink-300 mt-1">{stat.label}</div>
-                </div>
+                <Reveal key={i} delay={i * 100}>
+                  <div className="glass-dark rounded-2xl p-5 text-center border border-white/10 hover:border-gupi-amber-400/30 transition-colors">
+                    <Icon className="w-6 h-6 mx-auto mb-2 text-gupi-amber-300" />
+                    <div className="text-2xl md:text-3xl font-display font-black text-white">
+                      <CountUp end={stat.value} />
+                    </div>
+                    <div className="text-xs text-gupi-ink-300 mt-1">{stat.label}</div>
+                  </div>
+                </Reveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* Strategic Vision */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gupi-orange-50 text-gupi-orange-700 text-sm font-medium mb-4">
-              <Target className="w-4 h-4" />
-              الرؤية العامة والمنهجية
-            </div>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-gupi-orange-950 mb-4">
-              Strategic Vision
-            </h2>
-            <p className="text-lg text-gupi-ink-600 max-w-3xl mx-auto leading-relaxed">
-              تهدف منصة نخبة الجامعات العربية GUPI إلى إنشاء مؤشر عالمي عربي متخصص في قياس وتقييم حضور الجامعات، معتمدة على منهجية حديثة فائقة التنسيق تدمج بين:
-            </p>
-          </div>
+      {/* ================= شريط التصنيفات المتحرك ================= */}
+      <section className="bg-gupi-orange-950 border-b border-gupi-amber-400/20 py-3.5 marquee" dir="ltr" aria-label="التصنيفات العالمية المعتمدة">
+        <div className="marquee-track">
+          {[...RANKINGS_TICKER, ...RANKINGS_TICKER].map((name, i) => (
+            <span key={i} className="flex items-center gap-2 mx-5 text-xs font-semibold tracking-wider text-gupi-amber-200/80 whitespace-nowrap">
+              <Medal className="w-3.5 h-3.5 text-gupi-amber-400/70" />
+              {name}
+            </span>
+          ))}
+        </div>
+      </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      {/* ================= الرؤية العامة ================= */}
+      <section className="py-16 bg-white relative">
+        <div className="absolute inset-0 dot-grid-dark opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_60%)]" aria-hidden="true" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <SectionHeader
+              icon={Target}
+              eyebrow="الرؤية العامة والمنهجية"
+              title="منصة نخبة الجامعات العربية"
+              subtitle="مؤشر عالمي عربي متخصص في قياس وتقييم حضور الجامعات، بمنهجية حديثة تدمج بين أربعة محاور متكاملة"
+            />
+          </Reveal>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
             {[
               { title: 'البيانات الأكاديمية', icon: Database, desc: 'تحليل شامل للبيانات الأكاديمية الموثقة' },
               { title: 'التحليل الرقمي', icon: BarChart3, desc: 'أدوات تحليل رقمي متقدمة لقياس الأداء' },
-              { title: 'الذكاء الاصطناعي', icon: Calculator, desc: 'توظيف تقنيات الذكاء الاصطناعي في التقييم' },
+              { title: 'الذكاء الاصطناعي', icon: Sparkles, desc: 'توظيف تقنيات الذكاء الاصطناعي في التقييم' },
               { title: 'اللوحات التفاعلية', icon: Monitor, desc: 'لوحات بيانات تفاعلية لعرض النتائج' },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
-                <div key={i} className="card-hover bg-gradient-to-br from-gupi-ink-50 to-gupi-orange-50/50 rounded-2xl p-6 border border-gupi-ink-100">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gupi-orange-400 to-gupi-orange-600 flex items-center justify-center mb-4">
-                    <Icon className="w-7 h-7 text-white" />
+                <Reveal key={i} delay={i * 90}>
+                  <div className="shine-card card-hover group h-full bg-gradient-to-br from-gupi-ink-50 to-gupi-orange-50/60 rounded-2xl p-5 border border-gupi-ink-100 hover:border-gupi-orange-300">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-gupi-orange-400 to-gupi-orange-600 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+                      <Icon className="w-5 h-5 text-white" />
+                    </div>
+                    <h3 className="font-display font-bold text-base text-gupi-orange-900 mb-1.5">{item.title}</h3>
+                    <p className="text-xs text-gupi-ink-600 leading-relaxed">{item.desc}</p>
                   </div>
-                  <h3 className="font-display font-bold text-lg text-gupi-orange-900 mb-2">{item.title}</h3>
-                  <p className="text-sm text-gupi-ink-600">{item.desc}</p>
-                </div>
+                </Reveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* Index Pillars */}
-      <section className="py-20 section-gradient">
+      {/* ================= ركائز المؤشر ================= */}
+      <section className="py-16 section-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gupi-orange-100 text-gupi-orange-700 text-sm font-medium mb-4">
-              <Layers className="w-4 h-4" />
-              Index Pillars
-            </div>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-gupi-orange-950 mb-4">
-              ركائز قياس الأداء الأكاديمي
-            </h2>
-          </div>
+          <Reveal>
+            <SectionHeader
+              icon={Layers}
+              eyebrow="Index Pillars"
+              title="ركائز قياس الأداء الأكاديمي"
+              subtitle="ستة محاور متكاملة ترسم صورة الحضور الدولي لكل جامعة"
+            />
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
               {
                 title: 'الحضور الأكاديمي العالمي',
@@ -140,237 +167,224 @@ export default function HomePage() {
                 title: 'التأثير البحثي والنشر العلمي',
                 icon: BookOpen,
                 desc: 'قياس جودة المخرجات البحثية، الاقتباسات الحقيقية، ومعدلات النشر في المجلات المعتمدة.',
-                color: 'from-emerald-500 to-emerald-700',
+                color: 'from-gupi-sage-500 to-gupi-sage-700',
               },
               {
                 title: 'الظهور في التصنيفات الدولية',
                 icon: Award,
-                desc: 'قراءة موحدة لتموضع الجامعة في قواعد البيانات العالمية (QS, THE, ARWU, مؤشر البحث العلمي AD, التصنيف العربي) بمرونة وعمق.',
-                color: 'from-purple-500 to-purple-700',
+                desc: 'قراءة موحدة لتموضع الجامعة في قواعد البيانات العالمية (QS, THE, ARWU, AD, التصنيف العربي).',
+                color: 'from-gupi-amber-500 to-gupi-amber-700',
               },
               {
                 title: 'القوة الرقمية للجامعات',
                 icon: Monitor,
                 desc: 'تحليل جودة الحضور الرقمي، البنية السحابية للمواقع التعليمية، وقوة حضور الويب الأكاديمي.',
-                color: 'from-orange-500 to-orange-700',
+                color: 'from-gupi-orange-400 to-gupi-orange-600',
               },
               {
                 title: 'السمعة الأكاديمية الدولية',
                 icon: Users,
                 desc: 'مؤشر استبياني وتحليلي دقيق يستطلع آراء الأكاديميين وجهات التوظيف العالمية حول الخريجين.',
-                color: 'from-rose-500 to-rose-700',
+                color: 'from-gupi-sage-400 to-gupi-sage-600',
               },
               {
                 title: 'مؤشرات التعاون العلمي',
                 icon: Handshake,
                 desc: 'حساب حجم الشراكات الدولية المشتركة والمشاريع البحثية الممولة العابرة للحدود الجغرافية.',
-                color: 'from-cyan-500 to-cyan-700',
+                color: 'from-gupi-amber-400 to-gupi-amber-600',
               },
             ].map((pillar, i) => {
               const Icon = pillar.icon;
               return (
-                <div key={i} className="card-hover bg-white rounded-2xl p-6 border border-gupi-ink-100 shadow-sm">
-                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${pillar.color} flex items-center justify-center mb-4`}>
-                    <Icon className="w-7 h-7 text-white" />
+                <Reveal key={i} delay={(i % 3) * 90}>
+                  <div className="shine-card card-hover group h-full bg-white rounded-2xl p-5 border border-gupi-ink-100 hover:border-gupi-orange-300 shadow-sm">
+                    <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${pillar.color} flex items-center justify-center mb-3 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-300`}>
+                      <Icon className="w-5 h-5 text-white" />
+                    </div>
+                    <h3 className="font-display font-bold text-base text-gupi-orange-900 mb-2">{pillar.title}</h3>
+                    <p className="text-xs text-gupi-ink-600 leading-relaxed">{pillar.desc}</p>
                   </div>
-                  <h3 className="font-display font-bold text-lg text-gupi-orange-900 mb-3">{pillar.title}</h3>
-                  <p className="text-sm text-gupi-ink-600 leading-relaxed">{pillar.desc}</p>
-                </div>
+                </Reveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* GUPI Future CTA */}
-      <section className="py-20 bg-gupi-orange-950 text-white relative overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gupi-orange-500/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-80 h-80 bg-gupi-orange-700/30 rounded-full blur-3xl" />
-        </div>
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-            <span className="gold-text">GUPI</span> — مستقبل قياس الحضور الدولي للجامعات يبدأ هنا
-          </h2>
-          <p className="text-lg text-gupi-ink-300 mb-8 leading-relaxed">
-            تم تصميم مؤشر GUPI ليكون الأداة التحليلية الأكثر مرونة وعمقاً بين أيدي الجامعات الطامحة للريادة وصناع القرار بقطاع التعليم العالي والبحث العلمي.
-          </p>
-          <Link
-            href="/dashboard"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-gupi-orange-400 to-gupi-orange-600 text-white font-bold text-lg hover:scale-105 transition-all shadow-xl"
-          >
-            <BarChart3 className="w-5 h-5" />
-            استكشف لوحة البيانات التفاعلية
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-        </div>
-      </section>
+      {/* ================= منهجية المؤشر ================= */}
+      <section className="py-16 bg-white relative">
+        <div className="absolute inset-0 dot-grid-dark opacity-40 [mask-image:radial-gradient(ellipse_at_center,black,transparent_65%)]" aria-hidden="true" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Reveal>
+            <SectionHeader
+              icon={Calculator}
+              eyebrow="منهج المؤشر"
+              title="معادلة مؤشر الحضور العالمي"
+              subtitle="إطار كمي معياري مستقل — حضور دولي عبر 18 تصنيفاً، وتميز أكاديمي عبر 5 تصنيفات كبرى"
+            />
+          </Reveal>
 
-      {/* Methodology Preview */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gupi-orange-50 text-gupi-orange-700 text-sm font-medium mb-4">
-              <Calculator className="w-4 h-4" />
-              منهج المؤشر
+          {/* المعادلة */}
+          <Reveal>
+            <div className="max-w-3xl mx-auto mb-10">
+              <div className="bg-gradient-to-br from-gupi-orange-50 to-gupi-amber-100/60 rounded-3xl p-6 md:p-8 border border-gupi-orange-200">
+                <p className="text-xs text-gupi-orange-600 font-semibold mb-5 text-center">المعادلة الإجمالية لدرجة مؤشر GUPI</p>
+                <div className="flex items-center justify-center gap-2.5 flex-wrap">
+                  <div className="bg-white rounded-xl px-5 py-2.5 shadow-md border border-gupi-orange-100">
+                    <span className="font-display font-bold text-base text-gupi-orange-900">GUPI Score</span>
+                  </div>
+                  <span className="text-2xl font-bold text-gupi-orange-400">=</span>
+                  <div className="bg-gupi-orange-600 text-white rounded-xl px-5 py-2.5 shadow-md">
+                    <span className="font-bold text-sm">الحضور الدولي (18)</span>
+                  </div>
+                  <span className="text-2xl font-bold text-gupi-orange-400">+</span>
+                  <div className="bg-gupi-amber-500 text-white rounded-xl px-5 py-2.5 shadow-md">
+                    <span className="font-bold text-sm">التميز الأكاديمي (5)</span>
+                  </div>
+                  <span className="text-2xl font-bold text-gupi-orange-400">=</span>
+                  <div className="bg-gradient-to-br from-gupi-orange-700 to-gupi-orange-900 text-white rounded-xl px-5 py-2.5 shadow-lg">
+                    <span className="font-display font-black text-lg gold-shimmer">23 درجة</span>
+                  </div>
+                </div>
+
+                {/* شريط الأوزان المتحرك */}
+                <div className="mt-6">
+                  <div className="flex h-3 rounded-full overflow-hidden bg-white shadow-inner">
+                    <div className="bar-fill bg-gradient-to-l from-gupi-orange-500 to-gupi-orange-700" style={{ width: '78%' }} />
+                    <div className="bar-fill bg-gradient-to-l from-gupi-amber-400 to-gupi-amber-600" style={{ width: '22%', animationDelay: '0.7s' }} />
+                  </div>
+                  <div className="flex justify-between mt-2 text-[11px] font-semibold">
+                    <span className="text-gupi-orange-700">الحضور في التصنيفات — 18 درجة</span>
+                    <span className="text-gupi-amber-700">نقاط التميز — 5 درجات</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-gupi-orange-950 mb-4">
-              منهجية مؤشر الحضور العالمي للجامعات
-            </h2>
-            <p className="text-lg text-gupi-ink-600 max-w-3xl mx-auto">
-              إطار كمي ومعياري مستقل — نموذج يقيس مستوى الحضور الدولي للجامعات العربية يجمع بين كثافة البحث العلمي والتصنيفات الدولية.
-            </p>
+          </Reveal>
+
+          {/* البعدان */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <Reveal>
+              <div className="shine-card h-full bg-gradient-to-br from-gupi-orange-50 to-white rounded-2xl p-6 border border-gupi-orange-100 hover:border-gupi-orange-300 transition-colors">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-gupi-orange-600 text-white flex items-center justify-center font-display font-black text-lg shadow-gupi-primary">
+                    18
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-base text-gupi-orange-900">الظهور في التصنيفات العالمية</h3>
+                    <p className="text-xs text-gupi-orange-600">Global Ranking Presence</p>
+                  </div>
+                </div>
+                <p className="text-gupi-ink-600 text-xs leading-relaxed mb-3">
+                  يُقاس مدى ظهور الجامعة وثباتها في التصنيفات الدولية المعتمدة، مع التحقق المباشر من المشاركة الرسمية لكل جامعة عبر المواقع الإلكترونية لكل تصنيف. كل مشاركة تمنح الجامعة درجة حضور.
+                </p>
+                <ul className="space-y-1.5 text-xs">
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> مشاركة الجامعة: 1 درجة</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-ink-300" /> عدم المشاركة: 0 درجة</li>
+                </ul>
+                <div className="mt-3 pt-3 border-t border-gupi-orange-100">
+                  <p className="text-[11px] text-gupi-orange-600 font-semibold">الهدف: قياس الانتشار الدولي والاعتراف العالمي</p>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={120}>
+              <div className="shine-card h-full bg-gradient-to-br from-gupi-amber-50 to-white rounded-2xl p-6 border border-gupi-amber-200 hover:border-gupi-amber-400 transition-colors">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-xl bg-gupi-amber-500 text-white flex items-center justify-center font-display font-black text-lg shadow-md">
+                    5
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-base text-gupi-amber-800">التميز في التصنيفات الكبرى</h3>
+                    <p className="text-xs text-gupi-amber-600">Top Rankings Excellence</p>
+                  </div>
+                </div>
+                <p className="text-gupi-ink-600 text-xs leading-relaxed mb-3">
+                  تُمنح للجامعات التي تحقق مراكز متقدمة في التصنيفات الكبرى (ARWU - QS - THE - AD - التصنيف العربي)، وتعكس جودة الأداء الفعلي وليس مجرد الظهور: المركز الأول = 1.0، الثاني = 0.9، ... العاشر = 0.1.
+                </p>
+                <ul className="space-y-1.5 text-xs">
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> المركز 1: 1.0 نقطة</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> المركز 2: 0.9 نقطة</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> ... حتى المركز 10: 0.1 نقطة</li>
+                </ul>
+                <div className="mt-3 pt-3 border-t border-gupi-amber-200">
+                  <p className="text-[11px] text-gupi-amber-700 font-semibold">الهدف: قياس التميز والريادة الأكاديمية</p>
+                </div>
+              </div>
+            </Reveal>
           </div>
 
-          {/* Score equation */}
-          <div className="max-w-3xl mx-auto mb-12">
-            <div className="bg-gradient-to-br from-gupi-orange-50 to-gupi-orange-100/50 rounded-3xl p-8 border-2 border-gupi-orange-200">
-              <div className="text-center">
-                <p className="text-sm text-gupi-orange-600 font-medium mb-4">المعادلة الإجمالية لدرجة مؤشر GUPI</p>
-                <div className="flex items-center justify-center gap-3 flex-wrap">
-                  <div className="bg-white rounded-xl px-6 py-3 shadow-md">
-                    <span className="font-display font-bold text-xl text-gupi-orange-900">GUPI Score</span>
-                  </div>
-                  <span className="text-3xl font-bold text-gupi-orange-400">=</span>
-                  <div className="bg-gupi-orange-600 text-white rounded-xl px-6 py-3 shadow-md">
-                    <span className="font-bold text-lg">الحضور الدولي (70%)</span>
-                  </div>
-                  <span className="text-3xl font-bold text-gupi-orange-400">+</span>
-                  <div className="bg-gupi-amber-500 text-white rounded-xl px-6 py-3 shadow-md">
-                    <span className="font-bold text-lg">التميز الأكاديمي (30%)</span>
-                  </div>
-                  <span className="text-3xl font-bold text-gupi-orange-400">=</span>
-                  <div className="bg-gradient-to-br from-gupi-orange-700 to-gupi-orange-900 text-white rounded-xl px-6 py-3 shadow-lg">
-                    <span className="font-display font-black text-2xl">100 درجة</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Two dimensions */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {/* Dimension 1 */}
-            <div className="bg-gradient-to-br from-gupi-orange-50 to-white rounded-2xl p-8 border border-gupi-orange-100">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-gupi-orange-600 text-white flex items-center justify-center font-display font-black text-xl">
-                  18
-                </div>
-                <div>
-                  <h3 className="font-display font-bold text-xl text-gupi-orange-900">الظهور في التصنيفات العالمية</h3>
-                  <p className="text-sm text-gupi-orange-600">Global Ranking Presence</p>
-                </div>
-              </div>
-              <p className="text-gupi-ink-600 text-sm leading-relaxed mb-4">
-                يتم قياس مدى ظهور الجامعة وثباتها في التصنيفات الدولية الرئيسية، حيث يتم التحقق المباشر من المشاركة الرسمية لكل جامعة عبر المواقع الإلكترونية لكل تصنيف. كل مشاركة تمنح الجامعة درجة حضور.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-green-500" /> مشاركة الجامعة: 1 درجة</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-red-400" /> عدم المشاركة: 0 درجة</li>
-              </ul>
-              <div className="mt-4 pt-4 border-t border-gupi-orange-100">
-                <p className="text-xs text-gupi-orange-600 font-medium">الهدف: قياس الانتشار الدولي والاعتراف العالمي</p>
-              </div>
-            </div>
-
-            {/* Dimension 2 */}
-            <div className="bg-gradient-to-br from-gupi-amber-50 to-white rounded-2xl p-8 border border-gupi-amber-200">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-xl bg-gupi-amber-500 text-white flex items-center justify-center font-display font-black text-xl">
-                  5
-                </div>
-                <div>
-                  <h3 className="font-display font-bold text-xl text-gupi-amber-800">التميز في التصنيفات الكبرى</h3>
-                  <p className="text-sm text-gupi-amber-600">Top Rankings Excellence</p>
-                </div>
-              </div>
-              <p className="text-gupi-ink-600 text-sm leading-relaxed mb-4">
-                يُمنح للجامعات التي تحقق مراكز متقدمة في التصنيفات الكبرى (ARWU - QS - THE)، ويعكس هذا البعد جودة الأداء الفعلي وليس مجرد الظهور. يتم احتساب نقاط التميز وفق ترتيب الجامعة: المركز الأول = 1.0، الثاني = 0.9، ... العاشر = 0.1.
-              </p>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-green-500" /> المركز 1: 1.0 نقطة</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-green-500" /> المركز 2: 0.9 نقطة</li>
-                <li className="flex items-center gap-2 text-sm"><CheckCircle2 className="w-4 h-4 text-green-500" /> ... حتى المركز 10: 0.1 نقطة</li>
-              </ul>
-              <div className="mt-4 pt-4 border-t border-gupi-amber-200">
-                <p className="text-xs text-gupi-amber-700 font-medium">الهدف: قياس التميز والريادة الأكاديمية</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
+          <Reveal className="text-center mt-10">
             <Link
               href="/methodology"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gupi-orange-600 text-white font-bold hover:bg-gupi-orange-700 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gupi-orange-600 text-white text-sm font-bold hover:bg-gupi-orange-700 hover:scale-[1.03] transition-all shadow-gupi-primary"
             >
               عرض المنهجية الكاملة
               <ArrowLeft className="w-4 h-4" />
             </Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 
-      {/* Algorithm Steps */}
-      <section className="py-20 section-gradient">
+      {/* ================= خطوات الاحتساب ================= */}
+      <section className="py-16 section-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gupi-orange-100 text-gupi-orange-700 text-sm font-medium mb-4">
-              <TrendingUp className="w-4 h-4" />
-              الخوارزمية ومعادلة التقييم
-            </div>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-gupi-orange-950 mb-4">
-              خطوات احتساب المؤشر
-            </h2>
-          </div>
+          <Reveal>
+            <SectionHeader
+              icon={TrendingUp}
+              eyebrow="الخوارزمية ومعادلة التقييم"
+              title="خطوات احتساب المؤشر"
+            />
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
             {[
               { step: 1, title: 'الإنتاج العلمي', desc: 'اختيار الجامعات الأعلى في كثافة النشر العلمي (أعلى 70 جامعة عربية).', icon: Database },
-              { step: 2, title: 'تحليل الظهور', desc: 'التحقق الرقمي من الظهور في 18 تصنيفات عالمية معتمدة.', icon: Globe },
-              { step: 3, title: 'نقاط التميز', desc: 'احتساب الترتيب والريادة في تصنيفات QS وTHE وShanghai والتصنيف العربي ومؤشر البحث العلمي AD.', icon: Trophy },
+              { step: 2, title: 'تحليل الظهور', desc: 'التحقق الرقمي من الظهور في 18 تصنيفاً عالمياً معتمداً.', icon: Globe },
+              { step: 3, title: 'نقاط التميز', desc: 'احتساب الترتيب والريادة في تصنيفات QS وTHE وشنغهاي وAD والتصنيف العربي.', icon: Trophy },
               { step: 4, title: 'النتيجة النهائية', desc: 'استخراج درجة المؤشر المعتمدة وحفظها في قاعدة البيانات (GUPI Score).', icon: Calculator },
-            ].map((item) => {
+            ].map((item, i) => {
               const Icon = item.icon;
               return (
-                <div key={item.step} className="relative">
-                  <div className="card-hover bg-white rounded-2xl p-6 border border-gupi-ink-100">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gupi-orange-500 to-gupi-orange-700 text-white flex items-center justify-center font-display font-black">
-                        {item.step}
+                <Reveal key={item.step} delay={i * 100}>
+                  <div className="relative h-full">
+                    <div className="shine-card card-hover h-full bg-white rounded-2xl p-5 border border-gupi-ink-100 hover:border-gupi-orange-300">
+                      <div className="flex items-center gap-3 mb-3">
+                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-gupi-orange-500 to-gupi-orange-700 text-white flex items-center justify-center font-display font-black text-sm shadow-gupi-primary">
+                          {item.step}
+                        </div>
+                        <Icon className="w-5 h-5 text-gupi-orange-500" />
                       </div>
-                      <Icon className="w-6 h-6 text-gupi-orange-500" />
+                      <h3 className="font-display font-bold text-base text-gupi-orange-900 mb-1.5">{item.title}</h3>
+                      <p className="text-xs text-gupi-ink-600 leading-relaxed">{item.desc}</p>
                     </div>
-                    <h3 className="font-display font-bold text-lg text-gupi-orange-900 mb-2">{item.title}</h3>
-                    <p className="text-sm text-gupi-ink-600 leading-relaxed">{item.desc}</p>
+                    {item.step < 4 && (
+                      <div className="hidden md:block absolute top-1/2 -left-4 w-5 border-t-2 border-dashed border-gupi-orange-300" aria-hidden="true" />
+                    )}
                   </div>
-                  {item.step < 4 && (
-                    <div className="hidden md:block absolute top-1/2 -left-3 w-6 h-0.5 bg-gupi-orange-200" />
-                  )}
-                </div>
+                </Reveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* Quality Assurance */}
-      <section className="py-20 bg-white">
+      {/* ================= ضمان الجودة ================= */}
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gupi-orange-50 text-gupi-orange-700 text-sm font-medium mb-4">
-              <Shield className="w-4 h-4" />
-              إجراءات ضمان الجودة
-            </div>
-            <h2 className="text-3xl md:text-5xl font-display font-bold text-gupi-orange-950 mb-4">
-              مبررات تصميم المنهجية
-            </h2>
-          </div>
+          <Reveal>
+            <SectionHeader
+              icon={Shield}
+              eyebrow="إجراءات ضمان الجودة"
+              title="مبررات تصميم المنهجية"
+            />
+          </Reveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               {
                 title: 'الحيادية والتوازن',
-                desc: 'استخدام 18 تصنيفات متنوعة للحد التام من التحيز لصالح أي فلسفة تصنيفية واحدة.',
+                desc: 'استخدام 18 تصنيفاً متنوعاً للحد التام من التحيز لصالح أي فلسفة تصنيفية واحدة.',
                 icon: Shield,
               },
               {
@@ -386,36 +400,46 @@ export default function HomePage() {
             ].map((item, i) => {
               const Icon = item.icon;
               return (
-                <div key={i} className="card-hover bg-gradient-to-br from-gupi-ink-50 to-gupi-orange-50/30 rounded-2xl p-6 border border-gupi-ink-100">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gupi-orange-500 to-gupi-orange-700 flex items-center justify-center mb-4">
-                    <Icon className="w-7 h-7 text-white" />
+                <Reveal key={i} delay={i * 100}>
+                  <div className="shine-card card-hover group h-full bg-gradient-to-br from-gupi-ink-50 to-gupi-orange-50/40 rounded-2xl p-5 border border-gupi-ink-100 hover:border-gupi-orange-300">
+                    <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-gupi-orange-500 to-gupi-orange-700 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                      <Icon className="w-5 h-5 text-white" />
+                    </div>
+                    <h3 className="font-display font-bold text-base text-gupi-orange-900 mb-2">{item.title}</h3>
+                    <p className="text-xs text-gupi-ink-600 leading-relaxed">{item.desc}</p>
                   </div>
-                  <h3 className="font-display font-bold text-lg text-gupi-orange-900 mb-3">{item.title}</h3>
-                  <p className="text-sm text-gupi-ink-600 leading-relaxed">{item.desc}</p>
-                </div>
+                </Reveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-br from-gupi-orange-900 to-gupi-orange-950 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-5xl font-display font-bold mb-4">
-            القائمة النهائية لمؤشر GUPI لأفضل 70 جامعة عربية
-          </h2>
-          <p className="text-lg text-gupi-ink-300 mb-8">
-            اكتشف أحدث ترتيب واستكشف مواقع المؤسسات التعليمية ضمن الإطار القياسي الشامل
-          </p>
-          <Link
-            href="/rankings"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-gupi-orange-900 font-bold text-lg hover:scale-105 transition-all shadow-xl"
-          >
-            <Trophy className="w-5 h-5" />
-            اكتشف ترتيب الجامعات الآن
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
+      {/* ================= الدعوة الختامية ================= */}
+      <section className="relative py-16 bg-gupi-orange-950 text-white overflow-hidden">
+        <div className="absolute inset-0" aria-hidden="true">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-gupi-orange-500/20 rounded-full blur-3xl animate-drift" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-gupi-amber-600/20 rounded-full blur-3xl animate-drift-slow" />
+          <div className="absolute inset-0 dot-grid opacity-50 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
+        </div>
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Reveal>
+            <SectionHeader
+              dark
+              icon={Trophy}
+              eyebrow="GUPI 2027"
+              title={<>القائمة النهائية لمؤشر <span className="gold-shimmer">GUPI</span> لأفضل 70 جامعة عربية</>}
+              subtitle="اكتشف أحدث ترتيب واستكشف مواقع المؤسسات التعليمية ضمن الإطار القياسي الشامل"
+            />
+            <Link
+              href="/rankings"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-gupi-amber-400 to-gupi-orange-600 text-gupi-orange-950 font-bold hover:scale-105 transition-all shadow-xl glow-gold"
+            >
+              <Trophy className="w-5 h-5" />
+              اكتشف ترتيب الجامعات الآن
+              <ArrowLeft className="w-5 h-5" />
+            </Link>
+          </Reveal>
         </div>
       </section>
     </main>

@@ -138,3 +138,144 @@ body {
 .rank-2 { background: linear-gradient(135deg, #CDD1C5, #939C82); color: white; }
 .rank-3 { background: linear-gradient(135deg, #EDAD67, #A16626); color: white; }
 .rank-other { background: #F8ECDF; color: #A16626; border: 2px solid #F2C492; }
+
+/* ============================================================
+   GUPI Signature Effects — مؤثرات الهوية البصرية الفريدة
+   ============================================================ */
+
+/* نص ذهبي متلألئ (لمعة متحركة) */
+.gold-shimmer {
+  background: linear-gradient(110deg, #CEA250 15%, #F8DCA8 38%, #F2C063 50%, #F8DCA8 62%, #CEA250 85%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmer 4.5s linear infinite;
+}
+@keyframes shimmer {
+  to { background-position: -220% center; }
+}
+
+/* شريط التصنيفات المتحرك (Marquee) */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: marquee 45s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* الظهور التدريجي عند التمرير */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* لمعة ضوئية تمر على البطاقة عند التحويم */
+.shine-card {
+  position: relative;
+  overflow: hidden;
+}
+.shine-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 42%, rgba(255, 255, 255, 0.45) 50%, transparent 58%);
+  transform: translateX(-130%) skewX(-8deg);
+  transition: transform 0.9s ease;
+  pointer-events: none;
+}
+.shine-card:hover::after {
+  transform: translateX(130%) skewX(-8deg);
+}
+
+/* توهج ذهبي */
+.glow-gold {
+  box-shadow: 0 0 24px rgba(242, 192, 99, 0.4), 0 0 72px rgba(232, 150, 60, 0.22);
+}
+
+/* حلقة دوارة متدرجة (ختم الميدالية) */
+@keyframes spin-slow {
+  to { transform: rotate(360deg); }
+}
+.ring-conic {
+  background: conic-gradient(from 0deg, #F2C063, #E8963C, #A16626, #F8DCA8, #F2C063);
+  animation: spin-slow 7s linear infinite;
+}
+
+/* سحب متوهجة عائمة */
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(34px, -42px) scale(1.12); }
+  66% { transform: translate(-24px, 22px) scale(0.94); }
+}
+.animate-drift {
+  animation: drift 13s ease-in-out infinite;
+}
+.animate-drift-slow {
+  animation: drift 19s ease-in-out infinite reverse;
+}
+
+/* شبكة نقاط زخرفية */
+.dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1.6px);
+  background-size: 24px 24px;
+}
+.dot-grid-dark {
+  background-image: radial-gradient(rgba(161, 102, 38, 0.14) 1px, transparent 1.6px);
+  background-size: 24px 24px;
+}
+
+/* شريط تعبئة متحرك (أوزان الدرجات) */
+@keyframes fill-bar {
+  from { width: 0; }
+}
+.bar-fill {
+  animation: fill-bar 1.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* نبض حلقات ناعم */
+@keyframes ping-soft {
+  0% { transform: scale(1); opacity: 0.7; }
+  80%, 100% { transform: scale(2.1); opacity: 0; }
+}
+.animate-ping-soft {
+  animation: ping-soft 2.2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* احترام تفضيل تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+}
