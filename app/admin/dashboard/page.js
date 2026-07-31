@@ -5,7 +5,7 @@ import {
   Database, Upload, Plus, Edit2, Trash2, X, Search, Save,
   LogOut, AlertCircle, CheckCircle2, Download, Settings, Globe,
   Trophy, BarChart3, Table, Sliders, Eye, EyeOff, ChevronUp, ChevronDown,
-  Award, Target, TrendingUp
+  Award, Target, TrendingUp, FileText
 } from 'lucide-react';
 
 const ALL_FIELDS = [
@@ -38,6 +38,7 @@ const TABS = [
   { key: 'overview', label: 'نظرة عامة', icon: BarChart3 },
   { key: 'universities', label: 'إدارة الجامعات', icon: Table },
   { key: 'rankings', label: 'إعداد التصنيفات', icon: Sliders },
+  { key: 'content', label: 'إدارة المحتوى', icon: FileText },
   { key: 'settings', label: 'إعدادات المؤشر', icon: Settings },
 ];
 
@@ -128,6 +129,7 @@ export default function AdminDashboardPage() {
             {tab === 'overview' && <OverviewTab universities={universities} settings={settings} />}
             {tab === 'universities' && <UniversitiesTab universities={universities} configs={configs} onReload={loadAll} />}
             {tab === 'rankings' && <RankingsTab configs={configs} settings={settings} onReload={loadAll} />}
+            {tab === 'content' && <ContentTab />}
             {tab === 'settings' && <SettingsTab settings={settings} onReload={loadAll} />}
           </>
         )}
@@ -892,6 +894,127 @@ function SettingsTab({ settings, onReload }) {
           <div className="bg-white text-gupi-orange-900 rounded-xl px-6 py-3">
             <span className="font-black text-xl">{local.max_total_score || '100'} درجات</span>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============ CONTENT TAB ============ */
+const SECTION_LABELS = {
+  hero: 'الواجهة الرئيسية (Hero)',
+  stats: 'الإحصاءات',
+  vision: 'الرؤية العامة',
+  vision_pillars: 'محاور الرؤية',
+  independence: 'الاستقلالية والحياد',
+  formula: 'منهجية المؤشر',
+  cta: 'الدعوة الختامية',
+};
+
+function ContentTab() {
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
+
+  useEffect(() => {
+    fetch('/api/content/meta')
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setItems(data);
+        }
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
+
+  function updateValue(key, value) {
+    setItems(items.map((item) => item.key === key ? { ...item, value } : item));
+    setSaved(false);
+  }
+
+  async function handleSave() {
+    setSaving(true);
+    const payload = {};
+    for (const item of items) {
+      payload[item.key] = item.value;
+    }
+    await fetch('/api/content', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    setSaving(false);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 3000);
+  }
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="w-12 h-12 border-4 border-gupi-orange-200 border-t-gupi-orange-600 rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  const sections = [...new Set(items.map((i) => i.section))];
+  const sectionItems = items.filter((i) => i.section === activeSection);
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-4 flex-wrap">
+        <button onClick={handleSave} disabled={saving}
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gupi-orange-600 text-white font-medium hover:bg-gupi-orange-700 disabled:opacity-50">
+          <Save className="w-4 h-4" /> {saving ? 'جاري الحفظ...' : 'حفظ التغييرات'}
+        </button>
+        {saved && <span className="flex items-center gap-1 text-green-600 text-sm"><CheckCircle2 className="w-4 h-4" /> تم الحفظ بنجاح</span>}
+      </div>
+
+      {/* Section tabs */}
+      <div className="flex gap-2 flex-wrap">
+        {sections.map((sec) => (
+          <button
+            key={sec}
+            onClick={() => setActiveSection(sec)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+              activeSection === sec
+                ? 'bg-gupi-orange-600 text-white'
+                : 'bg-white border border-gupi-ink-200 text-gupi-ink-600 hover:bg-gupi-ink-50'
+            }`}
+          >
+            {SECTION_LABELS[sec] || sec}
+          </button>
+        ))}
+      </div>
+
+      {/* Content fields */}
+      <div className="bg-white rounded-2xl shadow p-6">
+        <div className="space-y-5">
+          {sectionItems.map((item) => (
+            <div key={item.key}>
+              <label className="block text-sm font-medium text-gupi-ink-700 mb-1.5">
+                {item.label}
+                <span className="text-xs text-gupi-ink-400 mr-2 font-normal">({item.key})</span>
+              </label>
+              {item.type === 'textarea' ? (
+                <textarea
+                  value={item.value || ''}
+                  onChange={(e) => updateValue(item.key, e.target.value)}
+                  rows={4}
+                  className="w-full px-3 py-2.5 rounded-lg border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all text-sm leading-relaxed resize-y"
+                />
+              ) : (
+                <input
+                  type={item.type === 'number' ? 'number' : 'text'}
+                  value={item.value || ''}
+                  onChange={(e) => updateValue(item.key, e.target.value)}
+                  className="w-full px-3 py-2.5 rounded-lg border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all text-sm"
+                />
+              )}
+            </div>
+          ))}
         </div>
       </div>
     </div>

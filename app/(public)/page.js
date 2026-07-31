@@ -1,3 +1,6 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Globe, BookOpen, Award, Monitor, Users, Handshake,
@@ -15,7 +18,59 @@ const RANKINGS_TICKER = [
   'QS Arab', 'THE Arab', 'UniRank Arabic', 'THE Impact', 'GreenMetric',
 ];
 
+const DEFAULT_CONTENT = {
+  hero_badge: 'Global University Presence Index • 2027',
+  hero_title: 'مؤشر الحضور العالمي للجامعات (GUPI)',
+  hero_subtitle: 'التميز يُقاس بالحضور العالمي',
+  hero_description: 'مؤشر رائد عربي متخصص في قياس وتقييم الظهور الدولي للجامعات، معتمدة على منهجية حديثة فائقة التنسيق عبر 18 تصنيفاً عالمياً تدمج بين منهجية علمية مستقلة وتقنيات الذكاء الاصطناعي.',
+  hero_cta1: 'استكشف ترتيب الجامعات',
+  hero_cta2: 'لوحة البيانات التفاعلية',
+  stat_universities: '70',
+  stat_universities_label: 'جامعة عربية نُخبة',
+  stat_rankings: '18',
+  stat_rankings_label: 'تصنيفاً عالمياً',
+  stat_excellence: '5',
+  stat_excellence_label: 'تصنيفات كبرى للتميز',
+  stat_total: '100',
+  stat_total_label: 'الدرجة الكلية للمؤشر',
+  vision_eyebrow: 'الرؤية العامة والمنهجية',
+  vision_title: 'منصة نخبة الجامعات العربية',
+  vision_subtitle: '«نخبة الجامعات العربية – TOP A University» منصة رقمية مستقلة تركز على الجامعات العربية في فضاء التصنيفات العالمية، وتقدّم محتوى تحليلياً مبسطاً يساعد الطالب وصانع القرار والمهتم بالتعليم العالي على قراءة الأرقام والتقارير بلغة واضحة وعصرية. نحن نؤمن أن الوصول إلى معلومة تصنيفية موثوقة ومنسقة هو الخطوة الأولى نحو قرار أكاديمي أفضل.',
+  vision_mission: 'تهدف منصة نخبة الجامعات العربية عبر GUPI إلى إنشاء مؤشر عالمي عربي متخصص في قياس وتقييم حضور الجامعات، معتمدة على منهجية حديثة فائقة التنسيق تدمج بين:',
+  pillar1_title: 'البيانات الأكاديمية',
+  pillar1_desc: 'تحليل شامل للبيانات الأكاديمية الموثقة',
+  pillar2_title: 'التحليل الرقمي',
+  pillar2_desc: 'أدوات تحليل رقمي متقدمة لقياس الأداء',
+  pillar3_title: 'الذكاء الاصطناعي',
+  pillar3_desc: 'توظيف تقنيات الذكاء الاصطناعي في التقييم',
+  pillar4_title: 'اللوحات التفاعلية',
+  pillar4_desc: 'لوحات بيانات تفاعلية لعرض النتائج',
+  independence_title: 'استقلالية وحياد تام',
+  independence_text: 'نحن مستقلون تمامًا عن الجامعات العربية وعن الجهات المالكة للتصنيفات العالمية. لا نمثّل أي تصنيف دولي، ولا نعمل لصالح جامعة بعينها، ولا نقدم خدمات ترويج مدفوعة تتعارض مع الحياد.',
+  formula_eyebrow: 'منهج المؤشر',
+  formula_title: 'معادلة مؤشر الحضور العالمي',
+  formula_subtitle: 'إطار كمي معياري مستقل — حضور دولي عبر 18 تصنيفاً، وتميز أكاديمي عبر 5 تصنيفات كبرى',
+  cta_eyebrow: 'GUPI 2027',
+  cta_title: 'لأفضل 70 جامعة عربية',
+  cta_subtitle: 'اكتشف أحدث ترتيب واستكشف مواقع المؤسسات التعليمية ضمن الإطار القياسي الشامل',
+  cta_button: 'اكتشف ترتيب الجامعات الآن',
+};
+
 export default function HomePage() {
+  const [content, setContent] = useState(DEFAULT_CONTENT);
+
+  useEffect(() => {
+    fetch('/api/content')
+      .then((r) => r.json())
+      .then((data) => {
+        if (data && Object.keys(data).length > 0) {
+          setContent({ ...DEFAULT_CONTENT, ...data });
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const c = content;
   return (
     <main>
       {/* ================= Hero — الصدارة ================= */}
@@ -35,17 +90,17 @@ export default function HomePage() {
                 <span className="absolute inset-0 rounded-full bg-gupi-amber-400 animate-ping-soft" />
                 <span className="relative rounded-full w-2 h-2 bg-gupi-amber-400" />
               </span>
-              <span className="text-xs font-semibold tracking-wide">Global University Presence Index • 2027</span>
+              <span className="text-xs font-semibold tracking-wide">{c.hero_badge}</span>
             </div>
 
             <h1 className="text-3xl md:text-4xl font-display font-black mb-3 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-              مؤشر الحضور العالمي للجامعات <span className="gold-shimmer">(GUPI)</span>
+              {c.hero_title}
             </h1>
             <p className="text-base md:text-lg text-gupi-amber-200 font-semibold mb-3 animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
-              التميز يُقاس بالحضور العالمي
+              {c.hero_subtitle}
             </p>
             <p className="text-sm md:text-base text-gupi-ink-200 max-w-2xl mx-auto leading-relaxed mb-8 animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
-              مؤشر رائد عربي متخصص في قياس وتقييم الظهور الدولي للجامعات، معتمدة على منهجية حديثة فائقة التنسيق عبر 18 تصنيفاً عالمياً تدمج بين منهجية علمية مستقلة وتقنيات الذكاء الاصطناعي.
+              {c.hero_description}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center animate-fade-in-up" style={{ animationDelay: '0.45s' }}>
@@ -54,14 +109,14 @@ export default function HomePage() {
                 className="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white text-gupi-orange-900 font-bold hover:bg-gupi-orange-50 transition-all shadow-xl hover:shadow-2xl hover:scale-[1.03]"
               >
                 <Trophy className="w-5 h-5 text-gupi-orange-600 group-hover:rotate-12 transition-transform" />
-                استكشف ترتيب الجامعات
+                {c.hero_cta1}
               </Link>
               <Link
                 href="/dashboard"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/10 border border-white/25 text-white font-bold hover:bg-white/20 transition-all backdrop-blur-sm"
               >
                 <BarChart3 className="w-5 h-5" />
-                لوحة البيانات التفاعلية
+                {c.hero_cta2}
               </Link>
             </div>
           </div>
@@ -72,10 +127,10 @@ export default function HomePage() {
           {/* شريط الإحصاءات — عدّادات متحركة */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14 max-w-4xl mx-auto">
             {[
-              { value: 70, label: 'جامعة عربية نُخبة', icon: Database },
-              { value: 18, label: 'تصنيفاً عالمياً', icon: Globe },
-              { value: 5, label: 'تصنيفات كبرى للتميز', icon: Trophy },
-              { value: 100, label: 'الدرجة الكلية للمؤشر', icon: Calculator },
+              { value: parseInt(c.stat_universities) || 70, label: c.stat_universities_label, icon: Database },
+              { value: parseInt(c.stat_rankings) || 18, label: c.stat_rankings_label, icon: Globe },
+              { value: parseInt(c.stat_excellence) || 5, label: c.stat_excellence_label, icon: Trophy },
+              { value: parseInt(c.stat_total) || 100, label: c.stat_total_label, icon: Calculator },
             ].map((stat, i) => {
               const Icon = stat.icon;
               return (
@@ -113,24 +168,24 @@ export default function HomePage() {
           <Reveal>
             <SectionHeader
               icon={Target}
-              eyebrow="الرؤية العامة والمنهجية"
-              title="منصة نخبة الجامعات العربية"
-              subtitle="«نخبة الجامعات العربية – TOP A University» منصة رقمية مستقلة تركز على الجامعات العربية في فضاء التصنيفات العالمية، وتقدّم محتوى تحليلياً مبسطاً يساعد الطالب وصانع القرار والمهتم بالتعليم العالي على قراءة الأرقام والتقارير بلغة واضحة وعصرية. نحن نؤمن أن الوصول إلى معلومة تصنيفية موثوقة ومنسقة هو الخطوة الأولى نحو قرار أكاديمي أفضل."
+              eyebrow={c.vision_eyebrow}
+              title={c.vision_title}
+              subtitle={c.vision_subtitle}
             />
           </Reveal>
 
           <Reveal delay={100}>
             <p className="text-sm md:text-base text-gupi-ink-600 leading-relaxed text-center max-w-3xl mx-auto mb-8">
-              تهدف منصة نخبة الجامعات العربية عبر GUPI إلى إنشاء مؤشر عالمي عربي متخصص في قياس وتقييم حضور الجامعات، معتمدة على منهجية حديثة فائقة التنسيق تدمج بين:
+              {c.vision_mission}
             </p>
           </Reveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
             {[
-              { title: 'البيانات الأكاديمية', icon: Database, desc: 'تحليل شامل للبيانات الأكاديمية الموثقة' },
-              { title: 'التحليل الرقمي', icon: BarChart3, desc: 'أدوات تحليل رقمي متقدمة لقياس الأداء' },
-              { title: 'الذكاء الاصطناعي', icon: Sparkles, desc: 'توظيف تقنيات الذكاء الاصطناعي في التقييم' },
-              { title: 'اللوحات التفاعلية', icon: Monitor, desc: 'لوحات بيانات تفاعلية لعرض النتائج' },
+              { title: c.pillar1_title, icon: Database, desc: c.pillar1_desc },
+              { title: c.pillar2_title, icon: BarChart3, desc: c.pillar2_desc },
+              { title: c.pillar3_title, icon: Sparkles, desc: c.pillar3_desc },
+              { title: c.pillar4_title, icon: Monitor, desc: c.pillar4_desc },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
@@ -159,10 +214,10 @@ export default function HomePage() {
           <Reveal>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 mb-5">
               <Shield className="w-4 h-4 text-gupi-amber-300" />
-              <span className="text-xs font-semibold tracking-wide">استقلالية وحياد تام</span>
+              <span className="text-xs font-semibold tracking-wide">{c.independence_title}</span>
             </div>
             <p className="text-base md:text-lg leading-relaxed text-gupi-ink-200 max-w-3xl mx-auto">
-              نحن مستقلون تمامًا عن الجامعات العربية وعن الجهات المالكة للتصنيفات العالمية. لا نمثّل أي تصنيف دولي، ولا نعمل لصالح جامعة بعينها، ولا نقدم خدمات ترويج مدفوعة تتعارض مع الحياد.
+              {c.independence_text}
             </p>
           </Reveal>
         </div>
@@ -243,9 +298,9 @@ export default function HomePage() {
           <Reveal>
             <SectionHeader
               icon={Calculator}
-              eyebrow="منهج المؤشر"
-              title="معادلة مؤشر الحضور العالمي"
-              subtitle="إطار كمي معياري مستقل — حضور دولي عبر 18 تصنيفاً، وتميز أكاديمي عبر 5 تصنيفات كبرى"
+              eyebrow={c.formula_eyebrow}
+              title={c.formula_title}
+              subtitle={c.formula_subtitle}
             />
           </Reveal>
 
@@ -452,16 +507,16 @@ export default function HomePage() {
             <SectionHeader
               dark
               icon={Trophy}
-              eyebrow="GUPI 2027"
-              title={<>القائمة النهائية لمؤشر <span className="gold-shimmer">GUPI</span> لأفضل 70 جامعة عربية</>}
-              subtitle="اكتشف أحدث ترتيب واستكشف مواقع المؤسسات التعليمية ضمن الإطار القياسي الشامل"
+              eyebrow={c.cta_eyebrow}
+              title={<>القائمة النهائية لمؤشر <span className="gold-shimmer">GUPI</span></>}
+              subtitle={c.cta_subtitle}
             />
             <Link
               href="/rankings"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-gupi-amber-400 to-gupi-orange-600 text-gupi-orange-950 font-bold hover:scale-105 transition-all shadow-xl glow-gold"
             >
               <Trophy className="w-5 h-5" />
-              اكتشف ترتيب الجامعات الآن
+              {c.cta_button}
               <ArrowLeft className="w-5 h-5" />
             </Link>
           </Reveal>
