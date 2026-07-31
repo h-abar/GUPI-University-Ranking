@@ -73,6 +73,7 @@ export default function HomePage() {
   }, []);
 
   const c = content;
+  const ct = (key) => lang === 'ar' ? (c[key] ?? t(key)) : t(key);
   return (
     <main>
       {/* ================= Hero — الصدارة ================= */}
@@ -92,17 +93,17 @@ export default function HomePage() {
                 <span className="absolute inset-0 rounded-full bg-gupi-amber-400 animate-ping-soft" />
                 <span className="relative rounded-full w-2 h-2 bg-gupi-amber-400" />
               </span>
-              <span className="text-xs font-semibold tracking-wide">{c.hero_badge}</span>
+              <span className="text-xs font-semibold tracking-wide">{ct('home_hero_badge')}</span>
             </div>
 
             <h1 className="text-3xl md:text-4xl font-display font-black mb-3 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-              {c.hero_title}
+              {ct('home_hero_title')}
             </h1>
             <p className="text-base md:text-lg text-gupi-amber-200 font-semibold mb-3 animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
-              {c.hero_subtitle}
+              {ct('home_hero_subtitle')}
             </p>
             <p className="text-sm md:text-base text-gupi-ink-200 max-w-2xl mx-auto leading-relaxed mb-8 animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
-              {c.hero_description}
+              {ct('home_hero_desc')}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center animate-fade-in-up" style={{ animationDelay: '0.45s' }}>
@@ -111,14 +112,14 @@ export default function HomePage() {
                 className="group inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white text-gupi-orange-900 font-bold hover:bg-gupi-orange-50 transition-all shadow-xl hover:shadow-2xl hover:scale-[1.03]"
               >
                 <Trophy className="w-5 h-5 text-gupi-orange-600 group-hover:rotate-12 transition-transform" />
-                {c.hero_cta1}
+                {ct('home_hero_cta1')}
               </Link>
               <Link
                 href="/dashboard"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-white/10 border border-white/25 text-white font-bold hover:bg-white/20 transition-all backdrop-blur-sm"
               >
                 <BarChart3 className="w-5 h-5" />
-                {c.hero_cta2}
+                {ct('home_hero_cta2')}
               </Link>
             </div>
           </div>
@@ -129,10 +130,10 @@ export default function HomePage() {
           {/* شريط الإحصاءات — عدّادات متحركة */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14 max-w-4xl mx-auto">
             {[
-              { value: parseInt(c.stat_universities) || 70, label: c.stat_universities_label, icon: Database },
-              { value: parseInt(c.stat_rankings) || 18, label: c.stat_rankings_label, icon: Globe },
-              { value: parseInt(c.stat_excellence) || 5, label: c.stat_excellence_label, icon: Trophy },
-              { value: parseInt(c.stat_total) || 100, label: c.stat_total_label, icon: Calculator },
+              { value: parseInt(c.stat_universities) || 70, label: ct('home_stat_universities_label'), icon: Database },
+              { value: parseInt(c.stat_rankings) || 18, label: ct('home_stat_rankings_label'), icon: Globe },
+              { value: parseInt(c.stat_excellence) || 5, label: ct('home_stat_excellence_label'), icon: Trophy },
+              { value: parseInt(c.stat_total) || 100, label: ct('home_stat_total_label'), icon: Calculator },
             ].map((stat, i) => {
               const Icon = stat.icon;
               return (
@@ -170,24 +171,24 @@ export default function HomePage() {
           <Reveal>
             <SectionHeader
               icon={Target}
-              eyebrow={c.vision_eyebrow}
-              title={c.vision_title}
-              subtitle={c.vision_subtitle}
+              eyebrow={ct('home_vision_eyebrow')}
+              title={ct('home_vision_title')}
+              subtitle={ct('home_vision_subtitle')}
             />
           </Reveal>
 
           <Reveal delay={100}>
             <p className="text-sm md:text-base text-gupi-ink-600 leading-relaxed text-center max-w-3xl mx-auto mb-8">
-              {c.vision_mission}
+              {ct('home_vision_mission')}
             </p>
           </Reveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
             {[
-              { title: c.pillar1_title, icon: Database, desc: c.pillar1_desc },
-              { title: c.pillar2_title, icon: BarChart3, desc: c.pillar2_desc },
-              { title: c.pillar3_title, icon: Sparkles, desc: c.pillar3_desc },
-              { title: c.pillar4_title, icon: Monitor, desc: c.pillar4_desc },
+              { title: ct('home_pillar1_title'), icon: Database, desc: ct('home_pillar1_desc') },
+              { title: ct('home_pillar2_title'), icon: BarChart3, desc: ct('home_pillar2_desc') },
+              { title: ct('home_pillar3_title'), icon: Sparkles, desc: ct('home_pillar3_desc') },
+              { title: ct('home_pillar4_title'), icon: Monitor, desc: ct('home_pillar4_desc') },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
@@ -216,10 +217,10 @@ export default function HomePage() {
           <Reveal>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 mb-5">
               <Shield className="w-4 h-4 text-gupi-amber-300" />
-              <span className="text-xs font-semibold tracking-wide">{c.independence_title}</span>
+              <span className="text-xs font-semibold tracking-wide">{ct('home_independence_title')}</span>
             </div>
             <p className="text-base md:text-lg leading-relaxed text-gupi-ink-200 max-w-3xl mx-auto">
-              {c.independence_text}
+              {ct('home_independence_text')}
             </p>
           </Reveal>
         </div>
@@ -300,9 +301,9 @@ export default function HomePage() {
           <Reveal>
             <SectionHeader
               icon={Calculator}
-              eyebrow={c.formula_eyebrow}
-              title={c.formula_title}
-              subtitle={c.formula_subtitle}
+              eyebrow={lang === 'ar' ? c.formula_eyebrow : t('formula_eyebrow')}
+              title={lang === 'ar' ? c.formula_title : t('formula_title')}
+              subtitle={lang === 'ar' ? c.formula_subtitle : t('formula_subtitle')}
             />
           </Reveal>
 
@@ -509,16 +510,16 @@ export default function HomePage() {
             <SectionHeader
               dark
               icon={Trophy}
-              eyebrow={c.cta_eyebrow}
+              eyebrow={ct('home_cta_eyebrow')}
               title={lang === 'ar' ? <>القائمة النهائية لمؤشر <span className="gold-shimmer">GUPI</span></> : <>Final <span className="gold-shimmer">GUPI</span> Index List</>}
-              subtitle={c.cta_subtitle}
+              subtitle={ct('home_cta_subtitle')}
             />
             <Link
               href="/rankings"
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-gupi-amber-400 to-gupi-orange-600 text-gupi-orange-950 font-bold hover:scale-105 transition-all shadow-xl glow-gold"
             >
               <Trophy className="w-5 h-5" />
-              {c.cta_button}
+              {ct('home_cta_button')}
               <ArrowLeft className="w-5 h-5" />
             </Link>
           </Reveal>
