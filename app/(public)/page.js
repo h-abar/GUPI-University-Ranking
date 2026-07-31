@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import {
   Globe, BookOpen, Award, Monitor, Users, Handshake,
-  ArrowLeft, BarChart3, Target, CheckCircle2, TrendingUp,
+  ArrowLeft, ArrowRight, BarChart3, Target, CheckCircle2, TrendingUp,
   Database, Shield, Layers, Calculator, Trophy, Sparkles, Medal
 } from 'lucide-react';
 import Reveal from '@/components/home/Reveal';
@@ -333,8 +333,8 @@ export default function HomePage() {
                 {/* شريط الأوزان المتحرك */}
                 <div className="mt-6">
                   <div className="flex h-3 rounded-full overflow-hidden bg-white shadow-inner">
-                    <div className="bar-fill bg-gradient-to-l from-gupi-orange-500 to-gupi-orange-700" style={{ width: '70%' }} />
-                    <div className="bar-fill bg-gradient-to-l from-gupi-amber-400 to-gupi-amber-600" style={{ width: '30%', animationDelay: '0.7s' }} />
+                    <div className="bar-fill bg-gradient-to-r from-gupi-orange-500 to-gupi-orange-700" style={{ width: '70%' }} />
+                    <div className="bar-fill bg-gradient-to-r from-gupi-amber-400 to-gupi-amber-600" style={{ width: '30%', animationDelay: '0.7s' }} />
                   </div>
                   <div className="flex justify-between mt-2 text-[11px] font-semibold">
                     <span className="text-gupi-orange-700">{t('formula_presence_bar')}</span>
@@ -403,7 +403,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gupi-orange-600 text-white text-sm font-bold hover:bg-gupi-orange-700 hover:scale-[1.03] transition-all shadow-gupi-primary"
             >
               {t('formula_view_methodology')}
-              <ArrowLeft className="w-4 h-4" />
+              {lang === 'ar' ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
             </Link>
           </Reveal>
         </div>
@@ -520,7 +520,7 @@ export default function HomePage() {
             >
               <Trophy className="w-5 h-5" />
               {ct('home_cta_button')}
-              <ArrowLeft className="w-5 h-5" />
+              {lang === 'ar' ? <ArrowLeft className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
             </Link>
           </Reveal>
         </div>

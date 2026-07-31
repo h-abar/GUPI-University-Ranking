@@ -256,14 +256,14 @@ function UniSelector({ label, color, universities, selectedId, onSelect, search,
       ) : (
         <div className="relative">
           <div className="relative">
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gupi-ink-400" />
+            <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gupi-ink-400" />
             <input
               type="text"
               placeholder={t('compare_search')}
               value={search}
               onChange={(e) => { setSearch(e.target.value); setShowList(true); }}
               onFocus={() => setShowList(true)}
-              className="w-full pr-10 pl-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all"
+              className="w-full pe-10 ps-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all"
             />
           </div>
 
@@ -279,7 +279,7 @@ function UniSelector({ label, color, universities, selectedId, onSelect, search,
                       key={u.id}
                       onClick={() => onSelect(u.id)}
                       disabled={u.id === excludeId}
-                      className={`w-full text-right px-4 py-3 hover:bg-gupi-orange-50 transition-colors border-b border-gupi-ink-50 last:border-0 flex items-center justify-between ${
+                      className={`w-full text-start px-4 py-3 hover:bg-gupi-orange-50 transition-colors border-b border-gupi-ink-50 last:border-0 flex items-center justify-between ${
                         u.id === excludeId ? 'opacity-30 cursor-not-allowed' : ''
                       }`}
                     >
@@ -410,7 +410,7 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gupi-ink-50 border-b border-gupi-ink-100">
-                <th className="px-4 py-3 text-right font-bold text-gupi-ink-700">{t('compare_col_ranking')}</th>
+                <th className="px-4 py-3 text-start font-bold text-gupi-ink-700">{t('compare_col_ranking')}</th>
                 <th className="px-4 py-3 text-center font-bold text-gupi-orange-700">{uni1.name}</th>
                 <th className="px-4 py-3 text-center font-bold text-gupi-amber-700">{uni2.name}</th>
                 <th className="px-4 py-3 text-center font-bold text-gupi-ink-600">{t('compare_col_best')}</th>
@@ -490,7 +490,7 @@ function ScoreCard({ uni, color, maxTotal, maxPresence, maxExcellence, isWinner,
   return (
     <div className={`bg-white rounded-2xl shadow-lg p-6 border-2 ${isWinner ? colorClasses.border : 'border-transparent'} relative`}>
       {isWinner && (
-        <div className={`absolute -top-3 right-6 px-3 py-1 rounded-full bg-gradient-to-r ${colorClasses.gradient} text-white text-xs font-bold flex items-center gap-1`}>
+        <div className={`absolute -top-3 end-6 px-3 py-1 rounded-full bg-gradient-to-r ${colorClasses.gradient} text-white text-xs font-bold flex items-center gap-1`}>
           <Crown className="w-3 h-3" /> {t('compare_winner')}
         </div>
       )}

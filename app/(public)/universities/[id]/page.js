@@ -9,6 +9,7 @@ import {
   ChevronRight, Search, Star, Target, BookOpen, ExternalLink
 } from 'lucide-react';
 import Reveal from '@/components/home/Reveal';
+import { useLang } from '@/lib/LanguageContext';
 
 const COUNTRY_FLAGS = {
   'السعودية': '🇸🇦', 'الأردن': '🇯🇴', 'قطر': '🇶🇦', 'مصر': '🇪🇬',
@@ -24,6 +25,7 @@ export default function UniversityCardPage() {
   const [allUnis, setAllUnis] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const { lang } = useLang();
 
   useEffect(() => {
     Promise.all([
@@ -345,7 +347,7 @@ export default function UniversityCardPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-gupi-ink-50 text-gupi-ink-600">
-                    <th className="px-4 py-3 text-right">التصنيف</th>
+                    <th className="px-4 py-3 text-start">التصنيف</th>
                     <th className="px-4 py-3 text-center">الحضور</th>
                     <th className="px-4 py-3 text-center">الوزن</th>
                     <th className="px-4 py-3 text-center">الدرجة المكتسبة</th>
@@ -387,7 +389,7 @@ export default function UniversityCardPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-gupi-ink-50 text-gupi-ink-600">
-                    <th className="px-4 py-3 text-right">التصنيف</th>
+                    <th className="px-4 py-3 text-start">التصنيف</th>
                     <th className="px-4 py-3 text-center">الحضور</th>
                     <th className="px-4 py-3 text-center">الترتيب</th>
                     <th className="px-4 py-3 text-center">نقاط التميز</th>
@@ -421,8 +423,8 @@ export default function UniversityCardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
           {prevUni && (
             <Link href={`/universities/${prevUni.id}`} className="bg-white rounded-2xl shadow p-5 flex items-center gap-3 hover:shadow-md transition-shadow group">
-              <ChevronRight className="w-5 h-5 text-gupi-orange-400 group-hover:text-gupi-orange-600" />
-              <div className="flex-1 text-right">
+              {lang === 'ar' ? <ChevronRight className="w-5 h-5 text-gupi-orange-400 group-hover:text-gupi-orange-600" /> : <ChevronLeft className="w-5 h-5 text-gupi-orange-400 group-hover:text-gupi-orange-600" />}
+              <div className="flex-1 text-start">
                 <div className="text-xs text-gupi-ink-400">السابق</div>
                 <div className="font-bold text-gupi-orange-900 text-sm">{prevUni.name}</div>
               </div>
@@ -436,7 +438,7 @@ export default function UniversityCardPage() {
                 <div className="text-xs text-gupi-ink-400">التالي</div>
                 <div className="font-bold text-gupi-orange-900 text-sm">{nextUni.name}</div>
               </div>
-              <ChevronLeft className="w-5 h-5 text-gupi-orange-400 group-hover:text-gupi-orange-600" />
+              {lang === 'ar' ? <ChevronLeft className="w-5 h-5 text-gupi-orange-400 group-hover:text-gupi-orange-600" /> : <ChevronRight className="w-5 h-5 text-gupi-orange-400 group-hover:text-gupi-orange-600" />}
             </Link>
           )}
         </div>

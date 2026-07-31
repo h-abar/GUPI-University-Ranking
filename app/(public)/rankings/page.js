@@ -87,13 +87,13 @@ export default function RankingsPage() {
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search */}
             <div className="flex-1 relative">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gupi-ink-400" />
+              <Search className="absolute start-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gupi-ink-400" />
               <input
                 type="text"
                 placeholder={t('rankings_search')}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pr-10 pl-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all"
+                className="w-full pe-10 ps-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all"
               />
             </div>
             {/* Country filter */}
@@ -131,13 +131,13 @@ export default function RankingsPage() {
             <table className="w-full">
               <thead>
                 <tr className="bg-gupi-orange-950 text-white">
-                  <th className="px-4 py-4 text-right cursor-pointer hover:bg-gupi-orange-900 transition-colors" onClick={() => toggleSort('rank')}>
+                  <th className="px-4 py-4 text-start cursor-pointer hover:bg-gupi-orange-900 transition-colors" onClick={() => toggleSort('rank')}>
                     <div className="flex items-center gap-1">
                       <span>{t('rankings_col_rank')}</span>
                       <ArrowUpDown className="w-3 h-3" />
                     </div>
                   </th>
-                  <th className="px-4 py-4 text-right cursor-pointer hover:bg-gupi-orange-900 transition-colors" onClick={() => toggleSort('name')}>
+                  <th className="px-4 py-4 text-start cursor-pointer hover:bg-gupi-orange-900 transition-colors" onClick={() => toggleSort('name')}>
                     <div className="flex items-center gap-1">
                       <span>{t('rankings_col_university')}</span>
                       <ArrowUpDown className="w-3 h-3" />

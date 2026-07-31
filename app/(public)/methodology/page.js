@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import {
   Globe, BookOpen, Award, Database, Shield, Calculator,
-  CheckCircle2, XCircle, Layers, TrendingUp, ArrowLeft,
+  CheckCircle2, XCircle, Layers, TrendingUp, ArrowLeft, ArrowRight,
   Trophy, ScrollText
 } from 'lucide-react';
 import PageHero from '@/components/PageHero';
@@ -244,8 +244,8 @@ export default function MethodologyPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-gupi-orange-950 text-white">
-                    <th className="px-4 py-3 text-right">{t('meth_model_col1')}</th>
-                    <th className="px-4 py-3 text-right">{t('meth_model_col2')}</th>
+                    <th className="px-4 py-3 text-start">{t('meth_model_col1')}</th>
+                    <th className="px-4 py-3 text-start">{t('meth_model_col2')}</th>
                     <th className="px-4 py-3 text-center">{t('meth_model_col3')}</th>
                   </tr>
                 </thead>
@@ -329,8 +329,8 @@ export default function MethodologyPage() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="bg-gupi-orange-950 text-white">
-                    <th className="px-4 py-3 text-right">{t('meth_qa_col1')}</th>
-                    <th className="px-4 py-3 text-right">{t('meth_qa_col2')}</th>
+                    <th className="px-4 py-3 text-start">{t('meth_qa_col1')}</th>
+                    <th className="px-4 py-3 text-start">{t('meth_qa_col2')}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -374,7 +374,7 @@ export default function MethodologyPage() {
           >
             <Trophy className="w-5 h-5" />
             {t('meth_cta')}
-            <ArrowLeft className="w-5 h-5" />
+            {lang === 'ar' ? <ArrowLeft className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
           </Link>
         </Reveal>
       </div>

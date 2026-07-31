@@ -22,7 +22,6 @@ const GUPI_CHART = [
 ];
 
 const TOOLTIP_STYLE = {
-  direction: 'rtl',
   borderRadius: '12px',
   border: '1px solid #F2C492',
   backgroundColor: '#FFFDF9',
