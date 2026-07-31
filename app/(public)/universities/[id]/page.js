@@ -63,7 +63,7 @@ export default function UniversityCardPage() {
   const nextUni = currentIndex < allUnis.length - 1 ? allUnis[currentIndex + 1] : null;
 
   const filteredSearch = allUnis.filter((u) =>
-    !search || u.name?.includes(search)
+    !search || (lang === 'en' && u.name_en ? u.name_en : u.name)?.includes(search)
   ).slice(0, 8);
 
   // Group rankings by category
@@ -156,18 +156,18 @@ export default function UniversityCardPage() {
               <div className="relative w-20 h-20 flex-shrink-0">
                 {uni.rank <= 3 && <div className="absolute inset-0 rounded-2xl ring-conic" aria-hidden="true" />}
                 <div className={`absolute ${uni.rank <= 3 ? 'inset-[3px]' : 'inset-0'} rounded-2xl bg-gradient-to-br from-gupi-orange-400 to-gupi-orange-700 flex items-center justify-center text-white font-black text-xl shadow-xl`}>
-                  {uni.short_code || uni.name?.slice(0, 2) || 'U'}
+                  {uni.short_code || (lang === 'en' && uni.name_en ? uni.name_en : uni.name)?.slice(0, 2) || 'U'}
                 </div>
               </div>
 
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-2xl">{flag}</span>
-                  <h1 className="text-xl md:text-2xl font-display font-black text-white">{uni.name}</h1>
+                  <h1 className="text-xl md:text-2xl font-display font-black text-white">{lang === 'en' && uni.name_en ? uni.name_en : uni.name}</h1>
                 </div>
                 <div className="flex flex-wrap items-center gap-4 text-white/80 text-xs">
                   {uni.country && (
-                    <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {uni.country}</span>
+                    <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {lang === 'en' && uni.country_en ? uni.country_en : uni.country}</span>
                   )}
                   {uni.founded && (
                     <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> تأسست {uni.founded}</span>
@@ -426,7 +426,7 @@ export default function UniversityCardPage() {
               {lang === 'ar' ? <ChevronRight className="w-5 h-5 text-gupi-orange-400 group-hover:text-gupi-orange-600" /> : <ChevronLeft className="w-5 h-5 text-gupi-orange-400 group-hover:text-gupi-orange-600" />}
               <div className="flex-1 text-start">
                 <div className="text-xs text-gupi-ink-400">السابق</div>
-                <div className="font-bold text-gupi-orange-900 text-sm">{prevUni.name}</div>
+                <div className="font-bold text-gupi-orange-900 text-sm">{lang === 'en' && prevUni.name_en ? prevUni.name_en : prevUni.name}</div>
               </div>
               <div className="text-xs font-bold text-gupi-ink-400">#{prevUni.rank}</div>
             </Link>
@@ -436,7 +436,7 @@ export default function UniversityCardPage() {
               <div className="text-xs font-bold text-gupi-ink-400">#{nextUni.rank}</div>
               <div className="flex-1">
                 <div className="text-xs text-gupi-ink-400">التالي</div>
-                <div className="font-bold text-gupi-orange-900 text-sm">{nextUni.name}</div>
+                <div className="font-bold text-gupi-orange-900 text-sm">{lang === 'en' && nextUni.name_en ? nextUni.name_en : nextUni.name}</div>
               </div>
               {lang === 'ar' ? <ChevronLeft className="w-5 h-5 text-gupi-orange-400 group-hover:text-gupi-orange-600" /> : <ChevronRight className="w-5 h-5 text-gupi-orange-400 group-hover:text-gupi-orange-600" />}
             </Link>

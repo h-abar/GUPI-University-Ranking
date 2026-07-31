@@ -18,7 +18,7 @@ export async function POST(request) {
   const body = await request.json();
 
   const cols = [
-    'name', 'founded', 'country', 'articles_2025',
+    'name', 'name_en', 'founded', 'country', 'country_en', 'articles_2025',
     'shanghai_ranking', 'the_ranking', 'ad_scientific_index', 'qs_ranking',
     'arabic_ranking', 'scimago', 'cwts', 'unirank_world',
     'qs_arab', 'the_arab', 'us_news', 'unirank_arabic',

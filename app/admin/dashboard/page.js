@@ -30,7 +30,7 @@ const ALL_FIELDS = [
 ];
 
 const EMPTY_UNI = {
-  name: '', founded: '', country: '', articles_2025: '', description: '', short_code: '',
+  name: '', name_en: '', founded: '', country: '', country_en: '', articles_2025: '', description: '', short_code: '',
   ...Object.fromEntries(ALL_FIELDS.map((f) => [f.key, ''])),
 };
 
@@ -278,7 +278,7 @@ function UniversitiesTab({ universities, configs, onReload }) {
   function handleEdit(uni) {
     setEditingId(uni.id);
     setFormData({
-      name: uni.name || '', founded: uni.founded || '', country: uni.country || '',
+      name: uni.name || '', name_en: uni.name_en || '', founded: uni.founded || '', country: uni.country || '', country_en: uni.country_en || '',
       articles_2025: uni.articles_2025 || '', description: uni.description || '', short_code: uni.short_code || '',
       ...Object.fromEntries(ALL_FIELDS.map((f) => [f.key, uni[f.key] || ''])),
     });
@@ -468,13 +468,25 @@ function UniversitiesTab({ universities, configs, onReload }) {
             <div className="p-6 space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gupi-ink-700 mb-1">اسم الجامعة *</label>
+                  <label className="block text-sm font-medium text-gupi-ink-700 mb-1">اسم الجامعة (عربي) *</label>
                   <input type="text" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full px-3 py-2 rounded-lg border border-gupi-ink-200 focus:border-gupi-orange-500 outline-none" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gupi-ink-700 mb-1">الدولة</label>
+                  <label className="block text-sm font-medium text-gupi-ink-700 mb-1">University Name (English)</label>
+                  <input type="text" value={formData.name_en} onChange={(e) => setFormData({ ...formData, name_en: e.target.value })}
+                    placeholder="e.g. King Saud University"
+                    className="w-full px-3 py-2 rounded-lg border border-gupi-ink-200 focus:border-gupi-orange-500 outline-none" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gupi-ink-700 mb-1">الدولة (عربي)</label>
                   <input type="text" value={formData.country} onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                    className="w-full px-3 py-2 rounded-lg border border-gupi-ink-200 focus:border-gupi-orange-500 outline-none" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gupi-ink-700 mb-1">Country (English)</label>
+                  <input type="text" value={formData.country_en} onChange={(e) => setFormData({ ...formData, country_en: e.target.value })}
+                    placeholder="e.g. Saudi Arabia"
                     className="w-full px-3 py-2 rounded-lg border border-gupi-ink-200 focus:border-gupi-orange-500 outline-none" />
                 </div>
                 <div>

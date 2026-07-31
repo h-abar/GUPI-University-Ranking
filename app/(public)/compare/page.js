@@ -42,13 +42,13 @@ export default function ComparePage() {
 
   const filtered1 = useMemo(() => {
     if (!search1) return universities;
-    return universities.filter((u) => u.name?.includes(search1));
-  }, [universities, search1]);
+    return universities.filter((u) => (lang === 'en' && u.name_en ? u.name_en : u.name)?.includes(search1));
+  }, [universities, search1, lang]);
 
   const filtered2 = useMemo(() => {
     if (!search2) return universities;
-    return universities.filter((u) => u.name?.includes(search2));
-  }, [universities, search2]);
+    return universities.filter((u) => (lang === 'en' && u.name_en ? u.name_en : u.name)?.includes(search2));
+  }, [universities, search2, lang]);
 
   const uni1 = universities.find((u) => u.id === uni1Id);
   const uni2 = universities.find((u) => u.id === uni2Id);
@@ -147,6 +147,7 @@ export default function ComparePage() {
             allUniversities={universities}
             excludeId={uni2Id}
             t={t}
+            lang={lang}
           />
 
           {/* VS Badge */}
@@ -171,6 +172,7 @@ export default function ComparePage() {
             allUniversities={universities}
             excludeId={uni1Id}
             t={t}
+            lang={lang}
           />
         </div>
 
@@ -225,8 +227,8 @@ export default function ComparePage() {
 }
 
 /* ============ University Selector Component ============ */
-function UniSelector({ label, color, universities, selectedId, onSelect, search, setSearch, showList, setShowList, allUniversities, excludeId, t }) {
-  const selected = allUniversities.find((u) => u.id === selectedId);
+function UniSelector({ label, color, universities, selectedId, onSelect, search, setSearch, excludeId, t, lang }) {
+  const selected = universities.find((u) => u.id === selectedId);
   const colorClasses = color === 'orange'
     ? { bg: 'from-gupi-orange-500 to-gupi-orange-700', text: 'text-gupi-orange-700', border: 'border-gupi-orange-300', light: 'bg-gupi-orange-50' }
     : { bg: 'from-gupi-amber-500 to-gupi-amber-700', text: 'text-gupi-amber-700', border: 'border-gupi-amber-300', light: 'bg-gupi-amber-50' };
@@ -239,10 +241,10 @@ function UniSelector({ label, color, universities, selectedId, onSelect, search,
         <div className={`rounded-xl p-4 ${colorClasses.light} border-2 ${colorClasses.border}`}>
           <div className="flex items-center justify-between">
             <div>
-              <div className="font-display font-bold text-lg text-gupi-ink-900">{selected.name}</div>
+              <div className="font-display font-bold text-lg text-gupi-ink-900">{lang === 'en' && selected.name_en ? selected.name_en : selected.name}</div>
               <div className="flex items-center gap-2 text-sm text-gupi-ink-500 mt-1">
                 <MapPin className="w-3 h-3" />
-                {selected.country}
+                {lang === 'en' && selected.country_en ? selected.country_en : selected.country}
               </div>
             </div>
             <button
@@ -284,8 +286,8 @@ function UniSelector({ label, color, universities, selectedId, onSelect, search,
                       }`}
                     >
                       <div>
-                        <div className="font-medium text-gupi-ink-800 text-sm">{u.name}</div>
-                        <div className="text-xs text-gupi-ink-400">{u.country}</div>
+                        <div className="font-medium text-gupi-ink-800 text-sm">{lang === 'en' && u.name_en ? u.name_en : u.name}</div>
+                        <div className="text-xs text-gupi-ink-400">{lang === 'en' && u.country_en ? u.country_en : u.country}</div>
                       </div>
                       {u.id === excludeId && <span className="text-xs text-gupi-ink-300">{t('compare_selected')}</span>}
                     </button>
@@ -306,6 +308,9 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
   const maxTotal = parseFloat(settings.maxTotal) || 100;
   const maxPresence = parseFloat(settings.maxPresence) || 18;
   const maxExcellence = parseFloat(settings.maxExcellence) || 5;
+
+  const dn = (u) => lang === 'en' && u.name_en ? u.name_en : u.name;
+  const dc = (u) => lang === 'en' && u.country_en ? u.country_en : u.country;
 
   const winner = uni1.gupi.totalScore > uni2.gupi.totalScore ? 1 : uni2.gupi.totalScore > uni1.gupi.totalScore ? 2 : 0;
 
@@ -339,7 +344,7 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
         ) : (
           <>
             <Crown className="w-9 h-9 mx-auto mb-2 drop-shadow-[0_0_10px_rgba(242,192,99,0.9)]" />
-            <h2 className="text-xl font-display font-black">{t('compare_winner')}: {winner === 1 ? uni1.name : uni2.name}</h2>
+            <h2 className="text-xl font-display font-black">{t('compare_winner')}: {winner === 1 ? dn(uni1) : dn(uni2)}</h2>
             <p className="text-white/80 text-sm">{t('compare_winner_score')}: {winner === 1 ? uni1.gupi.totalScore : uni2.gupi.totalScore} / {maxTotal}</p>
           </>
         )}
@@ -351,8 +356,8 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
 
       {/* Score Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <ScoreCard uni={uni1} color="orange" maxTotal={maxTotal} maxPresence={maxPresence} maxExcellence={maxExcellence} isWinner={winner === 1} t={t} />
-        <ScoreCard uni={uni2} color="amber" maxTotal={maxTotal} maxPresence={maxPresence} maxExcellence={maxExcellence} isWinner={winner === 2} t={t} />
+        <ScoreCard uni={uni1} color="orange" maxTotal={maxTotal} maxPresence={maxPresence} maxExcellence={maxExcellence} isWinner={winner === 1} t={t} lang={lang} />
+        <ScoreCard uni={uni2} color="amber" maxTotal={maxTotal} maxPresence={maxPresence} maxExcellence={maxExcellence} isWinner={winner === 2} t={t} lang={lang} />
       </div>
 
       {/* Charts Section */}
@@ -368,8 +373,8 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
               <PolarGrid stroke="#EFEFEF" />
               <PolarAngleAxis dataKey="metric" tick={{ fill: '#656461', fontSize: 13 }} />
               <PolarRadiusAxis tick={{ fill: '#91908E', fontSize: 10 }} />
-              <Radar name={uni1.name} dataKey="uni1" stroke="#D5791F" fill="#D5791F" fillOpacity={0.3} />
-              <Radar name={uni2.name} dataKey="uni2" stroke="#F2C063" fill="#F2C063" fillOpacity={0.3} />
+              <Radar name={dn(uni1)} dataKey="uni1" stroke="#D5791F" fill="#D5791F" fillOpacity={0.3} />
+              <Radar name={dn(uni2)} dataKey="uni2" stroke="#F2C063" fill="#F2C063" fillOpacity={0.3} />
               <Legend wrapperStyle={{ fontSize: 12 }} />
             </RadarChart>
           </ResponsiveContainer>
@@ -391,8 +396,8 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
                 formatter={(value) => [value, '']}
               />
               <Legend wrapperStyle={{ fontSize: 12 }} />
-              <Bar dataKey="uni1" name={uni1.name} fill="#D5791F" radius={[8, 8, 0, 0]} />
-              <Bar dataKey="uni2" name={uni2.name} fill="#F2C063" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="uni1" name={dn(uni1)} fill="#D5791F" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="uni2" name={dn(uni2)} fill="#F2C063" radius={[8, 8, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -411,8 +416,8 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
             <thead>
               <tr className="bg-gupi-ink-50 border-b border-gupi-ink-100">
                 <th className="px-4 py-3 text-start font-bold text-gupi-ink-700">{t('compare_col_ranking')}</th>
-                <th className="px-4 py-3 text-center font-bold text-gupi-orange-700">{uni1.name}</th>
-                <th className="px-4 py-3 text-center font-bold text-gupi-amber-700">{uni2.name}</th>
+                <th className="px-4 py-3 text-center font-bold text-gupi-orange-700">{dn(uni1)}</th>
+                <th className="px-4 py-3 text-center font-bold text-gupi-amber-700">{dn(uni2)}</th>
                 <th className="px-4 py-3 text-center font-bold text-gupi-ink-600">{t('compare_col_best')}</th>
               </tr>
             </thead>
@@ -447,8 +452,8 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
 
       {/* Presence Details */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <PresenceDetailsCard uni={uni1} color="orange" t={t} />
-        <PresenceDetailsCard uni={uni2} color="amber" t={t} />
+        <PresenceDetailsCard uni={uni1} color="orange" t={t} lang={lang} />
+        <PresenceDetailsCard uni={uni2} color="amber" t={t} lang={lang} />
       </div>
 
       {/* AI Analysis Section */}
@@ -482,7 +487,7 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
 }
 
 /* ============ Score Card ============ */
-function ScoreCard({ uni, color, maxTotal, maxPresence, maxExcellence, isWinner, t }) {
+function ScoreCard({ uni, color, maxTotal, maxPresence, maxExcellence, isWinner, t, lang }) {
   const colorClasses = color === 'orange'
     ? { gradient: 'from-gupi-orange-500 to-gupi-orange-700', text: 'text-gupi-orange-700', bg: 'bg-gupi-orange-50', border: 'border-gupi-orange-200' }
     : { gradient: 'from-gupi-amber-500 to-gupi-amber-700', text: 'text-gupi-amber-700', bg: 'bg-gupi-amber-50', border: 'border-gupi-amber-200' };
@@ -496,9 +501,9 @@ function ScoreCard({ uni, color, maxTotal, maxPresence, maxExcellence, isWinner,
       )}
       <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="font-display font-bold text-lg text-gupi-ink-900">{uni.name}</h3>
+          <h3 className="font-display font-bold text-lg text-gupi-ink-900">{lang === 'en' && uni.name_en ? uni.name_en : uni.name}</h3>
           <div className="flex items-center gap-3 text-sm text-gupi-ink-500 mt-1">
-            <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {uni.country}</span>
+            <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> {lang === 'en' && uni.country_en ? uni.country_en : uni.country}</span>
             {uni.founded && <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {uni.founded}</span>}
           </div>
         </div>
@@ -552,20 +557,20 @@ function RankValue({ value, present, color }) {
 }
 
 /* ============ Presence Details Card ============ */
-function PresenceDetailsCard({ uni, color, t }) {
+function PresenceDetailsCard({ uni, presenceDetails, color, t, lang }) {
   const colorClasses = color === 'orange'
     ? { text: 'text-gupi-orange-700', bg: 'bg-gupi-orange-50', border: 'border-gupi-orange-100', headerBg: 'bg-gupi-orange-950' }
     : { text: 'text-gupi-amber-700', bg: 'bg-gupi-amber-50', border: 'border-gupi-amber-100', headerBg: 'bg-gupi-amber-800' };
 
-  const presenceCount = uni.gupi.presenceDetails.filter((d) => d.present).length;
-  const totalCount = uni.gupi.presenceDetails.length;
+  const presenceCount = presenceDetails.filter((d) => d.present).length;
+  const totalCount = presenceDetails.length;
 
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
       <div className={`${colorClasses.headerBg} text-white px-6 py-4`}>
         <h3 className="font-display font-bold flex items-center gap-2">
           <Globe className="w-5 h-5" />
-          {t('compare_presence_title')} — {uni.name}
+          {t('compare_presence_title')} — {lang === 'en' && uni.name_en ? uni.name_en : uni.name}
         </h3>
         <p className="text-sm text-white/70 mt-1">{presenceCount} {t('compare_presence_of')} {totalCount} {t('compare_presence_rankings')}</p>
       </div>

@@ -57,13 +57,16 @@ export default function DashboardPage() {
   const total = universities.length || 1;
 
   /* ===== أفضل 10 ===== */
-  const top10 = universities.slice(0, 10).map((u) => ({
-    name: u.name.length > 22 ? u.name.substring(0, 22) + '…' : u.name,
-    fullName: u.name,
-    presence: u.gupi.presenceComponent || 0,
-    excellence: u.gupi.excellenceComponent || 0,
-    rank: u.rank,
-  }));
+  const top10 = universities.slice(0, 10).map((u) => {
+    const dn = lang === 'en' && u.name_en ? u.name_en : u.name;
+    return {
+      name: dn.length > 22 ? dn.substring(0, 22) + '…' : dn,
+      fullName: dn,
+      presence: u.gupi.presenceComponent || 0,
+      excellence: u.gupi.excellenceComponent || 0,
+      rank: u.rank,
+    };
+  });
 
   /* ===== توزيع الدول ===== */
   const countryCounts = {};
@@ -109,7 +112,7 @@ export default function DashboardPage() {
     x: u.gupi.presenceComponent || 0,
     y: u.gupi.excellenceComponent || 0,
     z: u.articles_2025 || 100,
-    name: u.name,
+    name: lang === 'en' && u.name_en ? u.name_en : u.name,
     rank: u.rank,
   }));
 
@@ -147,10 +150,10 @@ export default function DashboardPage() {
   ];
 
   const insights = [
-    { icon: Crown, label: t('dash_ins_leader'), value: leader?.name || '—', sub: leader ? `${leader.gupi.totalScore} / 100 ${lang === 'ar' ? 'درجة' : 'pts'}` : '', gold: true },
+    { icon: Crown, label: t('dash_ins_leader'), value: (lang === 'en' && leader?.name_en ? leader.name_en : leader?.name) || '—', sub: leader ? `${leader.gupi.totalScore} / 100 ${lang === 'ar' ? 'درجة' : 'pts'}` : '', gold: true },
     { icon: MapPin, label: t('dash_ins_countries'), value: countryData[0]?.name || '—', sub: countryData[0] ? `${countryData[0].value} ${lang === 'ar' ? 'جامعة' : 'universities'}` : '' },
     { icon: Globe, label: t('dash_ins_presence'), value: avgPresence, sub: t('dash_ins_presence_sub') },
-    { icon: Medal, label: t('dash_ins_excellence'), value: bestExcellence?.name || '—', sub: bestExcellence ? `${bestExcellence.gupi.excellenceScore} / 5 ${lang === 'ar' ? 'درجات' : 'pts'}` : '' },
+    { icon: Medal, label: t('dash_ins_excellence'), value: (lang === 'en' && bestExcellence?.name_en ? bestExcellence.name_en : bestExcellence?.name) || '—', sub: bestExcellence ? `${bestExcellence.gupi.excellenceScore} / 5 ${lang === 'ar' ? 'درجات' : 'pts'}` : '' },
   ];
 
   return (

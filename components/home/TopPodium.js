@@ -7,7 +7,7 @@ import { useLang } from '@/lib/LanguageContext';
 
 export default function TopPodium() {
   const [top, setTop] = useState(null);
-  const { t } = useLang();
+  const { t, lang } = useLang();
 
   useEffect(() => {
     fetch('/api/universities')
@@ -77,11 +77,11 @@ export default function TopPodium() {
               {label}
             </div>
             <h3 className="font-bold text-white text-sm md:text-base leading-snug mb-1.5 min-h-[2.5rem] flex items-center justify-center">
-              {u.name}
+              {lang === 'en' && u.name_en ? u.name_en : u.name}
             </h3>
             <p className="text-xs text-gupi-ink-300 flex items-center justify-center gap-1 mb-4">
               <MapPin className="w-3 h-3" />
-              {u.country}
+              {lang === 'en' && u.country_en ? u.country_en : u.country}
             </p>
 
             <div className="inline-flex items-baseline gap-1.5 px-4 py-1.5 rounded-full bg-black/25 border border-white/10 group-hover:border-gupi-amber-400/40 transition-colors">

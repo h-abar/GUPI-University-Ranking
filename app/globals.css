@@ -19,7 +19,6 @@ html {
 
 body {
   font-family: 'Cairo', 'Tajawal', 'Segoe UI', system-ui, sans-serif;
-  direction: rtl;
   background-color: var(--gupi-bg);
   color: var(--gupi-text);
 }

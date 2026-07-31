@@ -33,7 +33,7 @@ export default function RankingsPage() {
 
   const filtered = useMemo(() => {
     let result = universities.filter((u) => {
-      const matchesSearch = !search || u.name?.includes(search);
+      const matchesSearch = !search || (lang === 'en' && u.name_en ? u.name_en : u.name)?.includes(search);
       const matchesCountry = countryFilter === 'all' || u.country === countryFilter;
       return matchesSearch && matchesCountry;
     });
@@ -177,13 +177,13 @@ export default function RankingsPage() {
                       </div>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="font-bold text-gupi-orange-900">{uni.name}</div>
-                      <div className="text-xs text-gupi-ink-500 md:hidden">{uni.country}</div>
+                      <div className="font-bold text-gupi-orange-900">{lang === 'en' && uni.name_en ? uni.name_en : uni.name}</div>
+                      <div className="text-xs text-gupi-ink-500 md:hidden">{lang === 'en' && uni.country_en ? uni.country_en : uni.country}</div>
                     </td>
                     <td className="px-4 py-3 text-center hidden md:table-cell">
                       <span className="inline-flex items-center gap-1 text-sm text-gupi-ink-600">
                         <MapPin className="w-3 h-3" />
-                        {uni.country}
+                        {lang === 'en' && uni.country_en ? uni.country_en : uni.country}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-center">
@@ -248,8 +248,8 @@ export default function RankingsPage() {
                   {selectedUni.rank}
                 </div>
                 <div>
-                  <h3 className="text-xl font-display font-bold">{selectedUni.name}</h3>
-                  <p className="text-sm text-gupi-ink-300">{selectedUni.country} • {lang === 'ar' ? 'تأسست' : 'Founded'} {selectedUni.founded}</p>
+                  <h3 className="text-xl font-display font-bold">{lang === 'en' && selectedUni.name_en ? selectedUni.name_en : selectedUni.name}</h3>
+                  <p className="text-sm text-gupi-ink-300">{lang === 'en' && selectedUni.country_en ? selectedUni.country_en : selectedUni.country} • {lang === 'ar' ? 'تأسست' : 'Founded'} {selectedUni.founded}</p>
                 </div>
               </div>
               <div className="mt-4 flex gap-6">
