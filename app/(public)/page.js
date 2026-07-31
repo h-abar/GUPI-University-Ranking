@@ -39,13 +39,13 @@ export default function HomePage() {
             </div>
 
             <h1 className="text-3xl md:text-4xl font-display font-black mb-3 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-              مؤشر <span className="gold-shimmer">GUPI</span> للحضور العالمي للجامعات
+              مؤشر الحضور العالمي للجامعات <span className="gold-shimmer">(GUPI)</span>
             </h1>
             <p className="text-base md:text-lg text-gupi-amber-200 font-semibold mb-3 animate-fade-in-up" style={{ animationDelay: '0.25s' }}>
               التميز يُقاس بالحضور العالمي
             </p>
             <p className="text-sm md:text-base text-gupi-ink-200 max-w-2xl mx-auto leading-relaxed mb-8 animate-fade-in-up" style={{ animationDelay: '0.35s' }}>
-              مؤشر رائد يقيس الأثر الحقيقي والظهور الدولي للجامعات العربية عبر 18 تصنيفاً عالمياً، بمنهجية علمية مستقلة وتقنيات الذكاء الاصطناعي.
+              مؤشر رائد عربي متخصص في قياس وتقييم الظهور الدولي للجامعات، معتمدة على منهجية حديثة فائقة التنسيق عبر 18 تصنيفاً عالمياً تدمج بين منهجية علمية مستقلة وتقنيات الذكاء الاصطناعي.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center animate-fade-in-up" style={{ animationDelay: '0.45s' }}>
@@ -115,8 +115,14 @@ export default function HomePage() {
               icon={Target}
               eyebrow="الرؤية العامة والمنهجية"
               title="منصة نخبة الجامعات العربية"
-              subtitle="مؤشر عالمي عربي متخصص في قياس وتقييم حضور الجامعات، بمنهجية حديثة تدمج بين أربعة محاور متكاملة"
+              subtitle="«نخبة الجامعات العربية – TOP A University» منصة رقمية مستقلة تركز على الجامعات العربية في فضاء التصنيفات العالمية، وتقدّم محتوى تحليلياً مبسطاً يساعد الطالب وصانع القرار والمهتم بالتعليم العالي على قراءة الأرقام والتقارير بلغة واضحة وعصرية. نحن نؤمن أن الوصول إلى معلومة تصنيفية موثوقة ومنسقة هو الخطوة الأولى نحو قرار أكاديمي أفضل."
             />
+          </Reveal>
+
+          <Reveal delay={100}>
+            <p className="text-sm md:text-base text-gupi-ink-600 leading-relaxed text-center max-w-3xl mx-auto mb-8">
+              تهدف منصة نخبة الجامعات العربية عبر GUPI إلى إنشاء مؤشر عالمي عربي متخصص في قياس وتقييم حضور الجامعات، معتمدة على منهجية حديثة فائقة التنسيق تدمج بين:
+            </p>
           </Reveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
@@ -140,6 +146,25 @@ export default function HomePage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* ================= استقلالية وحياد تام ================= */}
+      <section className="py-14 bg-gupi-orange-950 text-white relative overflow-hidden">
+        <div className="absolute inset-0" aria-hidden="true">
+          <div className="absolute top-0 left-1/4 w-72 h-72 bg-gupi-orange-500/15 rounded-full blur-3xl animate-drift" />
+          <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-gupi-amber-600/15 rounded-full blur-3xl animate-drift-slow" />
+        </div>
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Reveal>
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 mb-5">
+              <Shield className="w-4 h-4 text-gupi-amber-300" />
+              <span className="text-xs font-semibold tracking-wide">استقلالية وحياد تام</span>
+            </div>
+            <p className="text-base md:text-lg leading-relaxed text-gupi-ink-200 max-w-3xl mx-auto">
+              نحن مستقلون تمامًا عن الجامعات العربية وعن الجهات المالكة للتصنيفات العالمية. لا نمثّل أي تصنيف دولي، ولا نعمل لصالح جامعة بعينها، ولا نقدم خدمات ترويج مدفوعة تتعارض مع الحياد.
+            </p>
+          </Reveal>
         </div>
       </section>
 
