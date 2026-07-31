@@ -3,18 +3,20 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X, Globe, BarChart3, Table, Home, Shield, Swords } from 'lucide-react';
+import { Menu, X, Globe, BarChart3, Table, Home, Shield, Swords, Languages } from 'lucide-react';
+import { useLang } from '@/lib/LanguageContext';
 
 export default function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { t, lang, toggleLang } = useLang();
 
   const links = [
-    { href: '/', label: 'الرئيسية', icon: Home },
-    { href: '/rankings', label: 'ترتيب الجامعات', icon: Table },
-    { href: '/dashboard', label: 'لوحة البيانات', icon: BarChart3 },
-    { href: '/methodology', label: 'منهجية المؤشر', icon: Globe },
-    { href: '/compare', label: 'تحدي الحضور الدولي', icon: Swords },
+    { href: '/', label: t('nav_home'), icon: Home },
+    { href: '/rankings', label: t('nav_rankings'), icon: Table },
+    { href: '/dashboard', label: t('nav_dashboard'), icon: BarChart3 },
+    { href: '/methodology', label: t('nav_methodology'), icon: Globe },
+    { href: '/compare', label: t('nav_compare'), icon: Swords },
   ];
 
   return (
@@ -46,22 +48,40 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            <button
+              onClick={toggleLang}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-gupi-ink-600 hover:bg-gupi-orange-50 hover:text-gupi-orange-600 transition-all mx-1"
+              title={lang === 'ar' ? 'Switch to English' : 'التبديل للعربية'}
+            >
+              <Languages className="w-4 h-4" />
+              {lang === 'ar' ? 'EN' : 'ع'}
+            </button>
             <Link
               href="/admin"
               className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gupi-ink-300 hover:text-gupi-orange-600 transition-all mr-2"
             >
               <Shield className="w-4 h-4" />
-              الإدارة
+              {t('nav_admin')}
             </Link>
           </div>
 
           {/* Mobile toggle */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gupi-orange-50"
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="flex items-center gap-2 md:hidden">
+            <button
+              onClick={toggleLang}
+              className="p-2 rounded-lg hover:bg-gupi-orange-50 text-gupi-ink-600"
+              title={lang === 'ar' ? 'Switch to English' : 'التبديل للعربية'}
+            >
+              <Languages className="w-5 h-5" />
+              <span className="text-xs font-medium ml-1">{lang === 'ar' ? 'EN' : 'ع'}</span>
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-gupi-orange-50"
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile menu */}
@@ -90,7 +110,7 @@ export default function Navbar() {
               className="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gupi-ink-300"
             >
               <Shield className="w-4 h-4" />
-              الإدارة
+              {t('nav_admin')}
             </Link>
           </div>
         )}

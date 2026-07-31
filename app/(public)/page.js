@@ -11,6 +11,7 @@ import Reveal from '@/components/home/Reveal';
 import CountUp from '@/components/home/CountUp';
 import SectionHeader from '@/components/home/SectionHeader';
 import TopPodium from '@/components/home/TopPodium';
+import { useLang } from '@/lib/LanguageContext';
 
 const RANKINGS_TICKER = [
   'QS', 'THE', 'ARWU', 'AD Scientific', 'Scimago', 'CWTS', 'UniRank',
@@ -58,6 +59,7 @@ const DEFAULT_CONTENT = {
 
 export default function HomePage() {
   const [content, setContent] = useState(DEFAULT_CONTENT);
+  const { t, lang } = useLang();
 
   useEffect(() => {
     fetch('/api/content')
@@ -229,48 +231,48 @@ export default function HomePage() {
           <Reveal>
             <SectionHeader
               icon={Layers}
-              eyebrow="Index Pillars"
-              title="ركائز قياس الأداء الأكاديمي"
-              subtitle="ستة محاور متكاملة ترسم صورة الحضور الدولي لكل جامعة"
+              eyebrow={t('pillars_eyebrow')}
+              title={t('pillars_title')}
+              subtitle={t('pillars_subtitle')}
             />
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {[
               {
-                title: 'الحضور الأكاديمي العالمي',
+                title: t('pillar_global_presence_title'),
                 icon: Globe,
-                desc: 'رصد ومتابعة مدى انتشار الهوية التعليمية للجامعة وبرامجها المشتركة عبر القارات.',
+                desc: t('pillar_global_presence_desc'),
                 color: 'from-gupi-orange-500 to-gupi-orange-700',
               },
               {
-                title: 'التأثير البحثي والنشر العلمي',
+                title: t('pillar_research_impact_title'),
                 icon: BookOpen,
-                desc: 'قياس جودة المخرجات البحثية، الاقتباسات الحقيقية، ومعدلات النشر في المجلات المعتمدة.',
+                desc: t('pillar_research_impact_desc'),
                 color: 'from-gupi-sage-500 to-gupi-sage-700',
               },
               {
-                title: 'الظهور في التصنيفات الدولية',
+                title: t('pillar_ranking_visibility_title'),
                 icon: Award,
-                desc: 'قراءة موحدة لتموضع الجامعة في قواعد البيانات العالمية (QS, THE, ARWU, AD, التصنيف العربي).',
+                desc: t('pillar_ranking_visibility_desc'),
                 color: 'from-gupi-amber-500 to-gupi-amber-700',
               },
               {
-                title: 'القوة الرقمية للجامعات',
+                title: t('pillar_digital_power_title'),
                 icon: Monitor,
-                desc: 'تحليل جودة الحضور الرقمي، البنية السحابية للمواقع التعليمية، وقوة حضور الويب الأكاديمي.',
+                desc: t('pillar_digital_power_desc'),
                 color: 'from-gupi-orange-400 to-gupi-orange-600',
               },
               {
-                title: 'السمعة الأكاديمية الدولية',
+                title: t('pillar_academic_reputation_title'),
                 icon: Users,
-                desc: 'مؤشر استبياني وتحليلي دقيق يستطلع آراء الأكاديميين وجهات التوظيف العالمية حول الخريجين.',
+                desc: t('pillar_academic_reputation_desc'),
                 color: 'from-gupi-sage-400 to-gupi-sage-600',
               },
               {
-                title: 'مؤشرات التعاون العلمي',
+                title: t('pillar_scientific_cooperation_title'),
                 icon: Handshake,
-                desc: 'حساب حجم الشراكات الدولية المشتركة والمشاريع البحثية الممولة العابرة للحدود الجغرافية.',
+                desc: t('pillar_scientific_cooperation_desc'),
                 color: 'from-gupi-amber-400 to-gupi-amber-600',
               },
             ].map((pillar, i) => {
@@ -308,22 +310,22 @@ export default function HomePage() {
           <Reveal>
             <div className="max-w-3xl mx-auto mb-10">
               <div className="bg-gradient-to-br from-gupi-orange-50 to-gupi-amber-100/60 rounded-3xl p-6 md:p-8 border border-gupi-orange-200">
-                <p className="text-xs text-gupi-orange-600 font-semibold mb-5 text-center">المعادلة الإجمالية لدرجة مؤشر GUPI</p>
+                <p className="text-xs text-gupi-orange-600 font-semibold mb-5 text-center">{t('formula_equation_label')}</p>
                 <div className="flex items-center justify-center gap-2.5 flex-wrap">
                   <div className="bg-white rounded-xl px-5 py-2.5 shadow-md border border-gupi-orange-100">
                     <span className="font-display font-bold text-base text-gupi-orange-900">GUPI Score</span>
                   </div>
                   <span className="text-2xl font-bold text-gupi-orange-400">=</span>
                   <div className="bg-gupi-orange-600 text-white rounded-xl px-5 py-2.5 shadow-md">
-                    <span className="font-bold text-sm">الحضور الدولي (70%)</span>
+                    <span className="font-bold text-sm">{t('formula_presence_label')}</span>
                   </div>
                   <span className="text-2xl font-bold text-gupi-orange-400">+</span>
                   <div className="bg-gupi-amber-500 text-white rounded-xl px-5 py-2.5 shadow-md">
-                    <span className="font-bold text-sm">التميز الأكاديمي (30%)</span>
+                    <span className="font-bold text-sm">{t('formula_excellence_label')}</span>
                   </div>
                   <span className="text-2xl font-bold text-gupi-orange-400">=</span>
                   <div className="bg-gradient-to-br from-gupi-orange-700 to-gupi-orange-900 text-white rounded-xl px-5 py-2.5 shadow-lg">
-                    <span className="font-display font-black text-lg gold-shimmer">100 درجة</span>
+                    <span className="font-display font-black text-lg gold-shimmer">{t('formula_total_label')}</span>
                   </div>
                 </div>
 
@@ -334,8 +336,8 @@ export default function HomePage() {
                     <div className="bar-fill bg-gradient-to-l from-gupi-amber-400 to-gupi-amber-600" style={{ width: '30%', animationDelay: '0.7s' }} />
                   </div>
                   <div className="flex justify-between mt-2 text-[11px] font-semibold">
-                    <span className="text-gupi-orange-700">الحضور في التصنيفات — 70% (18 درجة)</span>
-                    <span className="text-gupi-amber-700">نقاط التميز — 30% (5 درجات)</span>
+                    <span className="text-gupi-orange-700">{t('formula_presence_bar')}</span>
+                    <span className="text-gupi-amber-700">{t('formula_excellence_bar')}</span>
                   </div>
                 </div>
               </div>
@@ -351,19 +353,19 @@ export default function HomePage() {
                     18
                   </div>
                   <div>
-                    <h3 className="font-display font-bold text-base text-gupi-orange-900">الظهور في التصنيفات العالمية</h3>
-                    <p className="text-xs text-gupi-orange-600">Global Ranking Presence</p>
+                    <h3 className="font-display font-bold text-base text-gupi-orange-900">{t('formula_presence_card_title')}</h3>
+                    <p className="text-xs text-gupi-orange-600">{t('formula_presence_card_sub')}</p>
                   </div>
                 </div>
                 <p className="text-gupi-ink-600 text-xs leading-relaxed mb-3">
-                  يُقاس مدى ظهور الجامعة وثباتها في التصنيفات الدولية المعتمدة، مع التحقق المباشر من المشاركة الرسمية لكل جامعة عبر المواقع الإلكترونية لكل تصنيف. كل مشاركة تمنح الجامعة درجة حضور.
+                  {t('formula_presence_card_desc')}
                 </p>
                 <ul className="space-y-1.5 text-xs">
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> مشاركة الجامعة: 1 درجة</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-ink-300" /> عدم المشاركة: 0 درجة</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> {t('formula_presence_card_item1')}</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-ink-300" /> {t('formula_presence_card_item2')}</li>
                 </ul>
                 <div className="mt-3 pt-3 border-t border-gupi-orange-100">
-                  <p className="text-[11px] text-gupi-orange-600 font-semibold">الهدف: قياس الانتشار الدولي — يمثل 70% من الدرجة الإجمالية</p>
+                  <p className="text-[11px] text-gupi-orange-600 font-semibold">{t('formula_presence_card_goal')}</p>
                 </div>
               </div>
             </Reveal>
@@ -375,20 +377,20 @@ export default function HomePage() {
                     5
                   </div>
                   <div>
-                    <h3 className="font-display font-bold text-base text-gupi-amber-800">التميز في التصنيفات الكبرى</h3>
-                    <p className="text-xs text-gupi-amber-600">Top Rankings Excellence</p>
+                    <h3 className="font-display font-bold text-base text-gupi-amber-800">{t('formula_excellence_card_title')}</h3>
+                    <p className="text-xs text-gupi-amber-600">{t('formula_excellence_card_sub')}</p>
                   </div>
                 </div>
                 <p className="text-gupi-ink-600 text-xs leading-relaxed mb-3">
-                  تُمنح للجامعات التي تحقق مراكز متقدمة في التصنيفات الكبرى (ARWU - QS - THE - AD - التصنيف العربي)، وتعكس جودة الأداء الفعلي وليس مجرد الظهور: المركز الأول = 1.0، الثاني = 0.9، ... العاشر = 0.1.
+                  {t('formula_excellence_card_desc')}
                 </p>
                 <ul className="space-y-1.5 text-xs">
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> المركز 1: 1.0 نقطة</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> المركز 2: 0.9 نقطة</li>
-                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> ... حتى المركز 10: 0.1 نقطة</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> {t('formula_excellence_card_item1')}</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> {t('formula_excellence_card_item2')}</li>
+                  <li className="flex items-center gap-2"><CheckCircle2 className="w-3.5 h-3.5 text-gupi-success" /> {t('formula_excellence_card_item3')}</li>
                 </ul>
                 <div className="mt-3 pt-3 border-t border-gupi-amber-200">
-                  <p className="text-[11px] text-gupi-amber-700 font-semibold">الهدف: قياس التميز والريادة — يمثل 30% من الدرجة الإجمالية</p>
+                  <p className="text-[11px] text-gupi-amber-700 font-semibold">{t('formula_excellence_card_goal')}</p>
                 </div>
               </div>
             </Reveal>
@@ -399,7 +401,7 @@ export default function HomePage() {
               href="/methodology"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gupi-orange-600 text-white text-sm font-bold hover:bg-gupi-orange-700 hover:scale-[1.03] transition-all shadow-gupi-primary"
             >
-              عرض المنهجية الكاملة
+              {t('formula_view_methodology')}
               <ArrowLeft className="w-4 h-4" />
             </Link>
           </Reveal>
@@ -412,17 +414,17 @@ export default function HomePage() {
           <Reveal>
             <SectionHeader
               icon={TrendingUp}
-              eyebrow="الخوارزمية ومعادلة التقييم"
-              title="خطوات احتساب المؤشر"
+              eyebrow={t('steps_eyebrow')}
+              title={t('steps_title')}
             />
           </Reveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
             {[
-              { step: 1, title: 'الإنتاج العلمي', desc: 'اختيار الجامعات الأعلى في كثافة النشر العلمي (أعلى 70 جامعة عربية).', icon: Database },
-              { step: 2, title: 'تحليل الظهور', desc: 'التحقق الرقمي من الظهور في 18 تصنيفاً عالمياً معتمداً.', icon: Globe },
-              { step: 3, title: 'نقاط التميز', desc: 'احتساب الترتيب والريادة في تصنيفات QS وTHE وشنغهاي وAD والتصنيف العربي.', icon: Trophy },
-              { step: 4, title: 'النتيجة النهائية', desc: 'استخراج درجة المؤشر المعتمدة وحفظها في قاعدة البيانات (GUPI Score).', icon: Calculator },
+              { step: 1, title: t('step1_title'), desc: t('step1_desc'), icon: Database },
+              { step: 2, title: t('step2_title'), desc: t('step2_desc'), icon: Globe },
+              { step: 3, title: t('step3_title'), desc: t('step3_desc'), icon: Trophy },
+              { step: 4, title: t('step4_title'), desc: t('step4_desc'), icon: Calculator },
             ].map((item, i) => {
               const Icon = item.icon;
               return (
@@ -455,26 +457,26 @@ export default function HomePage() {
           <Reveal>
             <SectionHeader
               icon={Shield}
-              eyebrow="إجراءات ضمان الجودة"
-              title="مبررات تصميم المنهجية"
+              eyebrow={t('qa_eyebrow')}
+              title={t('qa_title')}
             />
           </Reveal>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               {
-                title: 'الحيادية والتوازن',
-                desc: 'استخدام 18 تصنيفاً متنوعاً للحد التام من التحيز لصالح أي فلسفة تصنيفية واحدة.',
+                title: t('qa1_title'),
+                desc: t('qa1_desc'),
                 icon: Shield,
               },
               {
-                title: 'الأداء البحثي الحقيقي',
-                desc: 'اختيار وحصر الجامعات بناءً على كثافة الإنتاج العلمي والبحثي الفعلي.',
+                title: t('qa2_title'),
+                desc: t('qa2_desc'),
                 icon: Database,
               },
               {
-                title: 'مكافأة الجودة والتميز',
-                desc: 'عدم الاكتفاء بالظهور الشكلي وإضافة نقاط تقديرية للتميز في التصنيفات الخمسة الأكثر تأثيراً.',
+                title: t('qa3_title'),
+                desc: t('qa3_desc'),
                 icon: Trophy,
               },
             ].map((item, i) => {
@@ -508,7 +510,7 @@ export default function HomePage() {
               dark
               icon={Trophy}
               eyebrow={c.cta_eyebrow}
-              title={<>القائمة النهائية لمؤشر <span className="gold-shimmer">GUPI</span></>}
+              title={lang === 'ar' ? <>القائمة النهائية لمؤشر <span className="gold-shimmer">GUPI</span></> : <>Final <span className="gold-shimmer">GUPI</span> Index List</>}
               subtitle={c.cta_subtitle}
             />
             <Link

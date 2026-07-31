@@ -12,6 +12,7 @@ import {
 import PageHero from '@/components/PageHero';
 import Reveal from '@/components/home/Reveal';
 import CountUp from '@/components/home/CountUp';
+import { useLang } from '@/lib/LanguageContext';
 
 /* لوحة ألوان الرسوم — مشتقة حصرياً من هوية GUPI */
 const GUPI_CHART = [
@@ -31,6 +32,7 @@ const TOOLTIP_STYLE = {
 export default function DashboardPage() {
   const [universities, setUniversities] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t, lang } = useLang();
 
   useEffect(() => {
     fetch('/api/universities')
@@ -47,7 +49,7 @@ export default function DashboardPage() {
       <div className="min-h-screen flex items-center justify-center bg-gupi-bg">
         <div className="text-center">
           <div className="w-14 h-14 border-4 border-gupi-orange-200 border-t-gupi-orange-600 rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gupi-ink-600 text-sm">جاري تحميل لوحة البيانات...</p>
+          <p className="text-gupi-ink-600 text-sm">{t('dash_loading')}</p>
         </div>
       </div>
     );
@@ -139,26 +141,26 @@ export default function DashboardPage() {
   const bestExcellence = [...universities].sort((a, b) => b.gupi.excellenceScore - a.gupi.excellenceScore)[0];
 
   const kpis = [
-    { label: 'جامعة ضمن المؤشر', value: universities.length, icon: Users, color: 'from-gupi-orange-500 to-gupi-orange-700' },
-    { label: 'دولة ممثلة', value: Object.keys(countryCounts).length, icon: Globe, color: 'from-gupi-sage-500 to-gupi-sage-700' },
-    { label: 'بحثاً علمياً مرصوداً', value: totalArticles, icon: Database, color: 'from-gupi-amber-500 to-gupi-amber-700', locale: true },
-    { label: 'متوسط درجة GUPI', value: avgScore, icon: Award, color: 'from-gupi-orange-400 to-gupi-orange-600', static: true },
+    { label: t('dash_kpi_universities'), value: universities.length, icon: Users, color: 'from-gupi-orange-500 to-gupi-orange-700' },
+    { label: t('dash_kpi_countries'), value: Object.keys(countryCounts).length, icon: Globe, color: 'from-gupi-sage-500 to-gupi-sage-700' },
+    { label: t('dash_kpi_articles'), value: totalArticles, icon: Database, color: 'from-gupi-amber-500 to-gupi-amber-700', locale: true },
+    { label: t('dash_kpi_avg'), value: avgScore, icon: Award, color: 'from-gupi-orange-400 to-gupi-orange-600', static: true },
   ];
 
   const insights = [
-    { icon: Crown, label: 'متصدّر المؤشر', value: leader?.name || '—', sub: leader ? `${leader.gupi.totalScore} / 100 درجة` : '', gold: true },
-    { icon: MapPin, label: 'الأكثر تمثيلاً', value: countryData[0]?.name || '—', sub: countryData[0] ? `${countryData[0].value} جامعة` : '' },
-    { icon: Globe, label: 'متوسط الحضور', value: avgPresence, sub: 'من 70 درجة (وزن 70%)' },
-    { icon: Medal, label: 'الأعلى تميزاً', value: bestExcellence?.name || '—', sub: bestExcellence ? `${bestExcellence.gupi.excellenceScore} / 5 درجات` : '' },
+    { icon: Crown, label: t('dash_ins_leader'), value: leader?.name || '—', sub: leader ? `${leader.gupi.totalScore} / 100 ${lang === 'ar' ? 'درجة' : 'pts'}` : '', gold: true },
+    { icon: MapPin, label: t('dash_ins_countries'), value: countryData[0]?.name || '—', sub: countryData[0] ? `${countryData[0].value} ${lang === 'ar' ? 'جامعة' : 'universities'}` : '' },
+    { icon: Globe, label: t('dash_ins_presence'), value: avgPresence, sub: t('dash_ins_presence_sub') },
+    { icon: Medal, label: t('dash_ins_excellence'), value: bestExcellence?.name || '—', sub: bestExcellence ? `${bestExcellence.gupi.excellenceScore} / 5 ${lang === 'ar' ? 'درجات' : 'pts'}` : '' },
   ];
 
   return (
     <div className="min-h-screen bg-gupi-bg">
       <PageHero
         icon={BarChart3}
-        eyebrow="GUPI Analytics • 2027"
-        title={<>مرصد <span className="gold-shimmer">الحضور العالمي</span></>}
-        subtitle="قراءة بصرية تحليلية لمؤشر الحضور العالمي للجامعات العربية — الدرجات، الدول، والتصنيفات"
+        eyebrow={t('dash_eyebrow')}
+        title={lang === 'ar' ? <>مرصد <span className="gold-shimmer">الحضور العالمي</span></> : <>Global Presence <span className="gold-shimmer">Observatory</span></>}
+        subtitle={t('dash_subtitle')}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 pb-16 relative z-10">
@@ -214,7 +216,7 @@ export default function DashboardPage() {
 
         {/* ===== أفضل 10 جامعات ===== */}
         <Reveal>
-          <ChartCard icon={Trophy} title="الصدارة — أفضل 10 جامعات" subtitle="درجة الحضور (70%) + درجة التميز (30%) مكدّستين من 100">
+          <ChartCard icon={Trophy} title={t('dash_top10_title')} subtitle={t('dash_top10_sub')}>
             <ResponsiveContainer width="100%" height={400}>
               <BarChart data={top10} layout="vertical" margin={{ right: 10, left: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" />
@@ -228,8 +230,8 @@ export default function DashboardPage() {
                   }}
                 />
                 <Legend wrapperStyle={{ fontSize: 12 }} />
-                <Bar dataKey="presence" name="الحضور (70%)" stackId="a" fill="#D5791F" />
-                <Bar dataKey="excellence" name="التميز (30%)" stackId="a" fill="#F2C063" radius={[4, 4, 4, 4]} />
+                <Bar dataKey="presence" name={t('dash_presence_label')} stackId="a" fill="#D5791F" />
+                <Bar dataKey="excellence" name={t('dash_excellence_label')} stackId="a" fill="#F2C063" radius={[4, 4, 4, 4]} />
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>
@@ -238,7 +240,7 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
           {/* ===== توزيع الدول ===== */}
           <Reveal>
-            <ChartCard icon={MapPin} title="توزيع الجامعات حسب الدولة" subtitle="عدد الجامعات الممثلة من كل دولة عربية">
+            <ChartCard icon={MapPin} title={t('dash_countries_title')} subtitle={t('dash_countries_sub')}>
               <ResponsiveContainer width="100%" height={340}>
                 <PieChart>
                   <Pie
@@ -264,14 +266,14 @@ export default function DashboardPage() {
 
           {/* ===== توزيع الدرجات ===== */}
           <Reveal delay={100}>
-            <ChartCard icon={Award} title="توزيع درجات المؤشر" subtitle="عدد الجامعات في كل نطاق درجي (من 100)">
+            <ChartCard icon={Award} title={t('dash_score_title')} subtitle={t('dash_score_sub')}>
               <ResponsiveContainer width="100%" height={340}>
                 <BarChart data={scoreData}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" />
                   <XAxis dataKey="range" tick={{ fontSize: 12, fill: '#656461' }} />
                   <YAxis tick={{ fontSize: 11, fill: '#656461' }} allowDecimals={false} />
-                  <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [v, 'عدد الجامعات']} />
-                  <Bar dataKey="count" name="عدد الجامعات" radius={[8, 8, 0, 0]}>
+                  <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [v, t('dash_uni_count')]} />
+                  <Bar dataKey="count" name={t('dash_uni_count')} radius={[8, 8, 0, 0]}>
                     {scoreData.map((_, i) => (
                       <Cell key={i} fill={GUPI_CHART[i % GUPI_CHART.length]} />
                     ))}
@@ -284,13 +286,13 @@ export default function DashboardPage() {
 
         {/* ===== معدلات الحضور في التصنيفات ===== */}
         <Reveal className="mt-6">
-          <ChartCard icon={Globe} title="معدلات الحضور في التصنيفات العالمية" subtitle="نسبة الجامعات الظاهرة في كل تصنيف من التصنيفات المعتمدة">
+          <ChartCard icon={Globe} title={t('dash_presence_rates_title')} subtitle={t('dash_presence_rates_sub')}>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={presenceRates} layout="vertical" margin={{ right: 10, left: 10 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" />
                 <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 11, fill: '#656461' }} unit="%" />
                 <YAxis type="category" dataKey="label" tick={{ fontSize: 12, fill: '#3A3835' }} width={100} />
-                <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v, n) => n === 'rate' ? [`${v}%`, 'نسبة الحضور'] : [v, 'عدد الجامعات']} />
+                <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v, n) => n === 'rate' ? [`${v}%`, t('dash_presence_rate')] : [v, t('dash_uni_count')]} />
                 <Bar dataKey="rate" name="rate" radius={[8, 8, 8, 8]} barSize={22}>
                   {presenceRates.map((_, i) => (
                     <Cell key={i} fill={GUPI_CHART[i % GUPI_CHART.length]} />
@@ -304,16 +306,16 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
           {/* ===== الحضور × التميز ===== */}
           <Reveal>
-            <ChartCard icon={Sparkles} title="العلاقة بين الحضور والتميز" subtitle="كل نقطة تمثل جامعة — محاور مرجحة (حضور 0-70، تميز 0-30)">
+            <ChartCard icon={Sparkles} title={t('dash_scatter_title')} subtitle={t('dash_scatter_sub')}>
               <ResponsiveContainer width="100%" height={340}>
                 <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 0 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" />
-                  <XAxis type="number" dataKey="x" name="الحضور" domain={[0, 70]} tick={{ fontSize: 11, fill: '#656461' }} label={{ value: 'الحضور (0-70)', position: 'bottom', offset: 5, fontSize: 11 }} />
-                  <YAxis type="number" dataKey="y" name="التميز" domain={[0, 30]} tick={{ fontSize: 11, fill: '#656461' }} label={{ value: 'التميز (0-30)', angle: -90, position: 'insideLeft', fontSize: 11 }} />
-                  <ZAxis type="number" dataKey="z" range={[40, 320]} name="الأبحاث" />
+                  <XAxis type="number" dataKey="x" name={t('dash_presence_label')} domain={[0, 70]} tick={{ fontSize: 11, fill: '#656461' }} label={{ value: lang === 'ar' ? 'الحضور (0-70)' : 'Presence (0-70)', position: 'bottom', offset: 5, fontSize: 11 }} />
+                  <YAxis type="number" dataKey="y" name={t('dash_excellence_label')} domain={[0, 30]} tick={{ fontSize: 11, fill: '#656461' }} label={{ value: lang === 'ar' ? 'التميز (0-30)' : 'Excellence (0-30)', angle: -90, position: 'insideLeft', fontSize: 11 }} />
+                  <ZAxis type="number" dataKey="z" range={[40, 320]} name={t('dash_articles_label')} />
                   <Tooltip
                     contentStyle={TOOLTIP_STYLE}
-                    formatter={(v, n) => (n === 'الأبحاث' ? [v?.toLocaleString(), n] : [v, n])}
+                    formatter={(v, n) => (n === t('dash_articles_label') ? [v?.toLocaleString(), n] : [v, n])}
                     labelFormatter={() => ''}
                     cursor={{ strokeDasharray: '3 3' }}
                   />
@@ -325,14 +327,14 @@ export default function DashboardPage() {
 
           {/* ===== متوسط الدول ===== */}
           <Reveal delay={100}>
-            <ChartCard icon={TrendingUp} title="متوسط درجة GUPI حسب الدولة" subtitle="متوسط الدرجة الإجمالية (من 100) لجامعات كل دولة">
+            <ChartCard icon={TrendingUp} title={t('dash_country_avg_title')} subtitle={t('dash_country_avg_sub')}>
               <ResponsiveContainer width="100%" height={340}>
                 <BarChart data={countryAvgData} layout="vertical" margin={{ right: 10, left: 10 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" />
                   <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 11, fill: '#656461' }} />
                   <YAxis type="category" dataKey="country" tick={{ fontSize: 11, fill: '#3A3835' }} width={90} />
-                  <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [v, 'متوسط GUPI']} />
-                  <Bar dataKey="avgScore" name="متوسط GUPI" fill="#D5791F" radius={[8, 8, 8, 8]} barSize={18} />
+                  <Tooltip contentStyle={TOOLTIP_STYLE} formatter={(v) => [v, t('dash_avg_gupi')]} />
+                  <Bar dataKey="avgScore" name={t('dash_avg_gupi')} fill="#D5791F" radius={[8, 8, 8, 8]} barSize={18} />
                 </BarChart>
               </ResponsiveContainer>
             </ChartCard>
@@ -341,7 +343,7 @@ export default function DashboardPage() {
 
         {/* ===== الحضور × التميز حسب الدولة ===== */}
         <Reveal className="mt-6">
-          <ChartCard icon={BarChart3} title="مقارنة الحضور والتميز حسب الدولة" subtitle="متوسطا الحضور (70%) والتميز (30%) لكل دولة — مقياس موحد من 100">
+          <ChartCard icon={BarChart3} title={t('dash_compare_title')} subtitle={t('dash_compare_sub')}>
             <ResponsiveContainer width="100%" height={360}>
               <BarChart data={countryAvgData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#EFEFEF" />
@@ -349,8 +351,8 @@ export default function DashboardPage() {
                 <YAxis tick={{ fontSize: 11, fill: '#656461' }} domain={[0, 70]} />
                 <Tooltip contentStyle={TOOLTIP_STYLE} />
                 <Legend wrapperStyle={{ fontSize: 12 }} />
-                <Bar dataKey="avgPresence" name="متوسط الحضور (70%)" fill="#D5791F" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="avgExcellence" name="متوسط التميز (30%)" fill="#F2C063" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="avgPresence" name={t('dash_avg_presence')} fill="#D5791F" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="avgExcellence" name={t('dash_avg_excellence')} fill="#F2C063" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </ChartCard>

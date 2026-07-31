@@ -13,6 +13,7 @@ import {
 } from 'recharts';
 import PageHero from '@/components/PageHero';
 import Reveal from '@/components/home/Reveal';
+import { useLang } from '@/lib/LanguageContext';
 
 export default function ComparePage() {
   const [universities, setUniversities] = useState([]);
@@ -28,6 +29,7 @@ export default function ComparePage() {
   const [aiLoading, setAiLoading] = useState(false);
   const [aiAnalysis, setAiAnalysis] = useState(null);
   const [aiError, setAiError] = useState(null);
+  const { t, lang } = useLang();
 
   useEffect(() => {
     fetch('/api/compare')
@@ -75,7 +77,7 @@ export default function ComparePage() {
       comparisonData = data;
       setComparison(data);
     } catch (err) {
-      setAiError('حدث خطأ أثناء جلب المقارنة');
+      setAiError(t('compare_error_fetch'));
       setComparing(false);
       return;
     }
@@ -96,7 +98,7 @@ export default function ComparePage() {
         setAiError(aiData.aiError);
       }
     } catch (err) {
-      setAiError('تعذر الحصول على التحليل الذكي');
+      setAiError(t('compare_error_ai'));
     }
     setAiLoading(false);
   }
@@ -112,7 +114,7 @@ export default function ComparePage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-gupi-orange-200 border-t-gupi-orange-600 rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gupi-ink-600">جاري تحميل الجامعات...</p>
+          <p className="text-gupi-ink-600">{t('compare_loading')}</p>
         </div>
       </div>
     );
@@ -122,9 +124,9 @@ export default function ComparePage() {
     <div className="min-h-screen bg-gupi-bg">
       <PageHero
         icon={Swords}
-        eyebrow="GUPI Challenge Arena"
-        title={<>تحدي <span className="gold-shimmer">الحضور الدولي</span></>}
-        subtitle="مواجهة مباشرة بين جامعتين عربيتين — مقارنة شاملة في كل التصنيفات والحضور والتميز مع تحليل ذكي"
+        eyebrow={t('compare_eyebrow')}
+        title={lang === 'ar' ? <>تحدي <span className="gold-shimmer">الحضور الدولي</span></> : <>International Presence <span className="gold-shimmer">Challenge</span></>}
+        subtitle={t('compare_subtitle')}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
@@ -133,7 +135,7 @@ export default function ComparePage() {
         <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 items-center mb-8">
           {/* University 1 Selector */}
           <UniSelector
-            label="الجامعة الأولى"
+            label={t('compare_uni1')}
             color="orange"
             universities={filtered1}
             selectedId={uni1Id}
@@ -144,6 +146,7 @@ export default function ComparePage() {
             setShowList={setShowList1}
             allUniversities={universities}
             excludeId={uni2Id}
+            t={t}
           />
 
           {/* VS Badge */}
@@ -156,7 +159,7 @@ export default function ComparePage() {
 
           {/* University 2 Selector */}
           <UniSelector
-            label="الجامعة الثانية"
+            label={t('compare_uni2')}
             color="amber"
             universities={filtered2}
             selectedId={uni2Id}
@@ -167,6 +170,7 @@ export default function ComparePage() {
             setShowList={setShowList2}
             allUniversities={universities}
             excludeId={uni1Id}
+            t={t}
           />
         </div>
 
@@ -180,12 +184,12 @@ export default function ComparePage() {
             {comparing ? (
               <>
                 <Loader2 className="w-5 h-5 animate-spin" />
-                جاري إجراء المواجهة...
+                {t('compare_comparing')}
               </>
             ) : (
               <>
                 <Swords className="w-5 h-5" />
-                ابدأ التحدي
+                {t('compare_start')}
               </>
             )}
           </button>
@@ -208,6 +212,8 @@ export default function ComparePage() {
             aiError={aiError}
             aiLoading={aiLoading}
             onReset={resetComparison}
+            t={t}
+            lang={lang}
           />
           </Reveal>
         )}
@@ -219,7 +225,7 @@ export default function ComparePage() {
 }
 
 /* ============ University Selector Component ============ */
-function UniSelector({ label, color, universities, selectedId, onSelect, search, setSearch, showList, setShowList, allUniversities, excludeId }) {
+function UniSelector({ label, color, universities, selectedId, onSelect, search, setSearch, showList, setShowList, allUniversities, excludeId, t }) {
   const selected = allUniversities.find((u) => u.id === selectedId);
   const colorClasses = color === 'orange'
     ? { bg: 'from-gupi-orange-500 to-gupi-orange-700', text: 'text-gupi-orange-700', border: 'border-gupi-orange-300', light: 'bg-gupi-orange-50' }
@@ -253,7 +259,7 @@ function UniSelector({ label, color, universities, selectedId, onSelect, search,
             <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gupi-ink-400" />
             <input
               type="text"
-              placeholder="ابحث عن جامعة..."
+              placeholder={t('compare_search')}
               value={search}
               onChange={(e) => { setSearch(e.target.value); setShowList(true); }}
               onFocus={() => setShowList(true)}
@@ -266,7 +272,7 @@ function UniSelector({ label, color, universities, selectedId, onSelect, search,
               <div className="fixed inset-0 z-10" onClick={() => setShowList(false)} />
               <div className="absolute z-20 mt-2 w-full bg-white rounded-xl shadow-xl border border-gupi-ink-100 max-h-64 overflow-y-auto">
                 {universities.length === 0 ? (
-                  <div className="p-4 text-center text-gupi-ink-400 text-sm">لا توجد نتائج</div>
+                  <div className="p-4 text-center text-gupi-ink-400 text-sm">{t('compare_no_results')}</div>
                 ) : (
                   universities.map((u) => (
                     <button
@@ -281,7 +287,7 @@ function UniSelector({ label, color, universities, selectedId, onSelect, search,
                         <div className="font-medium text-gupi-ink-800 text-sm">{u.name}</div>
                         <div className="text-xs text-gupi-ink-400">{u.country}</div>
                       </div>
-                      {u.id === excludeId && <span className="text-xs text-gupi-ink-300">مختارة</span>}
+                      {u.id === excludeId && <span className="text-xs text-gupi-ink-300">{t('compare_selected')}</span>}
                     </button>
                   ))
                 )}
@@ -295,7 +301,7 @@ function UniSelector({ label, color, universities, selectedId, onSelect, search,
 }
 
 /* ============ Comparison Results Component ============ */
-function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset }) {
+function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset, t, lang }) {
   const { uni1, uni2, allRankings, settings } = comparison;
   const maxTotal = parseFloat(settings.maxTotal) || 100;
   const maxPresence = parseFloat(settings.maxPresence) || 18;
@@ -305,16 +311,16 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
 
   // Radar chart data
   const radarData = [
-    { metric: 'الحضور', uni1: uni1.gupi.presenceScore, uni2: uni2.gupi.presenceScore, max: maxPresence },
-    { metric: 'التميز', uni1: uni1.gupi.excellenceScore, uni2: uni2.gupi.excellenceScore, max: maxExcellence },
+    { metric: t('rankings_col_presence'), uni1: uni1.gupi.presenceScore, uni2: uni2.gupi.presenceScore, max: maxPresence },
+    { metric: t('rankings_col_excellence'), uni1: uni1.gupi.excellenceScore, uni2: uni2.gupi.excellenceScore, max: maxExcellence },
     { metric: 'GUPI', uni1: uni1.gupi.totalScore, uni2: uni2.gupi.totalScore, max: maxTotal },
-    { metric: 'الأبحاث', uni1: normalizeArticles(uni1.articles_2025), uni2: normalizeArticles(uni2.articles_2025), max: 100 },
+    { metric: t('rankings_col_articles'), uni1: normalizeArticles(uni1.articles_2025), uni2: normalizeArticles(uni2.articles_2025), max: 100 },
   ];
 
   // Bar chart data
   const barData = [
-    { name: 'الحضور', uni1: uni1.gupi.presenceScore, uni2: uni2.gupi.presenceScore },
-    { name: 'التميز', uni1: uni1.gupi.excellenceScore, uni2: uni2.gupi.excellenceScore },
+    { name: t('rankings_col_presence'), uni1: uni1.gupi.presenceScore, uni2: uni2.gupi.presenceScore },
+    { name: t('rankings_col_excellence'), uni1: uni1.gupi.excellenceScore, uni2: uni2.gupi.excellenceScore },
     { name: 'GUPI', uni1: uni1.gupi.totalScore, uni2: uni2.gupi.totalScore },
   ];
 
@@ -327,26 +333,26 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
         {winner === 0 ? (
           <>
             <Trophy className="w-9 h-9 mx-auto mb-2" />
-            <h2 className="text-xl font-display font-black">تعادل!</h2>
-            <p className="text-white/80 text-sm">الجامعتان متساويتان في درجة GUPI</p>
+            <h2 className="text-xl font-display font-black">{t('compare_tie')}</h2>
+            <p className="text-white/80 text-sm">{t('compare_tie_desc')}</p>
           </>
         ) : (
           <>
             <Crown className="w-9 h-9 mx-auto mb-2 drop-shadow-[0_0_10px_rgba(242,192,99,0.9)]" />
-            <h2 className="text-xl font-display font-black">الفائز: {winner === 1 ? uni1.name : uni2.name}</h2>
-            <p className="text-white/80 text-sm">بدرجة GUPI: {winner === 1 ? uni1.gupi.totalScore : uni2.gupi.totalScore} / {maxTotal}</p>
+            <h2 className="text-xl font-display font-black">{t('compare_winner')}: {winner === 1 ? uni1.name : uni2.name}</h2>
+            <p className="text-white/80 text-sm">{t('compare_winner_score')}: {winner === 1 ? uni1.gupi.totalScore : uni2.gupi.totalScore} / {maxTotal}</p>
           </>
         )}
         <button onClick={onReset} className="mt-4 px-4 py-2 rounded-lg bg-white/20 hover:bg-white/30 text-sm font-medium transition-colors">
-          مواجهة جديدة
+          {t('compare_new')}
         </button>
         </div>
       </div>
 
       {/* Score Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <ScoreCard uni={uni1} color="orange" maxTotal={maxTotal} maxPresence={maxPresence} maxExcellence={maxExcellence} isWinner={winner === 1} />
-        <ScoreCard uni={uni2} color="amber" maxTotal={maxTotal} maxPresence={maxPresence} maxExcellence={maxExcellence} isWinner={winner === 2} />
+        <ScoreCard uni={uni1} color="orange" maxTotal={maxTotal} maxPresence={maxPresence} maxExcellence={maxExcellence} isWinner={winner === 1} t={t} />
+        <ScoreCard uni={uni2} color="amber" maxTotal={maxTotal} maxPresence={maxPresence} maxExcellence={maxExcellence} isWinner={winner === 2} t={t} />
       </div>
 
       {/* Charts Section */}
@@ -355,7 +361,7 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
         <div className="bg-white rounded-2xl shadow-lg p-6">
           <h3 className="font-display font-bold text-lg text-gupi-orange-900 mb-4 flex items-center gap-2">
             <Target className="w-5 h-5 text-gupi-orange-600" />
-            مخطط الرادار — مقارنة متعددة الأبعاد
+            {t('compare_radar_title')}
           </h3>
           <ResponsiveContainer width="100%" height={300}>
             <RadarChart data={radarData}>
@@ -373,7 +379,7 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
         <div className="bg-white rounded-2xl shadow-lg p-6">
           <h3 className="font-display font-bold text-lg text-gupi-orange-900 mb-4 flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-gupi-orange-600" />
-            مخطط الدرجات — مقارنة مباشرة
+            {t('compare_bar_title')}
           </h3>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={barData}>
@@ -397,17 +403,17 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
         <div className="bg-gupi-orange-950 text-white px-6 py-4">
           <h3 className="font-display font-bold text-lg flex items-center gap-2">
             <Globe className="w-5 h-5" />
-            مقارنة شاملة في جميع التصنيفات
+            {t('compare_table_title')}
           </h3>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="bg-gupi-ink-50 border-b border-gupi-ink-100">
-                <th className="px-4 py-3 text-right font-bold text-gupi-ink-700">التصنيف</th>
+                <th className="px-4 py-3 text-right font-bold text-gupi-ink-700">{t('compare_col_ranking')}</th>
                 <th className="px-4 py-3 text-center font-bold text-gupi-orange-700">{uni1.name}</th>
                 <th className="px-4 py-3 text-center font-bold text-gupi-amber-700">{uni2.name}</th>
-                <th className="px-4 py-3 text-center font-bold text-gupi-ink-600">الأفضل</th>
+                <th className="px-4 py-3 text-center font-bold text-gupi-ink-600">{t('compare_col_best')}</th>
               </tr>
             </thead>
             <tbody>
@@ -416,8 +422,8 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
                 return (
                   <tr key={r.field_key} className={`border-b border-gupi-ink-50 ${idx % 2 === 0 ? 'bg-white' : 'bg-gupi-ink-50/30'}`}>
                     <td className="px-4 py-3">
-                      <div className="font-medium text-gupi-ink-800">{r.label_ar}</div>
-                      <div className="text-xs text-gupi-ink-400">{r.label_en}</div>
+                      <div className="font-medium text-gupi-ink-800">{lang === 'ar' ? r.label_ar : r.label_en}</div>
+                      <div className="text-xs text-gupi-ink-400">{lang === 'ar' ? r.label_en : r.label_ar}</div>
                     </td>
                     <td className="px-4 py-3 text-center">
                       <RankValue value={r.uni1_value} present={r.uni1_present} color="orange" />
@@ -441,8 +447,8 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
 
       {/* Presence Details */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <PresenceDetailsCard uni={uni1} color="orange" />
-        <PresenceDetailsCard uni={uni2} color="amber" />
+        <PresenceDetailsCard uni={uni1} color="orange" t={t} />
+        <PresenceDetailsCard uni={uni2} color="amber" t={t} />
       </div>
 
       {/* AI Analysis Section */}
@@ -452,16 +458,16 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
             <Sparkles className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h3 className="font-display font-bold text-xl">التحليل الذكي للمواجهة</h3>
-            <p className="text-sm text-gupi-ink-300">تحليل آلي يعتمد حصرياً على بيانات الموقع</p>
+            <h3 className="font-display font-bold text-xl">{t('compare_ai_title')}</h3>
+            <p className="text-sm text-gupi-ink-300">{t('compare_ai_sub')}</p>
           </div>
         </div>
 
         {aiLoading ? (
           <div className="flex flex-col items-center justify-center py-12">
             <Loader2 className="w-10 h-10 text-gupi-orange-400 animate-spin mb-4" />
-            <p className="text-gupi-ink-300 text-sm">جاري إنشاء التحليل الذكي...</p>
-            <p className="text-gupi-ink-400 text-xs mt-1">قد يستغرق هذا بضع ثوان</p>
+            <p className="text-gupi-ink-300 text-sm">{t('compare_ai_loading')}</p>
+            <p className="text-gupi-ink-400 text-xs mt-1">{t('compare_ai_loading_sub')}</p>
           </div>
         ) : aiAnalysis ? (
           <AIAnalysisContent content={aiAnalysis} />
@@ -476,7 +482,7 @@ function ComparisonResults({ comparison, aiAnalysis, aiError, aiLoading, onReset
 }
 
 /* ============ Score Card ============ */
-function ScoreCard({ uni, color, maxTotal, maxPresence, maxExcellence, isWinner }) {
+function ScoreCard({ uni, color, maxTotal, maxPresence, maxExcellence, isWinner, t }) {
   const colorClasses = color === 'orange'
     ? { gradient: 'from-gupi-orange-500 to-gupi-orange-700', text: 'text-gupi-orange-700', bg: 'bg-gupi-orange-50', border: 'border-gupi-orange-200' }
     : { gradient: 'from-gupi-amber-500 to-gupi-amber-700', text: 'text-gupi-amber-700', bg: 'bg-gupi-amber-50', border: 'border-gupi-amber-200' };
@@ -485,7 +491,7 @@ function ScoreCard({ uni, color, maxTotal, maxPresence, maxExcellence, isWinner 
     <div className={`bg-white rounded-2xl shadow-lg p-6 border-2 ${isWinner ? colorClasses.border : 'border-transparent'} relative`}>
       {isWinner && (
         <div className={`absolute -top-3 right-6 px-3 py-1 rounded-full bg-gradient-to-r ${colorClasses.gradient} text-white text-xs font-bold flex items-center gap-1`}>
-          <Crown className="w-3 h-3" /> الفائز
+          <Crown className="w-3 h-3" /> {t('compare_winner')}
         </div>
       )}
       <div className="flex items-start justify-between mb-4">
@@ -503,14 +509,14 @@ function ScoreCard({ uni, color, maxTotal, maxPresence, maxExcellence, isWinner 
 
       <div className="grid grid-cols-3 gap-3">
         <ScoreBox label="GUPI" value={uni.gupi.totalScore} max={maxTotal} color={color} />
-        <ScoreBox label="الحضور" value={uni.gupi.presenceScore} max={maxPresence} color={color} />
-        <ScoreBox label="التميز" value={uni.gupi.excellenceScore} max={maxExcellence} color={color} />
+        <ScoreBox label={t('rankings_col_presence')} value={uni.gupi.presenceScore} max={maxPresence} color={color} />
+        <ScoreBox label={t('rankings_col_excellence')} value={uni.gupi.excellenceScore} max={maxExcellence} color={color} />
       </div>
 
       {uni.articles_2025 != null && (
         <div className="mt-3 flex items-center gap-2 text-sm text-gupi-ink-500">
           <BookOpen className="w-4 h-4" />
-          الأبحاث 2025: <span className="font-bold text-gupi-ink-700">{uni.articles_2025.toLocaleString()}</span>
+          {t('compare_articles_2025')}: <span className="font-bold text-gupi-ink-700">{uni.articles_2025.toLocaleString()}</span>
         </div>
       )}
     </div>
@@ -546,7 +552,7 @@ function RankValue({ value, present, color }) {
 }
 
 /* ============ Presence Details Card ============ */
-function PresenceDetailsCard({ uni, color }) {
+function PresenceDetailsCard({ uni, color, t }) {
   const colorClasses = color === 'orange'
     ? { text: 'text-gupi-orange-700', bg: 'bg-gupi-orange-50', border: 'border-gupi-orange-100', headerBg: 'bg-gupi-orange-950' }
     : { text: 'text-gupi-amber-700', bg: 'bg-gupi-amber-50', border: 'border-gupi-amber-100', headerBg: 'bg-gupi-amber-800' };
@@ -559,9 +565,9 @@ function PresenceDetailsCard({ uni, color }) {
       <div className={`${colorClasses.headerBg} text-white px-6 py-4`}>
         <h3 className="font-display font-bold flex items-center gap-2">
           <Globe className="w-5 h-5" />
-          حضور {uni.name} في التصنيفات
+          {t('compare_presence_title')} — {uni.name}
         </h3>
-        <p className="text-sm text-white/70 mt-1">{presenceCount} من {totalCount} تصنيف</p>
+        <p className="text-sm text-white/70 mt-1">{presenceCount} {t('compare_presence_of')} {totalCount} {t('compare_presence_rankings')}</p>
       </div>
       <div className="p-4 grid grid-cols-2 gap-2">
         {uni.gupi.presenceDetails.map((d, i) => (
@@ -579,7 +585,7 @@ function PresenceDetailsCard({ uni, color }) {
       {/* Excellence details */}
       <div className="px-4 pb-4">
         <div className="text-xs font-bold text-gupi-ink-500 mb-2 flex items-center gap-1">
-          <Award className="w-3 h-3" /> نقاط التميز
+          <Award className="w-3 h-3" /> {t('compare_excellence_pts')}
         </div>
         <div className="grid grid-cols-3 gap-2">
           {uni.gupi.excellenceDetails.map((d, i) => (

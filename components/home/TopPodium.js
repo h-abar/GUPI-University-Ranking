@@ -3,13 +3,11 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { MapPin, Crown, Medal } from 'lucide-react';
+import { useLang } from '@/lib/LanguageContext';
 
-/**
- * منصة التتويج — تعرض الجامعات الثلاث الأولى في ترتيب GUPI
- * بتصميم ميداليات (ذهبية / فضية / برونزية) مع حلقة دوارة للمركز الأول
- */
 export default function TopPodium() {
   const [top, setTop] = useState(null);
+  const { t } = useLang();
 
   useEffect(() => {
     fetch('/api/universities')
@@ -37,16 +35,16 @@ export default function TopPodium() {
   const [first, second, third] = top;
 
   const cards = [
-    { u: third, place: 3, badge: 'rank-3', label: 'المركز الثالث', order: 'order-3' },
-    { u: first, place: 1, badge: 'rank-1', label: 'المركز الأول', order: 'order-1', featured: true },
-    { u: second, place: 2, badge: 'rank-2', label: 'المركز الثاني', order: 'order-2' },
+    { u: third, place: 3, badge: 'rank-3', label: t('podium_third'), order: 'order-3' },
+    { u: first, place: 1, badge: 'rank-1', label: t('podium_first'), order: 'order-1', featured: true },
+    { u: second, place: 2, badge: 'rank-2', label: t('podium_second'), order: 'order-2' },
   ];
 
   return (
     <div className="mt-14 max-w-4xl mx-auto">
       <div className="flex items-center justify-center gap-2 mb-6 text-gupi-amber-300">
         <Medal className="w-4 h-4" />
-        <span className="text-xs font-semibold tracking-wide">صدارة الترتيب — GUPI 2027</span>
+        <span className="text-xs font-semibold tracking-wide">{t('podium_title')}</span>
         <Medal className="w-4 h-4" />
       </div>
 

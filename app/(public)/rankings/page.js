@@ -5,6 +5,7 @@ import { Search, ArrowUpDown, Trophy, MapPin, Award, TrendingUp, X, ExternalLink
 import Link from 'next/link';
 import PageHero from '@/components/PageHero';
 import Reveal from '@/components/home/Reveal';
+import { useLang } from '@/lib/LanguageContext';
 
 export default function RankingsPage() {
   const [universities, setUniversities] = useState([]);
@@ -14,6 +15,7 @@ export default function RankingsPage() {
   const [sortBy, setSortBy] = useState('rank');
   const [sortDir, setSortDir] = useState('asc');
   const [selectedUni, setSelectedUni] = useState(null);
+  const { t, lang } = useLang();
 
   useEffect(() => {
     fetch('/api/universities')
@@ -63,7 +65,7 @@ export default function RankingsPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-gupi-orange-200 border-t-gupi-orange-600 rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gupi-ink-600">جاري تحميل البيانات...</p>
+          <p className="text-gupi-ink-600">{t('common_loading')}</p>
         </div>
       </div>
     );
@@ -74,8 +76,8 @@ export default function RankingsPage() {
       <PageHero
         icon={Trophy}
         eyebrow="GUPI 2027"
-        title={<>ترتيب <span className="gold-shimmer">الجامعات العربية</span></>}
-        subtitle="القائمة النهائية لمؤشر الحضور العالمي للجامعات — أفضل 70 جامعة عربية"
+        title={lang === 'ar' ? <>ترتيب <span className="gold-shimmer">الجامعات العربية</span></> : <>Arab <span className="gold-shimmer">University Rankings</span></>}
+        subtitle={t('rankings_subtitle')}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-10">
@@ -88,7 +90,7 @@ export default function RankingsPage() {
               <Search className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gupi-ink-400" />
               <input
                 type="text"
-                placeholder="ابحث عن جامعة..."
+                placeholder={t('rankings_search')}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pr-10 pl-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all"
@@ -100,7 +102,7 @@ export default function RankingsPage() {
               onChange={(e) => setCountryFilter(e.target.value)}
               className="px-4 py-3 rounded-xl border border-gupi-ink-200 focus:border-gupi-orange-500 focus:ring-2 focus:ring-gupi-orange-200 outline-none transition-all bg-white"
             >
-              <option value="all">جميع الدول</option>
+              <option value="all">{t('rankings_filter_all')}</option>
               {countries.map((c) => (
                 <option key={c} value={c}>{c}</option>
               ))}
@@ -109,14 +111,14 @@ export default function RankingsPage() {
 
           {/* Results count */}
           <div className="mt-4 flex items-center justify-between text-sm text-gupi-ink-500">
-            <span>عرض {filtered.length} من {universities.length} جامعة</span>
+            <span>{t('rankings_showing')} {filtered.length} {t('rankings_of')} {universities.length} {t('rankings_universities')}</span>
             {(search || countryFilter !== 'all') && (
               <button
                 onClick={() => { setSearch(''); setCountryFilter('all'); }}
                 className="flex items-center gap-1 text-gupi-orange-600 hover:text-gupi-orange-700"
               >
                 <X className="w-4 h-4" />
-                مسح الفلاتر
+                {lang === 'ar' ? 'مسح الفلاتر' : 'Clear filters'}
               </button>
             )}
           </div>
@@ -131,32 +133,32 @@ export default function RankingsPage() {
                 <tr className="bg-gupi-orange-950 text-white">
                   <th className="px-4 py-4 text-right cursor-pointer hover:bg-gupi-orange-900 transition-colors" onClick={() => toggleSort('rank')}>
                     <div className="flex items-center gap-1">
-                      <span>الترتيب</span>
+                      <span>{t('rankings_col_rank')}</span>
                       <ArrowUpDown className="w-3 h-3" />
                     </div>
                   </th>
                   <th className="px-4 py-4 text-right cursor-pointer hover:bg-gupi-orange-900 transition-colors" onClick={() => toggleSort('name')}>
                     <div className="flex items-center gap-1">
-                      <span>الجامعة</span>
+                      <span>{t('rankings_col_university')}</span>
                       <ArrowUpDown className="w-3 h-3" />
                     </div>
                   </th>
-                  <th className="px-4 py-4 text-center hidden md:table-cell">الدولة</th>
+                  <th className="px-4 py-4 text-center hidden md:table-cell">{t('rankings_col_country')}</th>
                   <th className="px-4 py-4 text-center cursor-pointer hover:bg-gupi-orange-900 transition-colors" onClick={() => toggleSort('score')}>
                     <div className="flex items-center gap-1 justify-center">
-                      <span>درجة GUPI</span>
+                      <span>{t('rankings_col_gupi')}</span>
                       <ArrowUpDown className="w-3 h-3" />
                     </div>
                   </th>
-                  <th className="px-4 py-4 text-center hidden lg:table-cell">الحضور (18)</th>
-                  <th className="px-4 py-4 text-center hidden lg:table-cell">التميز (5)</th>
+                  <th className="px-4 py-4 text-center hidden lg:table-cell">{t('rankings_col_presence')} (18)</th>
+                  <th className="px-4 py-4 text-center hidden lg:table-cell">{t('rankings_col_excellence')} (5)</th>
                   <th className="px-4 py-4 text-center cursor-pointer hover:bg-gupi-orange-900 transition-colors hidden md:table-cell" onClick={() => toggleSort('articles')}>
                     <div className="flex items-center gap-1 justify-center">
-                      <span>الأبحاث</span>
+                      <span>{t('rankings_col_articles')}</span>
                       <ArrowUpDown className="w-3 h-3" />
                     </div>
                   </th>
-                  <th className="px-4 py-4 text-center hidden md:table-cell">تفاصيل</th>
+                  <th className="px-4 py-4 text-center hidden md:table-cell">{lang === 'ar' ? 'تفاصيل' : 'Details'}</th>
                 </tr>
               </thead>
               <tbody>
@@ -211,13 +213,13 @@ export default function RankingsPage() {
                           onClick={() => setSelectedUni(uni)}
                           className="px-3 py-1.5 rounded-lg bg-gupi-orange-100 text-gupi-orange-700 text-sm font-medium hover:bg-gupi-orange-200 transition-colors"
                         >
-                          عرض
+                          {lang === 'ar' ? 'عرض' : 'View'}
                         </button>
                         <Link
                           href={`/universities/${uni.id}`}
                           className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-gupi-orange-600 to-gupi-orange-800 text-white text-sm font-medium hover:from-gupi-orange-700 hover:to-gupi-orange-900 transition-colors"
                         >
-                          بطاقة
+                          {lang === 'ar' ? 'بطاقة' : 'Card'}
                         </Link>
                       </div>
                     </td>
@@ -247,21 +249,21 @@ export default function RankingsPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-display font-bold">{selectedUni.name}</h3>
-                  <p className="text-sm text-gupi-ink-300">{selectedUni.country} • تأسست {selectedUni.founded}</p>
+                  <p className="text-sm text-gupi-ink-300">{selectedUni.country} • {lang === 'ar' ? 'تأسست' : 'Founded'} {selectedUni.founded}</p>
                 </div>
               </div>
               <div className="mt-4 flex gap-6">
                 <div>
                   <div className="text-3xl font-black">{selectedUni.gupi.totalScore}</div>
-                  <div className="text-xs text-gupi-ink-300">درجة GUPI / 100</div>
+                  <div className="text-xs text-gupi-ink-300">{t('rankings_col_gupi')} / 100</div>
                 </div>
                 <div>
                   <div className="text-3xl font-black">{selectedUni.gupi.presenceScore}</div>
-                  <div className="text-xs text-gupi-ink-300">الحضور / 18</div>
+                  <div className="text-xs text-gupi-ink-300">{t('rankings_col_presence')} / 18</div>
                 </div>
                 <div>
                   <div className="text-3xl font-black">{selectedUni.gupi.excellenceScore}</div>
-                  <div className="text-xs text-gupi-ink-300">التميز / 5</div>
+                  <div className="text-xs text-gupi-ink-300">{t('rankings_col_excellence')} / 5</div>
                 </div>
               </div>
             </div>
@@ -271,7 +273,7 @@ export default function RankingsPage() {
               <div>
                 <h4 className="font-bold text-gupi-orange-900 mb-3 flex items-center gap-2">
                   <Trophy className="w-5 h-5 text-gupi-orange-600" />
-                  الحضور في التصنيفات العالمية (18 درجة)
+                  {t('formula_presence_card_title')} (18 {lang === 'ar' ? 'درجة' : 'pts'})
                 </h4>
                 <div className="grid grid-cols-2 gap-2">
                   {selectedUni.gupi.presenceDetails.map((d, i) => (
@@ -289,7 +291,7 @@ export default function RankingsPage() {
               <div>
                 <h4 className="font-bold text-gupi-amber-800 mb-3 flex items-center gap-2">
                   <Award className="w-5 h-5 text-gupi-amber-600" />
-                  التميز في التصنيفات الكبرى (5 درجات)
+                  {t('formula_excellence_card_title')} (5 {lang === 'ar' ? 'درجات' : 'pts'})
                 </h4>
                 <div className="grid grid-cols-3 gap-2">
                   {selectedUni.gupi.excellenceDetails.map((d, i) => (
@@ -307,13 +309,13 @@ export default function RankingsPage() {
               <div className="pt-2">
                 <Link href={`/universities/${selectedUni.id}`} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-gupi-orange-600 to-gupi-orange-800 text-white font-bold hover:from-gupi-orange-700 hover:to-gupi-orange-900 transition-colors">
                   <ExternalLink className="w-4 h-4" />
-                  عرض بطاقة الجامعة الكاملة
+                  {lang === 'ar' ? 'عرض بطاقة الجامعة الكاملة' : 'View Full University Card'}
                 </Link>
               </div>
 
               {/* All rankings */}
               <div>
-                <h4 className="font-bold text-gupi-ink-700 mb-3">جميع التصنيفات</h4>
+                <h4 className="font-bold text-gupi-ink-700 mb-3">{lang === 'ar' ? 'جميع التصنيفات' : 'All Rankings'}</h4>
                 <div className="grid grid-cols-2 gap-2 text-sm">
                   {[
                     ['Shanghai (ARWU)', selectedUni.shanghai_ranking],

@@ -1,10 +1,11 @@
 import './gupi-theme.css';
 import './globals.css';
+import { LanguageProvider } from '@/lib/LanguageContext';
 
 export const metadata = {
-  title: 'GUPI | مؤشر الحضور العالمي للجامعات',
-  description: 'مؤشر الحضور العالمي للجامعات (GUPI) - مؤشر رائد ومبتكر يهدف إلى قياس المنظومة الأكاديمية بأساليب جيل الذكاء الاصطناعي',
-  keywords: 'GUPI, جامعات, تصنيف, مؤشر, حضور عالمي, جامعات عربية',
+  title: 'GUPI | Global University Presence Index',
+  description: 'Global University Presence Index (GUPI) — a pioneering index measuring the international presence of Arab universities',
+  keywords: 'GUPI, universities, ranking, index, global presence, Arab universities',
 };
 
 export default function RootLayout({ children }) {
@@ -14,7 +15,9 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/logo.png" type="image/png" />
       </head>
       <body className="bg-gupi-bg text-gupi-ink-900 antialiased">
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );
