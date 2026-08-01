@@ -71,7 +71,8 @@ export default function DashboardPage() {
   /* ===== توزيع الدول ===== */
   const countryCounts = {};
   universities.forEach((u) => {
-    if (u.country) countryCounts[u.country] = (countryCounts[u.country] || 0) + 1;
+    const c = u.country?.trim();
+    if (c) countryCounts[c] = (countryCounts[c] || 0) + 1;
   });
   const countryData = Object.entries(countryCounts)
     .map(([name, value]) => ({ name, value }))
@@ -119,12 +120,13 @@ export default function DashboardPage() {
   /* ===== متوسطات الدول ===== */
   const countryScores = {};
   universities.forEach((u) => {
-    if (!u.country) return;
-    if (!countryScores[u.country]) countryScores[u.country] = { total: 0, count: 0, presence: 0, excellence: 0 };
-    countryScores[u.country].total += u.gupi.totalScore;
-    countryScores[u.country].presence += (u.gupi.presenceComponent || 0);
-    countryScores[u.country].excellence += (u.gupi.excellenceComponent || 0);
-    countryScores[u.country].count++;
+    const c = u.country?.trim();
+    if (!c) return;
+    if (!countryScores[c]) countryScores[c] = { total: 0, count: 0, presence: 0, excellence: 0 };
+    countryScores[c].total += u.gupi.totalScore;
+    countryScores[c].presence += (u.gupi.presenceComponent || 0);
+    countryScores[c].excellence += (u.gupi.excellenceComponent || 0);
+    countryScores[c].count++;
   });
   const countryAvgData = Object.entries(countryScores)
     .map(([country, d]) => ({
