@@ -70,14 +70,16 @@ export default function DashboardPage() {
 
   /* ===== توزيع الدول ===== */
   const norm = (s) => s?.trim().replace(/[\u064B-\u0652]/g, '').replace(/[إأآا]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه');
-  const countryCounts = {};
+  const countryMap = new Map();
   universities.forEach((u) => {
-    const c = norm(u.country);
-    if (c) countryCounts[c] = (countryCounts[c] || 0) + 1;
+    const key = norm(u.country);
+    if (!key) return;
+    if (!countryMap.has(key)) countryMap.set(key, { name: u.country.trim(), value: 0 });
+    countryMap.get(key).value++;
   });
-  const countryData = Object.entries(countryCounts)
-    .map(([name, value]) => ({ name, value }))
-    .sort((a, b) => b.value - a.value);
+  const countryCounts = {};
+  countryMap.forEach((v, k) => { countryCounts[k] = v.value; });
+  const countryData = Array.from(countryMap.values()).sort((a, b) => b.value - a.value);
 
   /* ===== توزيع الدرجات (من 100) ===== */
   const scoreBuckets = { '0-20': 0, '21-40': 0, '41-60': 0, '61-80': 0, '81-100': 0 };
@@ -123,15 +125,15 @@ export default function DashboardPage() {
   universities.forEach((u) => {
     const c = norm(u.country);
     if (!c) return;
-    if (!countryScores[c]) countryScores[c] = { total: 0, count: 0, presence: 0, excellence: 0 };
+    if (!countryScores[c]) countryScores[c] = { name: u.country.trim(), total: 0, count: 0, presence: 0, excellence: 0 };
     countryScores[c].total += u.gupi.totalScore;
     countryScores[c].presence += (u.gupi.presenceComponent || 0);
     countryScores[c].excellence += (u.gupi.excellenceComponent || 0);
     countryScores[c].count++;
   });
-  const countryAvgData = Object.entries(countryScores)
-    .map(([country, d]) => ({
-      country,
+  const countryAvgData = Object.values(countryScores)
+    .map((d) => ({
+      country: d.name,
       avgScore: +(d.total / d.count).toFixed(1),
       avgPresence: +(d.presence / d.count).toFixed(1),
       avgExcellence: +(d.excellence / d.count).toFixed(1),
