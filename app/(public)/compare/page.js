@@ -557,11 +557,12 @@ function RankValue({ value, present, color }) {
 }
 
 /* ============ Presence Details Card ============ */
-function PresenceDetailsCard({ uni, presenceDetails, color, t, lang }) {
+function PresenceDetailsCard({ uni, color, t, lang }) {
   const colorClasses = color === 'orange'
     ? { text: 'text-gupi-orange-700', bg: 'bg-gupi-orange-50', border: 'border-gupi-orange-100', headerBg: 'bg-gupi-orange-950' }
     : { text: 'text-gupi-amber-700', bg: 'bg-gupi-amber-50', border: 'border-gupi-amber-100', headerBg: 'bg-gupi-amber-800' };
 
+  const presenceDetails = uni.gupi.presenceDetails || [];
   const presenceCount = presenceDetails.filter((d) => d.present).length;
   const totalCount = presenceDetails.length;
 
