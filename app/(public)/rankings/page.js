@@ -27,14 +27,16 @@ export default function RankingsPage() {
   }, []);
 
   const countries = useMemo(() => {
-    const set = new Set(universities.map((u) => u.country?.trim()).filter(Boolean));
+    const norm = (s) => s?.trim().replace(/[\u064B-\u0652]/g, '').replace(/[إأآا]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه');
+    const set = new Set(universities.map((u) => norm(u.country)).filter(Boolean));
     return Array.from(set).sort();
   }, [universities]);
 
   const filtered = useMemo(() => {
+    const norm = (s) => s?.trim().replace(/[\u064B-\u0652]/g, '').replace(/[إأآا]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه');
     let result = universities.filter((u) => {
       const matchesSearch = !search || (lang === 'en' && u.name_en ? u.name_en : u.name)?.includes(search);
-      const matchesCountry = countryFilter === 'all' || (u.country?.trim() === countryFilter);
+      const matchesCountry = countryFilter === 'all' || (norm(u.country) === countryFilter);
       return matchesSearch && matchesCountry;
     });
 

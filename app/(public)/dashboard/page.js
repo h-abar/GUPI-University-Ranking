@@ -69,9 +69,10 @@ export default function DashboardPage() {
   });
 
   /* ===== توزيع الدول ===== */
+  const norm = (s) => s?.trim().replace(/[\u064B-\u0652]/g, '').replace(/[إأآا]/g, 'ا').replace(/ى/g, 'ي').replace(/ة/g, 'ه');
   const countryCounts = {};
   universities.forEach((u) => {
-    const c = u.country?.trim();
+    const c = norm(u.country);
     if (c) countryCounts[c] = (countryCounts[c] || 0) + 1;
   });
   const countryData = Object.entries(countryCounts)
@@ -120,7 +121,7 @@ export default function DashboardPage() {
   /* ===== متوسطات الدول ===== */
   const countryScores = {};
   universities.forEach((u) => {
-    const c = u.country?.trim();
+    const c = norm(u.country);
     if (!c) return;
     if (!countryScores[c]) countryScores[c] = { total: 0, count: 0, presence: 0, excellence: 0 };
     countryScores[c].total += u.gupi.totalScore;
