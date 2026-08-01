@@ -227,7 +227,7 @@ export default function ComparePage() {
 }
 
 /* ============ University Selector Component ============ */
-function UniSelector({ label, color, universities, selectedId, onSelect, search, setSearch, excludeId, t, lang }) {
+function UniSelector({ label, color, universities, selectedId, onSelect, search, setSearch, showList, setShowList, excludeId, t, lang }) {
   const selected = universities.find((u) => u.id === selectedId);
   const colorClasses = color === 'orange'
     ? { bg: 'from-gupi-orange-500 to-gupi-orange-700', text: 'text-gupi-orange-700', border: 'border-gupi-orange-300', light: 'bg-gupi-orange-50' }
