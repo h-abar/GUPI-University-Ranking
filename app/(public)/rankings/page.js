@@ -156,8 +156,8 @@ export default function RankingsPage() {
                       <ArrowUpDown className="w-3 h-3" />
                     </div>
                   </th>
-                  <th className="px-4 py-4 text-center hidden lg:table-cell">{t('rankings_col_presence')} (18)</th>
-                  <th className="px-4 py-4 text-center hidden lg:table-cell">{t('rankings_col_excellence')} (5)</th>
+                  <th className="px-4 py-4 text-center hidden lg:table-cell">{t('rankings_col_presence')}</th>
+                  <th className="px-4 py-4 text-center hidden lg:table-cell">{t('rankings_col_excellence')}</th>
                   <th className="px-4 py-4 text-center cursor-pointer hover:bg-gupi-orange-900 transition-colors hidden md:table-cell" onClick={() => toggleSort('articles')}>
                     <div className="flex items-center gap-1 justify-center">
                       <span>{t('rankings_col_articles')}</span>
@@ -199,12 +199,10 @@ export default function RankingsPage() {
                       </div>
                     </td>
                     <td className="px-4 py-3 text-center hidden lg:table-cell">
-                      <span className="font-bold text-gupi-orange-600">{uni.gupi.presenceScore}</span>
-                      <span className="text-gupi-ink-400 text-sm">/ 18</span>
+                      <span className="font-bold text-gupi-orange-600">{Math.round((uni.gupi.presenceScore / uni.gupi.maxPresence) * 100)}%</span>
                     </td>
                     <td className="px-4 py-3 text-center hidden lg:table-cell">
-                      <span className="font-bold text-gupi-amber-600">{uni.gupi.excellenceScore}</span>
-                      <span className="text-gupi-ink-400 text-sm">/ 5</span>
+                      <span className="font-bold text-gupi-amber-600">{Math.round((uni.gupi.excellenceScore / uni.gupi.maxExcellence) * 100)}%</span>
                     </td>
                     <td className="px-4 py-3 text-center hidden md:table-cell">
                       {uni.articles_2025 ? (
