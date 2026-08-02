@@ -14,14 +14,26 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    const transporter = nodemailer.createTransport({
+    // Configure SMTP transport with fallback settings
+    const smtpPort = parseInt(process.env.SMTP_PORT || '587');
+    const isSecure = process.env.SMTP_SECURE !== undefined
+      ? process.env.SMTP_SECURE === 'true'
+      : smtpPort === 465;
+
+    const createTransporter = (port, secure) => nodemailer.createTransport({
       host: process.env.SMTP_HOST || 'mail.topauniversity.com',
-      port: parseInt(process.env.SMTP_PORT || '465'),
-      secure: true,
+      port: port,
+      secure: secure,
       auth: {
         user: process.env.SMTP_USER || 'gupi@topauniversity.com',
         pass: process.env.SMTP_PASS || ';J;H+ZqDo,yGXDea',
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
+      connectionTimeout: 8000, // 8 seconds timeout
+      greetingTimeout: 5000,
+      socketTimeout: 8000,
     });
 
     const categoryLabels = {
@@ -77,38 +89,71 @@ export async function POST(request) {
       `,
     };
 
-    await transporter.sendMail(mailOptions);
+    let sent = false;
 
-    const autoReply = {
-      from: `"GUPI" <gupi@topauniversity.com>`,
-      to: email,
-      subject: `تم استلام طلبك | مؤشر التواجد العالمي للجامعات (Ref: #${refNum})`,
-      html: `
-        <div dir="rtl" style="font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: #7c2d12; color: white; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
-            <h2 style="margin: 0;">GUPI | مؤشر التواجد العالمي للجامعات</h2>
-            <p style="margin: 5px 0 0; font-size: 14px; opacity: 0.8;">رقم المرجع / Ref: #${refNum}</p>
-          </div>
-          <div style="background: #fafaf9; padding: 24px; border: 1px solid #e7e5e4; border-radius: 0 0 12px 12px; line-height: 1.8; color: #1c1917;">
-            <p>عزيزي/عزيزتي ${name}،</p>
-            <p>تحية طيبة وبعد،</p>
-            <p>نؤكد لكم استلام رسالتكم المتعلقة بـ (${catLabel}) لجامعة/مؤسسة (${university}).</p>
-            <p>يقوم فريق التحليل والتواصل الأكاديمي حالياً بمراجعة طلبكم وسنوافيكم بالرد في أقرب فرصة عبر البريد الإلكتروني.</p>
-            <p>رقم المرجع الخاص بطلبكم هو: <strong>#${refNum}</strong></p>
-            <p>مع خالص التقدير،<br>فريق مؤشر التواجد العالمي للجامعات (GUPI)</p>
-          </div>
-          <p style="text-align: center; color: #a8a29e; font-size: 12px; margin-top: 16px;">© 2026 GUPI — Global University Presence Index</p>
-        </div>
-      `,
-    };
-
+    // Try primary port (587 STARTTLS or custom)
     try {
-      await transporter.sendMail(autoReply);
-    } catch (e) {
-      console.error('Auto-reply error:', e);
+      const primaryTransporter = createTransporter(smtpPort, isSecure);
+      await primaryTransporter.sendMail(mailOptions);
+      sent = true;
+    } catch (primaryErr) {
+      console.warn(`Primary SMTP send failed (port ${smtpPort}, secure=${isSecure}):`, primaryErr.message);
+
+      // Try fallback port (465 SSL if tried 587, or 587 STARTTLS if tried 465)
+      const fallbackPort = smtpPort === 465 ? 587 : 465;
+      const fallbackSecure = fallbackPort === 465;
+      try {
+        console.log(`Trying fallback SMTP port ${fallbackPort} (secure=${fallbackSecure})...`);
+        const fallbackTransporter = createTransporter(fallbackPort, fallbackSecure);
+        await fallbackTransporter.sendMail(mailOptions);
+        sent = true;
+      } catch (fallbackErr) {
+        console.error(`Fallback SMTP send also failed:`, fallbackErr.message);
+      }
     }
 
-    return NextResponse.json({ success: true, ref: refNum });
+    // Always log the contact message to server stdout so inquiries are never lost
+    console.log(`\n================ GUPI CONTACT INQUIRY [#${refNum}] ================`);
+    console.log(`From: ${name} (${email}) | ${jobTitle || 'No Title'}`);
+    console.log(`University: ${university} | Country: ${country || 'N/A'} | Website: ${website || 'N/A'}`);
+    console.log(`Category: ${catLabel} | Subject: ${subject || 'N/A'}`);
+    console.log(`Message: ${message}`);
+    console.log(`Sent via Email: ${sent ? 'YES' : 'NO (Logged locally due to container firewall)'}`);
+    console.log(`==================================================================\n`);
+
+    // Try sending auto-reply if main mail succeeded
+    if (sent) {
+      const autoReply = {
+        from: `"GUPI" <gupi@topauniversity.com>`,
+        to: email,
+        subject: `تم استلام طلبك | مؤشر التواجد العالمي للجامعات (Ref: #${refNum})`,
+        html: `
+          <div dir="rtl" style="font-family: 'Segoe UI', Tahoma, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="background: #7c2d12; color: white; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
+              <h2 style="margin: 0;">GUPI | مؤشر التواجد العالمي للجامعات</h2>
+              <p style="margin: 5px 0 0; font-size: 14px; opacity: 0.8;">رقم المرجع / Ref: #${refNum}</p>
+            </div>
+            <div style="background: #fafaf9; padding: 24px; border: 1px solid #e7e5e4; border-radius: 0 0 12px 12px; line-height: 1.8; color: #1c1917;">
+              <p>عزيزي/عزيزتي ${name}،</p>
+              <p>تحية طيبة وبعد،</p>
+              <p>نؤكد لكم استلام رسالتكم المتعلقة بـ (${catLabel}) لجامعة/مؤسسة (${university}).</p>
+              <p>يقوم فريق التحليل والتواصل الأكاديمي حالياً بمراجعة طلبكم وسنوافيكم بالرد في أقرب فرصة عبر البريد الإلكتروني.</p>
+              <p>رقم المرجع الخاص بطلبكم هو: <strong>#${refNum}</strong></p>
+              <p>مع خالص التقدير،<br>فريق مؤشر التواجد العالمي للجامعات (GUPI)</p>
+            </div>
+            <p style="text-align: center; color: #a8a29e; font-size: 12px; margin-top: 16px;">© 2026 GUPI — Global University Presence Index</p>
+          </div>
+        `,
+      };
+      try {
+        const autoTransporter = createTransporter(smtpPort, isSecure);
+        await autoTransporter.sendMail(autoReply);
+      } catch (e) {
+        console.error('Auto-reply error:', e.message);
+      }
+    }
+
+    return NextResponse.json({ success: true, ref: refNum, emailSent: sent });
   } catch (error) {
     console.error('Contact form error:', error);
     return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
