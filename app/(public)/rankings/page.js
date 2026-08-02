@@ -164,7 +164,7 @@ export default function RankingsPage() {
                       <ArrowUpDown className="w-3 h-3" />
                     </div>
                   </th>
-                  <th className="px-4 py-4 text-center hidden md:table-cell">{lang === 'ar' ? 'تفاصيل' : 'Details'}</th>
+                  <th className="px-4 py-4 text-center">{lang === 'ar' ? 'تفاصيل' : 'Details'}</th>
                 </tr>
               </thead>
               <tbody>
@@ -211,17 +211,17 @@ export default function RankingsPage() {
                         <span className="text-gupi-ink-300">—</span>
                       )}
                     </td>
-                    <td className="px-4 py-3 text-center hidden md:table-cell">
+                    <td className="px-4 py-3 text-center">
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => setSelectedUni(uni)}
-                          className="px-3 py-1.5 rounded-lg bg-gupi-orange-100 text-gupi-orange-700 text-sm font-medium hover:bg-gupi-orange-200 transition-colors"
+                          className="px-2 py-1.5 rounded-lg bg-gupi-orange-100 text-gupi-orange-700 text-xs font-medium hover:bg-gupi-orange-200 transition-colors"
                         >
                           {lang === 'ar' ? 'عرض' : 'View'}
                         </button>
                         <Link
                           href={`/universities/${uni.id}`}
-                          className="px-3 py-1.5 rounded-lg bg-gradient-to-r from-gupi-orange-600 to-gupi-orange-800 text-white text-sm font-medium hover:from-gupi-orange-700 hover:to-gupi-orange-900 transition-colors"
+                          className="px-2 py-1.5 rounded-lg bg-gradient-to-r from-gupi-orange-600 to-gupi-orange-800 text-white text-xs font-medium hover:from-gupi-orange-700 hover:to-gupi-orange-900 transition-colors"
                         >
                           {lang === 'ar' ? 'بطاقة' : 'Card'}
                         </Link>
