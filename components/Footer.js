@@ -20,11 +20,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <img src="/logo.png" alt="GUPI" className="h-12 w-auto object-contain" />
-              <div>
-                <div className="font-display font-bold text-white text-lg">{t('footer_brand')}</div>
-                <div className="text-xs text-gupi-ink-300">{t('footer_brand_sub')}</div>
-              </div>
+              <img src="/logo.png" alt="GUPI" className="h-12 w-auto object-contain brightness-0 invert" />
             </div>
             <p className="text-sm text-gupi-ink-300 leading-relaxed">
               {t('footer_desc')}
