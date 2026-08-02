@@ -30,7 +30,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-0.5">
             {links.map((link) => {
               const Icon = link.icon;
               const active = pathname === link.href;
@@ -38,47 +38,47 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium transition-all ${
                     active
-                      ? 'bg-gupi-orange-100 text-gupi-orange-700'
-                      : 'text-gupi-ink-600 hover:bg-gupi-orange-50 hover:text-gupi-orange-600'
+                      ? 'bg-gupi-orange-100/80 text-gupi-orange-800 font-bold shadow-sm'
+                      : 'text-gupi-ink-600 hover:bg-gupi-orange-50/70 hover:text-gupi-orange-700'
                   }`}
                 >
-                  <Icon className="w-4 h-4" />
-                  {link.label}
+                  <Icon className="w-4 h-4 opacity-75" />
+                  <span>{link.label}</span>
                 </Link>
               );
             })}
+            <div className="h-5 w-px bg-gupi-ink-200 mx-1.5" />
             <button
               onClick={toggleLang}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-gupi-ink-600 hover:bg-gupi-orange-50 hover:text-gupi-orange-600 transition-all mx-1"
+              className="flex items-center gap-1 px-2.5 py-2 rounded-xl text-xs font-bold text-gupi-ink-600 hover:bg-gupi-orange-50 hover:text-gupi-orange-700 transition-all border border-gupi-ink-200"
               title={lang === 'ar' ? 'Switch to English' : 'التبديل للعربية'}
             >
-              <Languages className="w-4 h-4" />
-              {lang === 'ar' ? 'EN' : 'ع'}
+              <Languages className="w-3.5 h-3.5" />
+              <span>{lang === 'ar' ? 'EN' : 'عربية'}</span>
             </button>
             <Link
               href="/admin"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-gupi-ink-300 hover:text-gupi-orange-600 transition-all mr-2"
+              className="flex items-center gap-1.5 px-2.5 py-2 rounded-xl text-xs font-medium text-gupi-ink-400 hover:text-gupi-orange-700 hover:bg-gupi-orange-50/50 transition-all"
             >
-              <Shield className="w-4 h-4" />
-              {t('nav_admin')}
+              <Shield className="w-3.5 h-3.5" />
+              <span>{t('nav_admin')}</span>
             </Link>
           </div>
 
           {/* Mobile toggle */}
-          <div className="flex items-center gap-2 md:hidden">
+          <div className="flex items-center gap-2 lg:hidden">
             <button
               onClick={toggleLang}
               className="p-2 rounded-lg hover:bg-gupi-orange-50 text-gupi-ink-600"
               title={lang === 'ar' ? 'Switch to English' : 'التبديل للعربية'}
             >
               <Languages className="w-5 h-5" />
-              <span className="text-xs font-medium ml-1">{lang === 'ar' ? 'EN' : 'ع'}</span>
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-gupi-orange-50"
+              className="p-2 rounded-lg hover:bg-gupi-orange-50"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -87,7 +87,7 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {isOpen && (
-          <div className="md:hidden pb-4 space-y-1">
+          <div className="lg:hidden pb-4 space-y-1">
             {links.map((link) => {
               const Icon = link.icon;
               const active = pathname === link.href;
