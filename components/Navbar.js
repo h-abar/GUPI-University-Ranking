@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-import { Menu, X, Globe, BarChart3, Table, Home, Shield, Swords, Languages } from 'lucide-react';
+import { Menu, X, Globe, BarChart3, Table, Home, Shield, Swords, Languages, Mail } from 'lucide-react';
 import { useLang } from '@/lib/LanguageContext';
 
 export default function Navbar() {
@@ -17,6 +17,7 @@ export default function Navbar() {
     { href: '/dashboard', label: t('nav_dashboard'), icon: BarChart3 },
     { href: '/methodology', label: t('nav_methodology'), icon: Globe },
     { href: '/compare', label: t('nav_compare'), icon: Swords },
+    { href: '/contact', label: t('nav_contact'), icon: Mail },
   ];
 
   return (
